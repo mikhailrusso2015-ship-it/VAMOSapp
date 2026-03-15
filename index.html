@@ -116,25 +116,3 @@
 
 </body>
 </html>
-frame ───────
-window.addEventListener('message', e => {
-  if (e.data?.nav)      navigateTo(e.data.nav);
-  if (e.data?.back)     goBack();
-  if (e.data?.sos)      oneTapSOS();
-  if (e.data?.toggleLang) toggleLanguage();
-});
-
-// ── Side nav clicks ──────────────────────────
-sideItems.forEach(el => {
-  el.addEventListener('click', () => navigateTo(el.dataset.screen));
-});
-
-// ── Back button ──────────────────────────────
-backBtn.addEventListener('click', goBack);
-
-// ── Start: show login screen ──────────────────
-updateSideNav(currentScreen);
-
-</script>
-</body>
-</html>

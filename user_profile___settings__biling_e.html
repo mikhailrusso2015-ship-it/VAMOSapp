@@ -204,31 +204,54 @@
   function nav(key) {
     const screens = {
       'home': 'home__biling_e_venezuela.html',
-      'profile': 'user_profile___settings__biling_e.html',
+      'profile': 'vamos_profile.html',
       'kyc': 'kyc_verification__biling_e_venezuela.html',
       'vehicles': 'vehicle_management__biling_e.html',
       'wallet': 'wallet__biling_e.html',
       'history': 'ride_history__biling_e.html',
       'create_route': 'create_ride_-_route__biling_e.html',
-      'faq': 'faq___preguntas_frecuentes__biling_e.html'
+      'faq': 'faq___preguntas_frecuentes__biling_e.html',
+      'reviews': 'ride_review__biling_e.html',
+      'communications': 'chat_interface__biling_e.html',
+      'saved_passengers': 'chat_interface__biling_e.html'
     };
-    const target = screens[key] || key;
-    if(window.parent !== window) window.parent.postMessage({nav: target}, '*');
-    else window.location.href = target;
+    const target = screens[key] || (key.endsWith('.html') ? key : key + '.html');
+    
+    // Smooth transition
+    document.body.style.opacity = '0.5';
+    
+    if(window.parent !== window) {
+      window.parent.postMessage({nav: target}, '*');
+    } else {
+      window.location.href = target;
+    }
   }
 
   function logout() {
-    // Pillar 3: Destroy session and return to entry
     localStorage.clear();
     sessionStorage.clear();
-    if(window.parent !== window) window.parent.location.href = 'index.html';
-    else window.location.href = 'index.html';
+    alert('Sesión cerrada correctamente');
+    window.location.href = 'index.html';
   }
 
   function toggleLang() {
-    // Simulation
-    alert('Cambio de idioma solicitado');
+    const current = localStorage.getItem('vamos_lang') || 'es';
+    const next = current === 'es' ? 'en' : 'es';
+    localStorage.setItem('vamos_lang', next);
+    
+    document.getElementById('lang-es').className = next === 'es' ? 'text-[10px] font-black text-primary' : 'text-[10px] font-bold text-slate-500';
+    document.getElementById('lang-en').className = next === 'en' ? 'text-[10px] font-black text-primary' : 'text-[10px] font-bold text-slate-500';
+    
+    // Notify parent if in iframe
+    if(window.parent !== window) {
+      window.parent.postMessage({type: 'LANGUAGE_CHANGE', lang: next}, '*');
+    }
   }
+
+  // Set initial lang UI
+  const savedLang = localStorage.getItem('vamos_lang') || 'es';
+  document.getElementById('lang-es').className = savedLang === 'es' ? 'text-[10px] font-black text-primary' : 'text-[10px] font-bold text-slate-500';
+  document.getElementById('lang-en').className = savedLang === 'en' ? 'text-[10px] font-black text-primary' : 'text-[10px] font-bold text-slate-500';
 </script>
 </body>
 </html>
