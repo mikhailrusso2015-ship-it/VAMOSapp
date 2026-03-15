@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#ec5b13",
+                "background-light": "#f8f6f6",
+                "background-dark": "#040521",
+                "space-blue": "#040521",
+                "card-dark": "#0a0c3d",
+              },
+              fontFamily: {
+                "display": ["Public Sans", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+              boxShadow: {
+                'neu-out': '8px 8px 16px #020211, -8px -8px 16px #060831',
+                'neu-in': 'inset 4px 4px 8px #020211, inset -4px -4px 8px #060831',
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .neu-pressed { box-shadow: inset 4px 4px 8px #020211, inset -4px -4px 8px #060831; }
+        .neu-flat { box-shadow: 6px 6px 12px #020211, -6px -6px 12px #060831; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-md mx-auto min-h-screen flex flex-col p-6 gap-8">
+<!-- Header -->
+<header class="flex items-center justify-between">
+<button class="w-10 h-10 flex items-center justify-center rounded-xl neu-flat bg-background-dark text-slate-100">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="text-center flex-1">
+<h1 class="text-lg font-bold tracking-tight">Schedule &amp; Vehicle</h1>
+<p class="text-xs text-slate-400">Horario y Vehículo</p>
+</div>
+<div class="w-10 h-10"></div>
+</header>
+<!-- Progress Bar -->
+<div class="space-y-2">
+<div class="flex justify-between items-end text-sm px-1">
+<span class="font-semibold text-primary">Step 2 of 4</span>
+<span class="text-xs opacity-60">Paso 2 de 4</span>
+</div>
+<div class="h-3 w-full bg-background-dark rounded-full neu-pressed p-0.5">
+<div class="h-full bg-primary rounded-full" style="width: 50%;"></div>
+</div>
+</div>
+<!-- Date Picker Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<h3 class="font-bold">Select Date <span class="text-sm font-normal text-slate-400">| Fecha</span></h3>
+</div>
+<div class="bg-background-dark rounded-2xl p-4 neu-flat">
+<div class="flex items-center justify-between mb-4">
+<button class="material-symbols-outlined text-primary">chevron_left</button>
+<span class="font-bold">October 2023</span>
+<button class="material-symbols-outlined text-primary">chevron_right</button>
+</div>
+<div class="grid grid-cols-7 text-center text-xs font-bold text-slate-400 mb-2">
+<div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+</div>
+<div class="grid grid-cols-7 gap-1">
+<!-- Placeholder days -->
+<div class="h-10 flex items-center justify-center text-slate-700">28</div>
+<div class="h-10 flex items-center justify-center text-slate-700">29</div>
+<div class="h-10 flex items-center justify-center text-slate-700">30</div>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">1</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">2</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">3</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">4</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold shadow-lg shadow-primary/20">5</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">6</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">7</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">8</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">9</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">10</button>
+<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors text-primary font-bold">11</button>
+</div>
+</div>
+</section>
+<!-- Time Selector Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<h3 class="font-bold">Select Time <span class="text-sm font-normal text-slate-400">| Hora</span></h3>
+</div>
+<div class="flex gap-4 items-center justify-center">
+<div class="w-20 h-24 bg-background-dark rounded-xl neu-pressed flex items-center justify-center text-3xl font-bold text-primary">
+                    08
+                </div>
+<span class="text-3xl font-bold">:</span>
+<div class="w-20 h-24 bg-background-dark rounded-xl neu-pressed flex items-center justify-center text-3xl font-bold text-primary">
+                    30
+                </div>
+<div class="flex flex-col gap-2 ml-2">
+<button class="px-4 py-2 rounded-lg neu-flat bg-primary text-white text-xs font-bold uppercase tracking-wider">AM</button>
+<button class="px-4 py-2 rounded-lg neu-flat bg-background-dark text-slate-400 text-xs font-bold uppercase tracking-wider">PM</button>
+</div>
+</div>
+</section>
+<!-- Vehicle Selector Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">directions_car</span>
+<h3 class="font-bold">Select Vehicle <span class="text-sm font-normal text-slate-400">| Vehículo</span></h3>
+</div>
+<div class="bg-background-dark rounded-2xl p-4 neu-flat border-2 border-primary/40 relative overflow-hidden">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-xl bg-slate-800/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-primary">minor_crash</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-slate-100">Toyota Corolla</h4>
+<p class="text-primary font-mono text-sm tracking-widest">AB-123-CD</p>
+<p class="text-[10px] text-slate-400 uppercase mt-1">Primary Vehicle • 4 Seats</p>
+</div>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+</div>
+<button class="w-full py-4 rounded-xl neu-pressed bg-background-dark flex items-center justify-center gap-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-sm font-bold uppercase tracking-wide">Add New Vehicle</span>
+</button>
+</section>
+<!-- Navigation Buttons -->
+<footer class="mt-auto pt-8 pb-4 flex gap-4">
+<button class="flex-1 py-4 rounded-xl neu-flat bg-background-dark font-bold text-slate-400 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">arrow_back</span>
+                Back
+            </button>
+<button class="flex-[2] py-4 rounded-xl neu-flat bg-primary font-bold text-white shadow-xl shadow-primary/30 flex items-center justify-center gap-2">
+                Continue
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13", // Vibrant Orange
+                        "deep-space": "#0a1128", // Deep Space Blue
+                        "mid-deep": "#001f54", // Mid-Deep Blue
+                        "cerulean": "#034078", // Cerulean
+                        "background-light": "#f0f4f8",
+                        "background-dark": "#0a1128",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .neumorphic-flat {
+            background: #f0f4f8;
+            box-shadow: 6px 6px 12px #ced4da, -6px -6px 12px #ffffff;
+        }
+        .dark .neumorphic-flat {
+            background: #0a1128;
+            box-shadow: 6px 6px 12px #050814, -6px -6px 12px #0f1a3c;
+        }
+        .neumorphic-inset {
+            background: #f0f4f8;
+            box-shadow: inset 4px 4px 8px #ced4da, inset -4px -4px 8px #ffffff;
+        }
+        .dark .neumorphic-inset {
+            background: #0a1128;
+            box-shadow: inset 4px 4px 8px #050814, inset -4px -4px 8px #0f1a3c;
+        }
+        .neumorphic-pressed {
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1), inset -2px -2px 5px rgba(255,255,255,0.7);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Header -->
+<header class="p-6 flex items-center justify-between">
+<button class="w-12 h-12 flex items-center justify-center rounded-xl neumorphic-flat text-cerulean dark:text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight text-deep-space dark:text-white">Centro de Notificaciones</h1>
+<div class="px-4 py-2 rounded-full neumorphic-flat flex items-center gap-2">
+<span class="text-xs font-bold text-primary">ES</span>
+<span class="text-xs font-bold text-slate-400">|</span>
+<span class="text-xs font-bold text-slate-400">EN</span>
+</div>
+</header>
+<!-- Category Tabs -->
+<div class="px-6 py-4">
+<div class="p-1 rounded-xl neumorphic-inset flex gap-1">
+<button class="flex-1 py-3 px-2 rounded-lg bg-primary text-white font-semibold text-sm shadow-lg">
+                Todas
+            </button>
+<button class="flex-1 py-3 px-2 rounded-lg text-slate-500 dark:text-slate-400 font-semibold text-sm">
+                Seguridad
+            </button>
+<button class="flex-1 py-3 px-2 rounded-lg text-slate-500 dark:text-slate-400 font-semibold text-sm">
+                Pagos
+            </button>
+</div>
+</div>
+<!-- Notification List -->
+<main class="flex-1 px-6 space-y-6 pb-24 overflow-y-auto">
+<h2 class="text-sm font-bold uppercase tracking-widest text-cerulean dark:text-cerulean/80 mt-4">Recientes</h2>
+<!-- SOS Alert Card -->
+<div class="p-4 rounded-xl neumorphic-flat border-l-4 border-red-500 flex items-start gap-4">
+<div class="w-12 h-12 shrink-0 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined">sos</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-deep-space dark:text-white">Alerta SOS Activada</h3>
+<span class="text-[10px] font-medium text-slate-400 uppercase">Hace 5 min</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Se ha detectado una emergencia en el trayecto de la unidad #V-402.</p>
+</div>
+</div>
+<!-- Payment Card -->
+<div class="p-4 rounded-xl neumorphic-flat border-l-4 border-green-500 flex items-start gap-4">
+<div class="w-12 h-12 shrink-0 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-deep-space dark:text-white">Pago Recibido</h3>
+<span class="text-[10px] font-medium text-slate-400 uppercase">Hace 25 min</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Has recibido $12.50 USD por tu último viaje completado.</p>
+</div>
+</div>
+<h2 class="text-sm font-bold uppercase tracking-widest text-cerulean dark:text-cerulean/80 mt-8">Anteriores</h2>
+<!-- Ride Request Card -->
+<div class="p-4 rounded-xl neumorphic-flat border-l-4 border-primary flex items-start gap-4">
+<div class="w-12 h-12 shrink-0 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-deep-space dark:text-white">Nueva Solicitud</h3>
+<span class="text-[10px] font-medium text-slate-400 uppercase">Ayer, 18:45</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Hay una nueva solicitud de viaje cerca de tu ubicación actual.</p>
+<div class="mt-3 flex gap-2">
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold neumorphic-pressed">Ver Mapa</button>
+<button class="px-4 py-2 rounded-lg neumorphic-flat text-xs font-bold text-slate-600 dark:text-slate-300">Ignorar</button>
+</div>
+</div>
+</div>
+<!-- Security Update -->
+<div class="p-4 rounded-xl neumorphic-flat border-l-4 border-cerulean flex items-start gap-4">
+<div class="w-12 h-12 shrink-0 rounded-lg bg-cerulean/10 dark:bg-cerulean/20 flex items-center justify-center text-cerulean">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-deep-space dark:text-white">Seguridad de la Cuenta</h3>
+<span class="text-[10px] font-medium text-slate-400 uppercase">Hace 2 días</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Se detectó un inicio de sesión desde un nuevo dispositivo en Madrid, ES.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 p-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-md mx-auto neumorphic-flat rounded-2xl flex justify-around items-center p-2">
+<a class="flex flex-col items-center p-2 text-slate-400 hover:text-cerulean transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Inicio</span>
+</a>
+<a class="flex flex-col items-center p-2 text-slate-400 hover:text-cerulean transition-colors" href="#">
+<span class="material-symbols-outlined">route</span>
+<span class="text-[10px] font-bold">Viajes</span>
+</a>
+<a class="relative flex flex-col items-center p-3 -mt-8 rounded-full bg-primary text-white shadow-xl ring-8 ring-background-light dark:ring-background-dark" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<div class="absolute top-2 right-2 w-3 h-3 bg-white rounded-full border-2 border-primary"></div>
+</a>
+<a class="flex flex-col items-center p-2 text-slate-400 hover:text-cerulean transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[10px] font-bold">Cartera</span>
+</a>
+<a class="flex flex-col items-center p-2 text-slate-400 hover:text-cerulean transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">Perfil</span>
+</a>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vamos KYC Verification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F59A2F",
+                        "accent": "#62AAE5",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .neumorphic-inset {
+            background: #221610;
+            box-shadow: inset 4px 4px 8px #130c09, 
+                        inset -4px -4px 8px #312017;
+        }
+        .neumorphic-card {
+            background: #221610;
+            box-shadow: 6px 6px 12px #130c09, 
+                        -6px -6px 12px #312017;
+        }
+        .neumorphic-button {
+            background: #F59A2F;
+            box-shadow: 4px 4px 8px #130c09, 
+                        -2px -2px 6px #312017;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-10 bg-background-light dark:bg-background-dark p-4 border-b border-primary/10">
+<div class="flex items-center justify-between max-w-xl mx-auto">
+<button class="flex items-center justify-center size-10 neumorphic-card rounded-full text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Vamos KYC</h1>
+<div class="size-10"></div> <!-- Placeholder for balance -->
+</div>
+</header>
+<main class="max-w-xl mx-auto p-4 space-y-8">
+<!-- Progress Section -->
+<section class="neumorphic-card rounded-xl p-5 border border-primary/5">
+<div class="flex justify-between items-center mb-4">
+<div>
+<h2 class="text-sm font-semibold text-accent uppercase tracking-wider">Step 2 of 4</h2>
+<p class="text-xl font-bold">Document Upload</p>
+</div>
+<div class="text-accent">
+<span class="material-symbols-outlined text-4xl">verified_user</span>
+</div>
+</div>
+<div class="relative w-full h-3 neumorphic-inset rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent rounded-full transition-all duration-500" style="width: 50%;"></div>
+</div>
+<div class="flex justify-between mt-3 text-xs font-medium text-slate-500">
+<span>Personal info</span>
+<span class="text-accent">Documents</span>
+<span>Selfie</span>
+<span>Review</span>
+</div>
+</section>
+<!-- Upload Sections -->
+<div class="space-y-6">
+<!-- ID Upload -->
+<div class="space-y-3">
+<h3 class="text-sm font-bold uppercase tracking-widest text-primary px-1">Identity Card</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="neumorphic-card rounded-xl p-6 flex flex-col items-center justify-center border border-dashed border-accent/30 group cursor-pointer">
+<div class="neumorphic-inset p-3 rounded-full mb-3 group-hover:bg-accent/10 transition-colors">
+<span class="material-symbols-outlined text-accent">add_a_photo</span>
+</div>
+<span class="text-xs font-medium">Front Side</span>
+</div>
+<div class="neumorphic-card rounded-xl p-6 flex flex-col items-center justify-center border border-dashed border-accent/30 group cursor-pointer">
+<div class="neumorphic-inset p-3 rounded-full mb-3 group-hover:bg-accent/10 transition-colors">
+<span class="material-symbols-outlined text-accent">add_a_photo</span>
+</div>
+<span class="text-xs font-medium">Back Side</span>
+</div>
+</div>
+</div>
+<!-- Vehicle Registration -->
+<div class="space-y-3">
+<h3 class="text-sm font-bold uppercase tracking-widest text-primary px-1">Vehicle Registration</h3>
+<div class="neumorphic-card rounded-xl p-8 flex flex-col items-center justify-center border border-dashed border-accent/30 group cursor-pointer">
+<div class="neumorphic-inset p-4 rounded-xl mb-4 group-hover:bg-accent/10 transition-colors">
+<span class="material-symbols-outlined text-accent text-3xl">directions_car</span>
+</div>
+<p class="text-sm font-medium mb-1">Upload Registration Document</p>
+<p class="text-[10px] text-slate-500">PDF, JPG or PNG up to 10MB</p>
+</div>
+</div>
+<!-- Selfie Verification -->
+<div class="space-y-3">
+<h3 class="text-sm font-bold uppercase tracking-widest text-primary px-1">Facial Verification</h3>
+<div class="neumorphic-card rounded-xl p-6 flex items-center gap-4 border border-accent/20">
+<div class="size-16 neumorphic-inset rounded-full flex items-center justify-center overflow-hidden">
+<img alt="Selfie preview" class="w-full h-full object-cover opacity-50 grayscale" data-alt="Sample portrait of a man for face recognition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6T4vmIa9FKNA0KJEmLEVzCBH9hIq7Un9sTpUDI6YlOx1P4HYqf_6sHQrUSx9XvhKHiWvaOpQueDZQyEgMPnwj5Uf8U_1yRNn1EyFysSyFKZlMdfJXFu4dgxeD7AaIFPKNQ76EyzgrnerBoeKGwI6rggfBTNFmB6TJsafeoSiRvwxsNgVkHClWLt1LH4hOP7rlVxsKWTt7X0ryc6FLZstMKzzuGz5-SeQpSRcULL-iayJRg7G5BjpP05-Ahml8t43WEleFp_rOA0w"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">Liveness Check</p>
+<p class="text-xs text-slate-500">Ensure your face is clearly visible without glasses or hats.</p>
+</div>
+<button class="neumorphic-inset p-3 rounded-full text-accent">
+<span class="material-symbols-outlined">camera_front</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Cloudinary Integration Visual Cue -->
+<div class="flex items-center justify-center gap-2 py-4">
+<span class="text-[10px] uppercase font-bold text-slate-500 tracking-tighter">Powered by Secure Cloudinary Visual Auth</span>
+<div class="size-1 bg-accent rounded-full animate-pulse"></div>
+</div>
+<!-- Footer Action -->
+<div class="pt-4 pb-10">
+<button class="w-full neumorphic-button text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95">
+<span>Continue to Verification</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center text-[11px] text-slate-500 mt-4 leading-relaxed">
+                By clicking continue, you agree to our <span class="text-accent underline">Data Privacy Policy</span>. <br/>
+                Your documents are encrypted and stored securely.
+            </p>
+</div>
+</main>
+<!-- Navigation Bar (Simulated App Bar) -->
+<nav class="fixed bottom-0 inset-x-0 bg-background-dark/80 backdrop-blur-md border-t border-white/5 p-4 flex justify-around items-center max-w-xl mx-auto">
+<div class="text-slate-500 flex flex-col items-center">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px]">Home</span>
+</div>
+<div class="text-primary flex flex-col items-center">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Account</span>
+</div>
+<div class="text-slate-500 flex flex-col items-center">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px]">History</span>
+</div>
+<div class="text-slate-500 flex flex-col items-center">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px]">Settings</span>
+</div>
+</nav>
+</body></html>

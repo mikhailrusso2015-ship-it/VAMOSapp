@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vamos - Ride History / Historial de Viajes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F59A2F", // Vibrant Orange
+                        "space-dark": "#040521", // Deep Space Blue
+                        "space-mid": "#081D56", // Mid-Deep Blue
+                        "cerulean": "#62AAE5", // Cerulean
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#040521",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .neumorphic-card {
+            background: #f8f6f6;
+            box-shadow: 6px 6px 12px #d9d7d7, -6px -6px 12px #ffffff;
+        }
+        .dark .neumorphic-card {
+            background: #081D56;
+            box-shadow: 6px 6px 12px #020311, -2px -2px 8px #0d2c82;
+        }
+        .neumorphic-inset {
+            box-shadow: inset 4px 4px 8px #d9d7d7, inset -4px -4px 8px #ffffff;
+        }
+        .dark .neumorphic-inset {
+            box-shadow: inset 4px 4px 8px #020311, inset -4px -4px 8px #0d2c82;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Header -->
+<header class="sticky top-0 z-10 bg-background-light dark:bg-space-dark px-4 py-4 flex items-center justify-between border-b border-slate-200 dark:border-space-mid">
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center w-10 h-10 rounded-full neumorphic-card text-space-mid dark:text-cerulean">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div>
+<h1 class="text-lg font-bold leading-tight">History / Historial</h1>
+<p class="text-xs text-slate-500 dark:text-cerulean/70 font-medium">Vamos Carpooling</p>
+</div>
+</div>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full neumorphic-card border border-primary/20">
+<span class="text-xs font-bold text-primary">ES</span>
+<span class="text-xs font-bold text-slate-300 dark:text-slate-600">|</span>
+<span class="text-xs font-bold text-slate-500 dark:text-slate-400">EN</span>
+</button>
+</header>
+<!-- Tab Navigation -->
+<nav class="px-4 mt-6">
+<div class="flex p-1 rounded-xl neumorphic-inset bg-slate-100 dark:bg-space-dark/50">
+<button class="flex-1 py-3 text-sm font-bold rounded-lg bg-primary text-white shadow-lg">
+                Active / Activos
+            </button>
+<button class="flex-1 py-3 text-sm font-bold text-slate-500 dark:text-cerulean/60">
+                Completed / Pasados
+            </button>
+</div>
+</nav>
+<!-- Content Area -->
+<main class="flex-1 px-4 py-6 space-y-6 overflow-y-auto pb-24">
+<!-- Ride Card 1: Active -->
+<div class="neumorphic-card rounded-xl p-5 border-l-4 border-primary">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/30">
+<img alt="Driver Profile" class="w-full h-full object-cover" data-alt="Professional headshot of a smiling male driver" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmvx4PZooYtJbW2j-QP4B5hSWe-71EFinqNvw35jyG-TP7tFhzcUdiitsnDhHLMNDee1aAr1DJrKuHMku9Hk7VI2Th_7RslEilqORXFutrQBpY5Ocd1FpRr7Jzqz2OU3fM3ACI7HoiAitpcYNastF7Av72LfkfLoB4zvUdlR8YJz9ACEq6ne2rW_sq-_75MvaCMVxrsMSna5IevNMpFxh4dJFRR_CFU9E2aNwgmlEQAXkwf9ySmg__Va3_VMwYPROgBD0u4m-DZkw"/>
+</div>
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider">In Progress / En Curso</p>
+<h3 class="font-bold text-space-mid dark:text-white">Carlos Rodriguez</h3>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-bold text-primary">$15.00</p>
+<p class="text-[10px] text-slate-500 dark:text-cerulean/70">Ref: 735.00 Bs.</p>
+</div>
+</div>
+<div class="space-y-3 relative">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-cerulean text-lg mt-1">radio_button_checked</span>
+<div>
+<p class="text-[10px] text-slate-500 dark:text-cerulean/50 uppercase font-bold">From / Desde</p>
+<p class="text-sm font-medium">Altamira, Edif. Humboldt</p>
+</div>
+</div>
+<div class="absolute left-[9px] top-6 bottom-6 w-0.5 border-l-2 border-dotted border-cerulean/30"></div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg mt-1">location_on</span>
+<div>
+<p class="text-[10px] text-slate-500 dark:text-cerulean/50 uppercase font-bold">To / Hasta</p>
+<p class="text-sm font-medium">Las Mercedes, Tolón Fashion Mall</p>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-slate-200 dark:border-space-mid/50 flex justify-between items-center">
+<div class="flex items-center gap-2 text-slate-500 dark:text-cerulean/70">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="text-xs font-medium">Today, 10:30 AM</span>
+</div>
+<button class="text-xs font-bold text-cerulean flex items-center gap-1">
+                    Details / Detalles <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Ride Card 2: Recent -->
+<div class="neumorphic-card rounded-xl p-5 opacity-80">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-200 dark:border-space-mid">
+<img alt="Driver Profile" class="w-full h-full object-cover grayscale" data-alt="Professional headshot of a smiling female driver" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcIARjc058e5lIghPc9wSl4H2BLpT5or08IGT4zsSvfNNyIPM_j-MYnSep7r9o5MladEWJQLAXOeq_pEmvm5xeuMirurxMy_uQlt3MuA7Xa4WWCR3f4S2sUwNYrYVP22XGHpoKzGReYhC7OPiErDatLryF4QU7z7If6e5BAy36_Wht0xa-PSSIK_h-EDvjh4041PM5lzeAEPLy6MAJ6LSaTNg7jBk8RjFH7NRhx0J_QLKsTe3ENN1xdcQJkuDDQmpWLQuUQ6OYGvE"/>
+</div>
+<div>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Completed / Completado</p>
+<h3 class="font-bold text-slate-600 dark:text-slate-300">Elena Vasquez</h3>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-bold text-slate-400">$12.00</p>
+<p class="text-[10px] text-slate-400">Ref: 588.00 Bs.</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-300 text-lg">trip_origin</span>
+<p class="text-sm font-medium text-slate-500 italic">Chacao → La Trinidad</p>
+</div>
+<div class="flex items-center gap-2 text-slate-400">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="text-xs font-medium">Oct 22, 08:15 AM</span>
+</div>
+</div>
+</div>
+<!-- Ride Card 3: Cancelled -->
+<div class="neumorphic-card rounded-xl p-5 opacity-60">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-slate-200 dark:bg-space-mid flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400">person_off</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-red-400 uppercase tracking-wider">Cancelled / Cancelado</p>
+<h3 class="font-bold text-slate-400">Ride Search</h3>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-bold text-slate-300">$0.00</p>
+</div>
+</div>
+<p class="text-xs text-slate-400 mb-2">Los Dos Caminos → El Hatillo</p>
+<div class="flex items-center gap-2 text-slate-400">
+<span class="material-symbols-outlined text-sm">event_busy</span>
+<span class="text-xs font-medium">Oct 20, 05:45 PM</span>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-space-dark border-t border-slate-200 dark:border-space-mid px-6 pb-6 pt-3 flex justify-between items-center shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/40" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-bold">History</span>
+</a>
+<div class="relative -mt-10">
+<button class="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-white shadow-lg shadow-primary/30 border-4 border-background-light dark:border-space-dark">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/40" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-bold">Chat</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/40" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-bold">Profile</span>
+</a>
+</nav>
+<!-- Map Background Aesthetic Overlay (Subtle) -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] z-[-1]" data-alt="Abstract subtle city map background pattern" data-location="Caracas" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDt72bofouER7FjIwzoaQ40nMxdDMxISxnSrUyJWomSfgxbtMDz1wS280RzYfv_TwfpaVl_Ut016uccD5ON7MbpV4SMeWadT1u4aUaMl0leJo6i7liw6B4JBdjZ2-t7B42s-Yxu1ppBt4YqrgO2QNID9WTMkQlp3tccgpqs818C_iR6pyAe9ebd0xzq7gf2w-4Mxy8vjm3dDfGanATQ44_RKEkN3QudTGyu-ApBpIFxmcb5LqLPwxEtkgaB0B5Oqhkmzp9_IB6SvAY'); background-size: cover;">
+</div>
+</body></html>

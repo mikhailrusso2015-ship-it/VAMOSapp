@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F59A2F",
+                        "background-light": "#f8f9fc",
+                        "background-dark": "#040521",
+                        "deep-blue": "#081D56",
+                        "cerulean": "#62AAE5"
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                    boxShadow: {
+                        'neu-flat': '6px 6px 12px #bebebe, -6px -6px 12px #ffffff',
+                        'neu-inset': 'inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff',
+                        'neu-dark-flat': '6px 6px 12px #020211, -6px -6px 12px #060831',
+                        'neu-dark-inset': 'inset 4px 4px 8px #020211, inset -4px -4px 8px #060831',
+                        'neu-orange-flat': '4px 4px 8px #d08328, -4px -4px 8px #ffb136',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neu-card { @apply bg-background-light dark:bg-background-dark shadow-neu-flat dark:shadow-neu-dark-flat rounded-xl; }
+        .neu-button-active { @apply bg-primary shadow-neu-orange-flat text-white; }
+        .neu-icon-container { @apply flex items-center justify-center size-12 rounded-xl bg-background-light dark:bg-background-dark shadow-neu-flat dark:shadow-neu-dark-flat text-cerulean dark:text-cerulean; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden pb-20">
+<!-- Header -->
+<header class="flex items-center p-4 justify-between sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="flex size-12 shrink-0 items-center justify-center">
+<div class="neu-card p-1 size-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl font-bold">directions_car</span>
+</div>
+</div>
+<h1 class="text-2xl font-bold leading-tight tracking-tight flex-1 ml-3 text-deep-blue dark:text-slate-100">Vamos</h1>
+<div class="flex items-center gap-2">
+<button class="neu-card px-3 py-1 text-xs font-bold border border-transparent hover:border-primary transition-all">
+                    ES | <span class="opacity-50">EN</span>
+</button>
+</div>
+</header>
+<!-- Main Tabs -->
+<div class="px-4 py-4">
+<div class="neu-card p-1 flex gap-1">
+<button class="flex-1 py-3 rounded-lg font-bold text-sm transition-all neu-button-active">
+                    Pasajero
+                </button>
+<button class="flex-1 py-3 rounded-lg font-bold text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                    Conductor
+                </button>
+</div>
+</div>
+<div class="px-6 py-4">
+<h2 class="text-2xl font-bold text-deep-blue dark:text-white mb-2">¿Cómo funciona?</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-8">Viaja seguro por toda Venezuela con precios ajustados a la tasa BCV.</p>
+<!-- Steps Section -->
+<div class="relative space-y-10">
+<!-- Vertical Line Decor -->
+<div class="absolute left-6 top-6 bottom-6 w-0.5 bg-slate-200 dark:bg-slate-800 -z-10"></div>
+<!-- Step 1 -->
+<div class="flex gap-6 items-start">
+<div class="neu-icon-container shrink-0">
+<span class="material-symbols-outlined text-2xl">search</span>
+</div>
+<div class="flex flex-col pt-1">
+<h3 class="font-bold text-lg text-deep-blue dark:text-slate-100">Busca tu ruta</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Encuentra conductores verificados en Caracas y rutas interurbanas a nivel nacional.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex gap-6 items-start">
+<div class="neu-icon-container shrink-0">
+<span class="material-symbols-outlined text-2xl">event_seat</span>
+</div>
+<div class="flex flex-col pt-1">
+<h3 class="font-bold text-lg text-deep-blue dark:text-slate-100">Reserva tu asiento</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Elige tu puesto preferido y recibe confirmación instantánea por el sistema.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex gap-6 items-start">
+<div class="neu-icon-container shrink-0">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+</div>
+<div class="flex flex-col pt-1">
+<h3 class="font-bold text-lg text-deep-blue dark:text-slate-100">Paga seguro</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Aceptamos Pago Móvil, Zelle o efectivo. Pagos protegidos hasta finalizar el viaje.</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="flex gap-6 items-start">
+<div class="neu-icon-container shrink-0">
+<span class="material-symbols-outlined text-2xl">sentiment_very_satisfied</span>
+</div>
+<div class="flex flex-col pt-1">
+<h3 class="font-bold text-lg text-deep-blue dark:text-slate-100">¡Disfruta el viaje!</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Llega a tu destino con comodidad. No olvides calificar a tu conductor al llegar.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Safety Features Section -->
+<div class="mt-8 px-4 pb-12">
+<div class="neu-card p-6 border-l-4 border-primary">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary font-bold">security</span>
+<h3 class="font-bold text-lg text-deep-blue dark:text-slate-100">Seguridad 'Vamos'</h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="neu-card p-3 shadow-neu-inset dark:shadow-neu-dark-inset bg-slate-50 dark:bg-slate-900/50">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-xs text-cerulean">verified_user</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">KYC Facial</span>
+</div>
+<p class="text-[11px] text-slate-500 leading-tight">Identidad validada por biometría.</p>
+</div>
+<div class="neu-card p-3 shadow-neu-inset dark:shadow-neu-dark-inset bg-slate-50 dark:bg-slate-900/50">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-xs text-red-500">sos</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Botón SOS</span>
+</div>
+<p class="text-[11px] text-slate-500 leading-tight">Asistencia 24/7 y monitoreo GPS.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">home</span>
+<span class="text-[10px] font-medium">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Viajes</span>
+</a>
+<div class="relative -mt-10">
+<button class="bg-primary size-14 rounded-full shadow-neu-orange-flat flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-medium">Mensajes</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Perfil</span>
+</a>
+</nav>
+</div>
+</body></html>

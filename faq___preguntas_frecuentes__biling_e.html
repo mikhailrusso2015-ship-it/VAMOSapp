@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vamos - FAQ &amp; Soporte</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F59A2F",
+                        "deep-space": "#040521",
+                        "mid-deep": "#081D56",
+                        "cerulean": "#62AAE5",
+                        "background-light": "#f0f2f5",
+                        "background-dark": "#040521",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'neumo-out': '8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff',
+                        'neumo-in': 'inset 6px 6px 12px #d1d9e6, inset -6px -6px 12px #ffffff',
+                        'neumo-dark-out': '8px 8px 16px #020314, -8px -8px 16px #06072e',
+                        'neumo-dark-in': 'inset 6px 6px 12px #020314, inset -6px -6px 12px #06072e',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .faq-gradient {
+            background: linear-gradient(145deg, #f0f2f5, #ffffff);
+        }
+        .dark .faq-gradient {
+            background: linear-gradient(145deg, #081D56, #040521);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-md mx-auto min-h-screen flex flex-col relative pb-20">
+<!-- Header -->
+<header class="flex items-center justify-between p-6 pt-8">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-xl bg-white dark:bg-mid-deep flex items-center justify-center shadow-neumo-out dark:shadow-neumo-dark-out overflow-hidden">
+<img alt="Vamos Logo" class="size-8" data-alt="Abstract orange and blue geometric logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2XkjQqMdBpPqCtZ9qH8UFYgbfWhxBjiNYaB0azonIH2vqiHsosEMT4uKb2Ca1l8wWlPws7ImnUgTJHJXPhBPKkon_D_iPQbLrDJFoNG4gFYlxlkxZ6OrGUiZ3ORpXh-Os6o3IVJq-lCVD2oaohS-jsitHeAcyHg2K9PCGs6xcSLjK64DikQ7i5GvRRO_B-CIVSXk4M7cgJ57kIdqIDnXoZvXDLZVXX7YOe19E7n_jEETpj1wHkIcTxSQU-BriRYcAhtWTR0ZMZVU"/>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-mid-deep dark:text-cerulean">Vamos</h1>
+</div>
+<div class="flex items-center bg-white dark:bg-mid-deep px-3 py-1.5 rounded-full shadow-neumo-out dark:shadow-neumo-dark-out border border-slate-200 dark:border-slate-800">
+<span class="text-primary font-bold text-xs">ES</span>
+<span class="mx-2 text-slate-300 dark:text-slate-600">|</span>
+<span class="text-slate-400 dark:text-slate-400 font-medium text-xs">EN</span>
+</div>
+</header>
+<!-- Hero Section -->
+<div class="px-6 py-4">
+<h2 class="text-3xl font-extrabold text-slate-800 dark:text-white mb-2">Centro de Ayuda</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">¿En qué podemos ayudarte hoy en tu ruta?</p>
+</div>
+<!-- Neumorphic Search Bar -->
+<div class="px-6 py-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-cerulean">search</span>
+</div>
+<input class="block w-full pl-12 pr-4 py-4 bg-background-light dark:bg-background-dark border-none rounded-2xl shadow-neumo-in dark:shadow-neumo-dark-in focus:ring-2 focus:ring-primary/20 text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-600 transition-all" placeholder="Buscar pagos, rutas, seguridad..." type="text"/>
+</div>
+</div>
+<!-- Categories Grid -->
+<div class="px-6 py-6">
+<h3 class="text-lg font-bold mb-4 text-slate-700 dark:text-slate-200">Categorías</h3>
+<div class="grid grid-cols-2 gap-4">
+<!-- Safety -->
+<div class="p-4 rounded-2xl bg-white dark:bg-mid-deep shadow-neumo-out dark:shadow-neumo-dark-out border border-white/50 dark:border-slate-800 flex flex-col items-center gap-3 transition-transform active:scale-95">
+<div class="size-12 rounded-xl bg-cerulean/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-cerulean text-3xl">verified_user</span>
+</div>
+<span class="font-bold text-sm text-slate-700 dark:text-slate-200">Seguridad</span>
+</div>
+<!-- Payments -->
+<div class="p-4 rounded-2xl bg-white dark:bg-mid-deep shadow-neumo-out dark:shadow-neumo-dark-out border border-white/50 dark:border-slate-800 flex flex-col items-center gap-3 transition-transform active:scale-95">
+<div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">payments</span>
+</div>
+<span class="font-bold text-sm text-slate-700 dark:text-slate-200">Pagos</span>
+</div>
+<!-- Ride Rules -->
+<div class="p-4 rounded-2xl bg-white dark:bg-mid-deep shadow-neumo-out dark:shadow-neumo-dark-out border border-white/50 dark:border-slate-800 flex flex-col items-center gap-3 transition-transform active:scale-95">
+<div class="size-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-mid-deep dark:text-cerulean text-3xl">rule</span>
+</div>
+<span class="font-bold text-sm text-slate-700 dark:text-slate-200">Reglas</span>
+</div>
+<!-- Account -->
+<div class="p-4 rounded-2xl bg-white dark:bg-mid-deep shadow-neumo-out dark:shadow-neumo-dark-out border border-white/50 dark:border-slate-800 flex flex-col items-center gap-3 transition-transform active:scale-95">
+<div class="size-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-mid-deep dark:text-cerulean text-3xl">account_circle</span>
+</div>
+<span class="font-bold text-sm text-slate-700 dark:text-slate-200">Cuenta</span>
+</div>
+</div>
+</div>
+<!-- FAQ Items -->
+<div class="px-6 py-4 space-y-4 mb-8">
+<h3 class="text-lg font-bold text-slate-700 dark:text-slate-200">Preguntas Frecuentes (Venezuela)</h3>
+<!-- FAQ 1: Pago Móvil -->
+<div class="p-5 rounded-2xl bg-white dark:bg-mid-deep shadow-neumo-out dark:shadow-neumo-dark-out border border-white/50 dark:border-slate-800">
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-bold text-slate-800 dark:text-slate-100">¿Cómo pago con Pago Móvil o Zelle?</h4>
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Al finalizar tu viaje, selecciona "Método de Pago". Verás los datos de Pago Móvil o el correo de Zelle del conductor. Recuerda enviar el capture por el chat interno.
+                </p>
+</div>
+<!-- FAQ 2: Tasa BCV -->
+<div class="p-5 rounded-2xl bg-white dark:bg-mid-deep shadow-neumo-out dark:shadow-neumo-dark-out border border-white/50 dark:border-slate-800">
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-bold text-slate-800 dark:text-slate-100">¿Cuál es la tasa de cambio utilizada?</h4>
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    En Vamos utilizamos exclusivamente la <strong>tasa oficial del BCV</strong> del día. El monto en Bolívares se calcula automáticamente en la aplicación.
+                </p>
+</div>
+<!-- FAQ 3: Verificación -->
+<div class="p-5 rounded-2xl bg-white dark:bg-mid-deep shadow-neumo-out dark:shadow-neumo-dark-out border border-white/50 dark:border-slate-800">
+<div class="flex justify-between items-center mb-2">
+<h4 class="font-bold text-slate-800 dark:text-slate-100">Verificación de seguridad</h4>
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Todos nuestros conductores en Venezuela pasan por un proceso de verificación de antecedentes y revisión de documentos del vehículo (RIF, Licencia, Seguro).
+                </p>
+</div>
+</div>
+<!-- Support CTA -->
+<div class="px-6 pb-12">
+<div class="bg-primary p-6 rounded-3xl shadow-xl flex items-center justify-between text-white overflow-hidden relative">
+<div class="relative z-10">
+<h4 class="font-bold text-xl">¿Aún necesitas ayuda?</h4>
+<p class="text-white/80 text-sm mt-1">Chatea con nuestro soporte técnico 24/7.</p>
+<button class="mt-4 bg-white text-primary px-6 py-2 rounded-xl font-bold text-sm shadow-lg active:scale-95 transition-transform">
+                        Hablar con un agente
+                    </button>
+</div>
+<span class="material-symbols-outlined text-white/20 text-8xl absolute -right-4 -bottom-4">support_agent</span>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/80 dark:bg-deep-space/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">directions_car</span>
+<span class="text-[10px] font-medium">Viajes</span>
+</a>
+<div class="relative -mt-10">
+<div class="size-14 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/30 text-white">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+</div>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-[1]">help_center</span>
+<span class="text-[10px] font-medium">Ayuda</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Perfil</span>
+</a>
+</nav>
+</div>
+</body></html>

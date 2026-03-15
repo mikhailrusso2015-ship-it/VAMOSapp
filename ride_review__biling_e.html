@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vamos - Ride Review</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13", // Vibrant Orange base
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#040521",
+                        "space-blue": "#040521",
+                        "deep-blue": "#081D56",
+                        "cerulean": "#62AAE5",
+                        "vibrant-orange": "#F59A2F",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        'neu-flat': '6px 6px 12px #bebebe, -6px -6px 12px #ffffff',
+                        'neu-pressed': 'inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff',
+                        'neu-dark-flat': '6px 6px 12px #020314, -4px -4px 12px #0a0b4d',
+                        'neu-dark-pressed': 'inset 4px 4px 8px #020314, inset -4px -4px 8px #0a0b4d',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .neumorphic-card {
+            background: #f8f6f6;
+            box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff;
+        }
+        .dark .neumorphic-card {
+            background: #081D56;
+            box-shadow: 8px 8px 16px #030412, -4px -4px 12px #0e2b7a;
+        }
+        .neumorphic-inset {
+            background: #f8f6f6;
+            box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #ffffff;
+        }
+        .dark .neumorphic-inset {
+            background: #040521;
+            box-shadow: inset 6px 6px 12px #01010a, inset -2px -2px 8px #0c0e5e;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<!-- Header -->
+<header class="flex items-center justify-between p-6 sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md z-50">
+<div class="flex items-center gap-3">
+<div class="neumorphic-card p-2 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined font-bold">directions_car</span>
+</div>
+<h1 class="text-2xl font-black tracking-tighter text-deep-blue dark:text-white">VAMOS</h1>
+</div>
+<div class="neumorphic-card px-4 py-2 rounded-full flex gap-3 text-xs font-bold">
+<span class="text-primary">ES</span>
+<span class="text-slate-400">|</span>
+<span class="text-slate-500 dark:text-slate-400">EN</span>
+</div>
+</header>
+<main class="max-w-md mx-auto px-6 pb-24 space-y-8">
+<!-- Ride Summary Card -->
+<section class="neumorphic-card rounded-3xl p-6 border-t border-white/20 dark:border-white/5">
+<div class="flex items-center gap-4 mb-6">
+<div class="relative">
+<div class="w-16 h-16 rounded-full border-4 border-primary/20 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional driver portrait smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9sLuDTm0kuU9gcbnW25uvas70vsHXp-AzfM75FPEB9Rvqri7lSLnmbOdIj9MOQ9uTepEQ68McYLH1f8G1RJOHWfPtt4TRcX7WFFhY0V-YfioEH5myKzAamvy62EEqAI188m0WYPphCuLc_4IYGGNdJpdGEJiWECjJQptiJSc1MilSf2MI1Nrbai1lu-mTUoVDVGxAGAifA8dNS1vbGta8pARzjzbjEYwJEaBojZFfA7I6VpReb-u9GKNQ_8sTWAFs0wqnOKyw6Aw"/>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-green-500 w-4 h-4 rounded-full border-2 border-background-light dark:border-deep-blue"></div>
+</div>
+<div>
+<h2 class="text-xl font-bold dark:text-white">Carlos R.</h2>
+<p class="text-sm text-slate-500 dark:text-cerulean/80 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">verified</span> 4.98 • 2.4k rides
+                    </p>
+</div>
+<div class="ml-auto text-right">
+<p class="text-xs uppercase tracking-widest text-slate-400 font-bold">Total Paid</p>
+<p class="text-xl font-black text-primary">$12.50</p>
+</div>
+</div>
+<div class="neumorphic-inset rounded-2xl p-4 flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-cerulean text-lg">pin</span>
+<div>
+<p class="text-[10px] uppercase font-bold text-slate-400">Pickup</p>
+<p class="text-sm font-medium">Altamira, Caracas</p>
+</div>
+</div>
+<div class="h-4 border-l-2 border-dotted border-slate-300 dark:border-slate-700 ml-[9px]"></div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg">location_on</span>
+<div>
+<p class="text-[10px] uppercase font-bold text-slate-400">Drop-off</p>
+<p class="text-sm font-medium">Las Mercedes</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Rating Section -->
+<section class="text-center space-y-4">
+<h3 class="text-lg font-bold">How was your ride?</h3>
+<div class="flex justify-center gap-2">
+<button class="text-primary drop-shadow-sm transition-transform active:scale-95"><span class="material-symbols-outlined !text-4xl fill-1">star</span></button>
+<button class="text-primary drop-shadow-sm transition-transform active:scale-95"><span class="material-symbols-outlined !text-4xl fill-1">star</span></button>
+<button class="text-primary drop-shadow-sm transition-transform active:scale-95"><span class="material-symbols-outlined !text-4xl fill-1">star</span></button>
+<button class="text-primary drop-shadow-sm transition-transform active:scale-95"><span class="material-symbols-outlined !text-4xl fill-1">star</span></button>
+<button class="text-slate-300 dark:text-slate-700 transition-transform active:scale-95"><span class="material-symbols-outlined !text-4xl">star</span></button>
+</div>
+</section>
+<!-- Feedback Tags -->
+<section class="space-y-4">
+<p class="text-sm font-bold text-slate-500 dark:text-slate-400 text-center">What went well?</p>
+<div class="flex flex-wrap justify-center gap-3">
+<button class="neumorphic-card px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">shield</span> Safe Driver
+                </button>
+<button class="neumorphic-card px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm">cleaning_services</span> Clean Car
+                </button>
+<button class="neumorphic-card px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm">schedule</span> Punctual
+                </button>
+<button class="neumorphic-card px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 dark:text-slate-300">
+<span class="material-symbols-outlined text-sm">chat_bubble</span> Good Talk
+                </button>
+</div>
+</section>
+<!-- Comment Area -->
+<section>
+<div class="neumorphic-inset rounded-2xl p-4">
+<textarea class="bg-transparent border-none w-full focus:ring-0 text-sm font-medium resize-none" placeholder="Add a comment... / Añade un comentario..." rows="3"></textarea>
+</div>
+</section>
+<!-- Tip Section -->
+<section class="neumorphic-card rounded-3xl p-6 space-y-6">
+<div class="flex justify-between items-center">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-vibrant-orange">payments</span>
+                    Tip the Driver
+                </h3>
+<span class="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">BCV: 36.42 Bs.D</span>
+</div>
+<div class="grid grid-cols-4 gap-3">
+<button class="neumorphic-card py-3 rounded-xl font-bold text-sm hover:text-primary transition-colors">$1</button>
+<button class="neumorphic-card py-3 rounded-xl font-bold text-sm bg-primary/10 text-primary border border-primary/30">$2</button>
+<button class="neumorphic-card py-3 rounded-xl font-bold text-sm hover:text-primary transition-colors">$5</button>
+<div class="neumorphic-inset rounded-xl flex items-center px-3">
+<span class="text-xs text-slate-400">$</span>
+<input class="bg-transparent border-none w-full focus:ring-0 text-xs font-bold p-1" placeholder="Other" type="text"/>
+</div>
+</div>
+<p class="text-[10px] text-center text-slate-500 italic">
+                Approx: 72.84 Bs.D will be charged to your wallet.
+            </p>
+</section>
+<!-- CTA -->
+<button class="w-full bg-primary hover:bg-orange-600 text-white font-black py-5 rounded-2xl shadow-lg shadow-primary/30 transition-all active:scale-[0.98] flex flex-col items-center justify-center gap-1">
+<span class="text-lg">Submit Review</span>
+<span class="text-[10px] opacity-80 uppercase tracking-widest">Enviar Reseña</span>
+</button>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 px-6 py-3 pb-6 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">directions_car</span>
+<span class="text-[10px] font-bold uppercase">Rides</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[10px] font-bold uppercase">Wallet</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase">Profile</span>
+</a>
+</nav>
+</body></html>

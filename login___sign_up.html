@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13", // Adjusted vibrant orange from theme
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#040521", // Deep space blue from request
+                        "surface-dark": "#0a0c3d",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        'neumorphic-dark': '8px 8px 16px #020212, -4px -4px 12px #0a0c4d',
+                        'neumorphic-inset': 'inset 4px 4px 8px #020212, inset -2px -2px 6px #0a0c4d',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neumorphic-card {
+            background: #040521;
+            box-shadow: 12px 12px 24px #020212, -8px -8px 24px #0a0c4d;
+        }
+        .neumorphic-input {
+            background: #040521;
+            box-shadow: inset 4px 4px 8px #020212, inset -2px -2px 6px #0a0c4d;
+        }
+        .neumorphic-button {
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.4), -2px -2px 8px rgba(255,255,255,0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4">
+<div class="relative w-full max-w-[420px] neumorphic-card rounded-[2.5rem] overflow-hidden flex flex-col p-8 border border-white/5">
+<!-- Header/Logo Area -->
+<div class="flex flex-col items-center mb-10">
+<div class="w-20 h-20 rounded-full bg-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-4xl">rocket_launch</span>
+</div>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">Vamos</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Ready for your next journey?</p>
+</div>
+<!-- Login Form -->
+<div class="space-y-6">
+<!-- Phone Input -->
+<div class="space-y-2">
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 ml-1">Phone Number</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary text-xl">call</span>
+<input class="w-full h-14 pl-12 pr-4 rounded-2xl neumorphic-input border-none focus:ring-2 focus:ring-primary/50 text-slate-900 dark:text-white placeholder:text-slate-600" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-2">
+<div class="flex justify-between items-center ml-1">
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Password</label>
+<a class="text-xs font-semibold text-primary hover:text-primary/80 transition-colors" href="#">Forgot?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary text-xl">lock</span>
+<input class="w-full h-14 pl-12 pr-12 rounded-2xl neumorphic-input border-none focus:ring-2 focus:ring-primary/50 text-slate-900 dark:text-white placeholder:text-slate-600" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</button>
+</div>
+</div>
+<!-- Action Button -->
+<div class="pt-4">
+<button class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-2xl transition-all neumorphic-button flex items-center justify-center gap-2">
+                    Login
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Twilio OTP Notice -->
+<div class="mt-8 flex items-center justify-center gap-2 bg-primary/10 py-3 px-4 rounded-xl border border-primary/20">
+<span class="material-symbols-outlined text-primary text-sm">shield</span>
+<p class="text-[11px] text-slate-300 font-medium">Secure OTP verification via Twilio</p>
+</div>
+<!-- Footer Links -->
+<div class="mt-auto pt-10 text-center">
+<p class="text-slate-400 text-sm">
+                Don't have an account? 
+                <a class="text-primary font-bold hover:underline ml-1" href="#">Sign Up</a>
+</p>
+</div>
+<!-- Abstract Decorative Element -->
+<div class="absolute -bottom-12 -right-12 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute -top-12 -left-12 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
+</div>
+<!-- Bottom Navigation Copy from Component List (Themed) -->
+<div class="fixed bottom-0 left-0 right-0 max-w-[480px] mx-auto">
+<div class="flex gap-2 border-t border-white/5 bg-surface-dark px-4 pb-6 pt-2 rounded-t-[2rem] shadow-2xl">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<div class="flex h-10 items-center justify-center">
+<span class="material-symbols-outlined">home</span>
+</div>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<div class="flex h-10 items-center justify-center">
+<span class="material-symbols-outlined">search</span>
+</div>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<div class="flex h-10 items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person</span>
+</div>
+</a>
+</div>
+</div>
+</body></html>

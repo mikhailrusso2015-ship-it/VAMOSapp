@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F59A2F", // Vibrant Orange
+                        "deep-space": "#040521",
+                        "mid-deep": "#081D56",
+                        "cerulean": "#62AAE5",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#040521",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        'neu-light': '5px 5px 10px #d1cfcf, -5px -5px 10px #ffffff',
+                        'neu-dark': '5px 5px 10px #020211, -5px -5px 10px #060831',
+                        'neu-inset': 'inset 2px 2px 5px #b8b6b6, inset -2px -2px 5px #ffffff',
+                        'neu-orange': '4px 4px 8px #d18328, -4px -4px 8px #ffb136',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neumorphic-card {
+            background: #f8f6f6;
+            box-shadow: 6px 6px 12px #d9d7d7, -6px -6px 12px #ffffff;
+        }
+        .dark .neumorphic-card {
+            background: #040521;
+            box-shadow: 6px 6px 12px #020211, -6px -6px 12px #060831;
+        }
+        .neumorphic-inset {
+            background: #f8f6f6;
+            box-shadow: inset 4px 4px 8px #d9d7d7, inset -4px -4px 8px #ffffff;
+        }
+        .dark .neumorphic-inset {
+            background: #040521;
+            box-shadow: inset 4px 4px 8px #020211, inset -4px -4px 8px #060831;
+        }
+        .message-driver {
+            background: #040521;
+            box-shadow: 4px 4px 8px #d9d7d7, -2px -2px 6px #ffffff;
+        }
+        .dark .message-driver {
+            background: #081D56;
+            box-shadow: 4px 4px 10px #020211;
+        }
+        .message-user {
+            background: #62AAE5;
+            box-shadow: 4px 4px 8px #d9d7d7, -2px -2px 6px #ffffff;
+        }
+        .dark .message-user {
+            background: #081D56;
+            border: 1px solid #62AAE5;
+            box-shadow: 4px 4px 10px #020211;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex justify-center">
+<div class="w-full max-w-md flex flex-col h-screen overflow-hidden border-x border-slate-200 dark:border-slate-800">
+<!-- Header -->
+<header class="neumorphic-card z-10 p-4 flex items-center gap-3">
+<button class="p-2 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-mid-deep dark:text-cerulean">arrow_back_ios_new</span>
+</button>
+<div class="relative">
+<div class="size-12 rounded-full border-2 border-primary overflow-hidden shadow-md">
+<img alt="Driver Profile Photo" class="w-full h-full object-cover" data-alt="Portrait of a friendly male driver with a cap" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL4BEWL1gqUkpRq2BUxn_Bj_3MfdkPQtJVENjeYKhKJnUPSiSPyJq1WKXC2hT2Vy_csK8h_3hfa6jhEQf36A7nrsElRdkIc78PJFwPJyL8XP6WqY5wE-ecqu6KHEuFywdnBj8vOr6aTjv08SyiOFpXeifVaktkMr3hRcqESyDnOazDSXPfMQ5ifoHZMMAa8gox3VhTnob9yFoGOu7F07sBA_yLQvAr--qUR4brctmEhFjX1ZV7Q3_qI4p1-vZ7PYkcZgIshsXy3ZU"/>
+</div>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-white dark:border-deep-space"></div>
+</div>
+<div class="flex-1">
+<h1 class="font-bold text-lg leading-tight text-deep-space dark:text-white">Juan Carlos R.</h1>
+<p class="text-xs text-slate-500 dark:text-cerulean/80 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] fill-1">directions_car</span>
+                    Toyota Corolla • 4.9 ★
+                </p>
+</div>
+<div class="neumorphic-inset flex items-center p-1 rounded-full text-[10px] font-bold">
+<span class="bg-primary text-white px-2 py-1 rounded-full shadow-sm">ES</span>
+<span class="px-2 py-1 text-slate-400">EN</span>
+</div>
+</header>
+<!-- Chat Body -->
+<main class="flex-1 overflow-y-auto p-4 space-y-6 bg-background-light dark:bg-background-dark">
+<div class="text-center">
+<span class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Hoy / Today</span>
+</div>
+<!-- Driver Message -->
+<div class="flex items-end gap-2 max-w-[85%]">
+<div class="flex flex-col gap-1">
+<div class="message-driver text-white rounded-2xl rounded-bl-none p-3 shadow-neu-light dark:shadow-neu-dark">
+<p class="text-sm font-medium">¡Hola! Ya estoy en la Plaza Altamira, cerca del obelisco.</p>
+<hr class="my-2 border-white/10"/>
+<p class="text-xs italic opacity-80 font-light">Hi! I'm already at Plaza Altamira, near the obelisk.</p>
+</div>
+<span class="text-[10px] text-slate-400 px-1">14:02</span>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex items-end gap-2 max-w-[85%] ml-auto flex-row-reverse">
+<div class="flex flex-col gap-1 items-end">
+<div class="message-user text-white rounded-2xl rounded-br-none p-3 shadow-neu-light dark:shadow-neu-dark">
+<p class="text-sm font-medium">Perfecto, voy bajando. ¿Puedes ver mi ubicación?</p>
+<hr class="my-2 border-white/10"/>
+<p class="text-xs italic opacity-80 font-light">Perfect, I'm heading down. Can you see my location?</p>
+</div>
+<span class="text-[10px] text-slate-400 px-1 flex items-center gap-1">
+                        14:03 <span class="material-symbols-outlined text-[12px] text-cerulean">done_all</span>
+</span>
+</div>
+</div>
+<!-- Location Share Widget (Custom Component) -->
+<div class="flex items-end gap-2 max-w-[85%] ml-auto flex-row-reverse">
+<div class="flex flex-col gap-1 items-end w-full">
+<div class="neumorphic-card rounded-2xl overflow-hidden w-full border border-cerulean/30">
+<div class="h-32 bg-slate-200 relative overflow-hidden">
+<img alt="Map view of Caracas" class="w-full h-full object-cover" data-alt="Digital map showing urban street layout with a pin" data-location="Caracas, Venezuela" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbAKp2Z7i13NSbAXblVWqfq0k1gpjtk7sgnpssYpplfaO5oZf-l5_RqETT2N8iA9sN7l7dMI5IZTmby_XOBI65zSL6VnYcIc5Cm8HzQst_CGEUYU4AMB9u-hc20VJE24uuojUPJk10MsfZB_Gv0Cf4U8nOFYIiJYWXQzMYr1wDbg9iecXfOBSM5BXA9ooGUxMyjcObUh4vIDgN1GslKeW9T9AY_4ec1sVVR4qLYtBOstamGIG2NG6v44U4M1pxA7kQD8kyHsCFKi8"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="size-8 bg-primary rounded-full flex items-center justify-center text-white animate-pulse shadow-lg">
+<span class="material-symbols-outlined fill-1">person_pin_circle</span>
+</div>
+</div>
+</div>
+<div class="p-3 bg-white dark:bg-deep-space flex items-center justify-between">
+<div>
+<p class="text-xs font-bold text-deep-space dark:text-white">Ubicación en tiempo real</p>
+<p class="text-[10px] text-slate-500 italic">Live location sharing</p>
+</div>
+<span class="material-symbols-outlined text-primary">share_location</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Driver Message 2 -->
+<div class="flex items-end gap-2 max-w-[85%]">
+<div class="flex flex-col gap-1">
+<div class="message-driver text-white rounded-2xl rounded-bl-none p-3 shadow-neu-light dark:shadow-neu-dark">
+<p class="text-sm font-medium">Entendido. Te espero frente a la torre British.</p>
+<hr class="my-2 border-white/10"/>
+<p class="text-xs italic opacity-80 font-light">Got it. I'll wait for you in front of the British tower.</p>
+</div>
+<span class="text-[10px] text-slate-400 px-1">14:05</span>
+</div>
+</div>
+</main>
+<!-- Input Area -->
+<footer class="neumorphic-card p-4 space-y-3">
+<div class="flex items-center gap-3">
+<button class="neumorphic-card size-10 rounded-full flex items-center justify-center text-mid-deep dark:text-cerulean active:shadow-neu-inset transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+<div class="flex-1 neumorphic-inset rounded-full px-4 py-2 flex items-center gap-2">
+<input class="bg-transparent border-none focus:ring-0 text-sm flex-1 placeholder:text-slate-400 dark:text-white" placeholder="Escribe un mensaje..." type="text"/>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">mood</span>
+</button>
+</div>
+<button class="bg-primary size-10 rounded-full flex items-center justify-center text-white shadow-neu-orange active:scale-95 transition-transform">
+<span class="material-symbols-outlined fill-1">send</span>
+</button>
+</div>
+<div class="flex justify-between items-center px-1">
+<div class="flex gap-4">
+<button class="flex items-center gap-1 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">mic</span>
+<span class="text-[10px] font-bold uppercase">Audio</span>
+</button>
+<button class="flex items-center gap-1 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">location_on</span>
+<span class="text-[10px] font-bold uppercase">Ubicación</span>
+</button>
+</div>
+<div class="text-[10px] text-slate-400 italic">Vamos App • Caracas</div>
+</div>
+</footer>
+<!-- Bottom Navigation (Contextual) -->
+<nav class="flex border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-deep-space/50 backdrop-blur-md px-6 py-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">chat_bubble</span>
+<span class="text-[10px] font-bold">Chat</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">directions_car</span>
+<span class="text-[10px] font-bold">Viaje</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="text-[10px] font-bold">Alertas</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-bold">Perfil</span>
+</a>
+</nav>
+</div>
+</body></html>

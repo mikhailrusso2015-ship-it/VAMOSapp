@@ -1,0 +1,143 @@
+# Estructura del Proyecto: Vamos (Carpooling PWA)
+
+## 1. Árbol de Directorios (Folder Structure)
+
+Esta estructura sigue las mejores prácticas de Next.js (App Router) y está diseñada para la modularidad y escalabilidad.
+
+```text
+vamos-app/
+├── public/
+│   ├── icons/              # Iconos de la PWA (manifest icons)
+│   ├── images/             # Activos estáticos
+│   └── sw.js               # Service Worker personalizado para offline
+├── src/
+│   ├── app/                # Next.js App Router
+│   │   ├── api/            # Endpoints de API (Auth, SOS, Matching)
+│   │   ├── layout.tsx      # Layout raíz con Providers
+│   │   ├── page.tsx        # Landing / Home
+│   │   └── (dashboard)/    # Rutas protegidas (Conductores/Pasajeros)
+│   ├── components/
+│   │   ├── common/         # Botones, inputs neumórficos, modales
+│   │   ├── forms/          # Formularios de KYC y Registro
+│   │   ├── layout/         # Navbar, Sidebar, Mobile Nav
+│   │   └── maps/           # Componentes de Google Maps
+│   ├── config/             # Configuraciones de Firebase, Cloudinary, etc.
+│   ├── hooks/              # Custom hooks (useAuth, useMap, useOffline)
+│   ├── lib/                # Utilidades de terceros (Twilio, Cloudinary)
+│   ├── services/           # Lógica de negocio (Firestore, Matching Logic)
+│   ├── store/              # Gestión de estado (Zustand o Context)
+│   ├── styles/             # Global CSS y utilidades de Tailwind
+│   └── types/              # Definiciones de TypeScript
+├── .env.example
+├── .gitignore
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+└── tsconfig.json
+```
+
+## 2. Archivo package.json
+
+```json
+{
+  "name": "vamos-pwa",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-google-maps/api": "^2.19.2",
+    "axios": "^1.6.0",
+    "cloudinary": "^1.41.0",
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "firebase": "^10.5.0",
+    "framer-motion": "^10.16.4",
+    "lucide-react": "^0.288.0",
+    "next": "14.0.0",
+    "next-pwa": "^5.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^1.14.0",
+    "twilio": "^4.18.0",
+    "zustand": "^4.4.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.7",
+    "@types/react": "^18.2.29",
+    "@types/react-dom": "^18.2.14",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.51.0",
+    "eslint-config-next": "14.0.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2"
+  }
+}
+```
+
+## 3. Archivo .env.example
+
+```env
+# FIREBASE CONFIGURATION
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+
+# GOOGLE MAPS CONFIGURATION
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
+
+# CLOUDINARY (KYC)
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+# TWILIO (OTP/SMS)
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_PHONE_NUMBER=
+
+# APP SETTINGS
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+## 4. Archivo tailwind.config.js (Configuración Neumórfica)
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'vamos-deep-space': '#040521',
+        'vamos-mid-blue': '#081D56',
+        'vamos-cerulean': '#62AAE5',
+        'vamos-orange': '#F59A2F',
+      },
+      boxShadow: {
+        // Sombras para efecto Neumórfico 3D
+        'neumorph-flat': '6px 6px 12px #020211, -6px -6px 12px #060831',
+        'neumorph-pressed': 'inset 6px 6px 12px #020211, inset -6px -6px 12px #060831',
+        'neumorph-orange': '4px 4px 8px #935c1c, -4px -4px 8px #ffd842',
+      },
+      backgroundImage: {
+        'gradient-vamos': 'linear-gradient(145deg, #081D56, #040521)',
+      },
+    },
+  },
+  plugins: [],
+}
+```

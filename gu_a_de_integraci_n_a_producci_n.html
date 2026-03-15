@@ -1,0 +1,46 @@
+# Guía de Integración: De Stitch a Producción (Antigravity/Next.js)
+
+Para implementar estos diseños en tu stack tecnológico (Next.js + Tailwind), sigue estos pasos:
+
+## 1. Exportación de Código HTML/CSS
+Para cada pantalla en el Canvas:
+1. Haz clic en el botón **</> View Code** en la barra de herramientas superior.
+2. Copia el código HTML generado. Este código ya utiliza clases de Tailwind CSS y está estructurado de forma semántica.
+3. En tu proyecto de Next.js, crea un nuevo componente o página (ej. `src/app/dashboard/page.tsx`) y pega el contenido dentro de un fragmento de React.
+
+## 2. Configuración de Tailwind CSS (Neumorfismo)
+Asegúrate de que tu archivo `tailwind.config.js` tenga las extensiones necesarias para la paleta de colores y las sombras 3D que hemos definido. Utiliza la configuración que guardamos en la Fase 1:
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        'vamos-deep-space': '#040521',
+        'vamos-mid-blue': '#081D56',
+        'vamos-cerulean': '#62AAE5',
+        'vamos-orange': '#F59A2F',
+      },
+      boxShadow: {
+        'neumorph-flat': '6px 6px 12px #020211, -6px -6px 12px #060831',
+        'neumorph-pressed': 'inset 6px 6px 12px #020211, inset -6px -6px 12px #060831',
+      },
+    },
+  },
+}
+```
+
+## 3. Exportación a Figma
+Si prefieres trabajar primero en el diseño visual antes de programar:
+1. Selecciona las pantallas que deseas exportar.
+2. Haz clic en el botón **Export to Figma** en la barra de herramientas.
+3. Sigue las instrucciones para importar el archivo `.fig` en tu cuenta de Figma.
+
+## 4. Implementación de Lógica (Fase 2)
+Una vez tengas la UI montada:
+- **Bilingüismo:** Implementa una librería como `next-intl` o maneja el estado global del idioma con `Zustand`.
+- **Firebase:** Conecta los botones de acción (ej. "Pedir Viaje") con tus funciones de Firestore.
+- **Google Maps:** Reemplaza los placeholders de mapas con el componente `@react-google-maps/api`.
+
+¿Te gustaría que profundice en la lógica de algún componente específico de Next.js ahora?

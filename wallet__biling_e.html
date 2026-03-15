@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vamos - Billetera</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F59A2F", // Vibrant Orange
+                        "deep-space": "#040521",
+                        "mid-deep": "#081D56",
+                        "cerulean": "#62AAE5",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#040521",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .neumorphic-flat {
+            background: #081D56;
+            box-shadow: 6px 6px 12px #030414, -4px -4px 10px #0d2e88;
+        }
+        .neumorphic-inset {
+            background: #081D56;
+            box-shadow: inset 4px 4px 8px #030414, inset -4px -4px 8px #0d2e88;
+        }
+        .neumorphic-button-primary {
+            background: #F59A2F;
+            box-shadow: 4px 4px 10px #030414, -2px -2px 6px #ffa742;
+        }
+        .neumorphic-card {
+            background: #040521;
+            box-shadow: 8px 8px 16px #020212, -4px -4px 12px #06083a;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-deep-space dark overflow-x-hidden max-w-md mx-auto border-x border-mid-deep/20">
+<!-- Header -->
+<div class="flex items-center bg-deep-space p-6 pb-4 justify-between sticky top-0 z-10">
+<div class="text-cerulean flex size-10 items-center justify-center neumorphic-flat rounded-xl cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-tight flex-1 text-center">Billetera</h2>
+<div class="flex items-center justify-end">
+<div class="neumorphic-inset px-3 py-1 rounded-full">
+<p class="text-cerulean text-xs font-bold leading-normal tracking-wider">ES | <span class="text-white/40">EN</span></p>
+</div>
+</div>
+</div>
+<!-- Balances Section -->
+<div class="px-6 py-4">
+<div class="flex flex-col gap-5">
+<!-- Main Balance -->
+<div class="neumorphic-flat p-6 rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl text-white">account_balance_wallet</span>
+</div>
+<p class="text-cerulean/80 text-sm font-medium uppercase tracking-widest">Total Balance (USD)</p>
+<p class="text-white text-4xl font-bold mt-1">$450.00</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-green-400 text-sm">trending_up</span>
+<p class="text-green-400 text-xs font-medium">+2.4% vs last week</p>
+</div>
+</div>
+<!-- Secondary Balances -->
+<div class="grid grid-cols-2 gap-4">
+<div class="neumorphic-flat p-4 rounded-xl">
+<div class="flex items-center gap-2 mb-2">
+<div class="size-2 rounded-full bg-cerulean"></div>
+<p class="text-white/60 text-[10px] font-bold uppercase">Pago Móvil (Bs)</p>
+</div>
+<p class="text-white text-lg font-bold truncate">16,200.50</p>
+</div>
+<div class="neumorphic-flat p-4 rounded-xl border-l-2 border-primary/40">
+<div class="flex items-center gap-2 mb-2">
+<div class="size-2 rounded-full bg-primary"></div>
+<p class="text-white/60 text-[10px] font-bold uppercase">Binance (USDT)</p>
+</div>
+<p class="text-white text-lg font-bold truncate">120.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Exchange Rate -->
+<div class="px-6 py-2">
+<div class="neumorphic-inset rounded-lg py-2 px-4 flex justify-between items-center border border-white/5">
+<p class="text-cerulean text-[10px] font-bold uppercase tracking-wider">BCV Rate Reference</p>
+<p class="text-white text-xs font-bold">1 USD = 36.50 Bs.</p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="px-6 py-6 grid grid-cols-2 gap-6">
+<button class="neumorphic-button-primary h-14 rounded-xl flex items-center justify-center gap-2 text-deep-space font-bold transition-transform active:scale-95">
+<span class="material-symbols-outlined font-bold">add_circle</span>
+<span>Recargar</span>
+</button>
+<button class="neumorphic-flat h-14 rounded-xl flex items-center justify-center gap-2 text-white font-bold border border-white/5 transition-transform active:scale-95">
+<span class="material-symbols-outlined">payments</span>
+<span>Retirar</span>
+</button>
+</div>
+<!-- Transaction History -->
+<div class="flex-1 px-6 pb-24">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-white font-bold text-lg">Actividad Reciente</h3>
+<p class="text-primary text-sm font-medium cursor-pointer">Ver Todo</p>
+</div>
+<div class="space-y-4">
+<!-- Transaction Item 1 -->
+<div class="neumorphic-card p-4 rounded-xl flex items-center gap-4 border border-white/5">
+<div class="size-12 rounded-full bg-mid-deep flex items-center justify-center text-primary neumorphic-inset">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold text-sm">Pago de Viaje</p>
+<p class="text-white/40 text-[10px]">Hoy, 2:30 PM</p>
+</div>
+<div class="text-right">
+<p class="text-white font-bold text-sm">-$12.50</p>
+<p class="text-green-400 text-[10px] font-medium uppercase">Completado</p>
+</div>
+</div>
+<!-- Transaction Item 2 -->
+<div class="neumorphic-card p-4 rounded-xl flex items-center gap-4 border border-white/5">
+<div class="size-12 rounded-full bg-mid-deep flex items-center justify-center text-cerulean neumorphic-inset">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold text-sm">Recarga Pago Móvil</p>
+<p class="text-white/40 text-[10px]">Ayer, 10:15 AM</p>
+</div>
+<div class="text-right">
+<p class="text-green-400 font-bold text-sm">+$50.00</p>
+<p class="text-green-400 text-[10px] font-medium uppercase">Completado</p>
+</div>
+</div>
+<!-- Transaction Item 3 -->
+<div class="neumorphic-card p-4 rounded-xl flex items-center gap-4 border border-white/5 opacity-80">
+<div class="size-12 rounded-full bg-mid-deep flex items-center justify-center text-white/60 neumorphic-inset">
+<span class="material-symbols-outlined">currency_bitcoin</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold text-sm">Transferencia Binance</p>
+<p class="text-white/40 text-[10px]">12 Oct, 09:45 AM</p>
+</div>
+<div class="text-right">
+<p class="text-white font-bold text-sm">-$20.00</p>
+<p class="text-primary text-[10px] font-medium uppercase">Pendiente</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-20">
+<div class="flex gap-2 border-t border-white/10 bg-deep-space/95 backdrop-blur-md px-6 pb-6 pt-4 justify-between items-center rounded-t-3xl">
+<a class="flex flex-col items-center gap-1 text-white/40" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[26px]">home</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Inicio</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-white/40" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[26px]">directions_car</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Viajes</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary relative -top-4" href="#">
+<div class="flex size-14 items-center justify-center neumorphic-button-primary rounded-full border-4 border-deep-space">
+<span class="material-symbols-outlined text-[28px] text-deep-space font-bold">wallet</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest mt-1">Wallet</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-white/40" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[26px]">chat_bubble</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Chat</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-white/40" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[26px]">person</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Perfil</p>
+</a>
+</div>
+</div>
+</div>
+</body></html>

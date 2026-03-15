@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                        "brand-deep": "#040521",
+                        "brand-mid": "#081D56",
+                        "brand-cerulean": "#62AAE5",
+                        "brand-orange": "#F59A2F",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        'neo-out': '8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff',
+                        'neo-in': 'inset 8px 8px 16px #d1d1d1, inset -8px -8px 16px #ffffff',
+                        'neo-out-dark': '8px 8px 16px #1a110c, -8px -8px 16px #2a1b14',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neo-card {
+            background: #f8f6f6;
+            box-shadow: 6px 6px 12px #e3e1e1, -6px -6px 12px #ffffff;
+        }
+        .dark .neo-card {
+            background: #221610;
+            box-shadow: 6px 6px 12px #180f0b, -6px -6px 12px #2c1d15;
+        }
+        .neo-btn-primary {
+            background: #ec5b13;
+            box-shadow: 4px 4px 8px #c94d10, -4px -4px 8px #ff6916;
+        }
+        .neo-inset {
+            box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #ffffff;
+        }
+        .dark .neo-inset {
+            box-shadow: inset 4px 4px 8px #180f0b, inset -4px -4px 8px #2c1d15;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-md mx-auto min-h-screen flex flex-col pb-24">
+<header class="flex items-center justify-between p-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-brand-orange text-3xl">directions_car</span>
+<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Vamos</h1>
+</div>
+<div class="flex items-center gap-3 neo-card rounded-full px-4 py-1.5">
+<span class="text-xs font-bold text-brand-orange">ES</span>
+<div class="w-10 h-5 bg-slate-200 dark:bg-slate-800 rounded-full relative neo-inset">
+<div class="absolute right-0.5 top-0.5 w-4 h-4 bg-brand-orange rounded-full shadow-sm"></div>
+</div>
+<span class="text-xs font-bold text-slate-400">EN</span>
+</div>
+</header>
+<section class="px-6 flex flex-col items-center mb-8">
+<div class="relative mb-4">
+<div class="w-32 h-32 rounded-full neo-card p-1.5">
+<div class="w-full h-full rounded-full bg-cover bg-center border-4 border-white dark:border-slate-800" data-alt="Professional headshot of a smiling woman profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzitX7sOUeAGdkIVgD0EgyoSC0GnlggoId_YfPn6bHKX15cLdm5xaRto9dGG5_K0i4K50WQXN445chIO_Uw8E7d59bMKKPs4WD1o-H776rchKN95ZTx6efuQtDydRDA5tN_7fkhgRonmv0KAzaLwAt0e8B1pzsgt7Lyzcuo3hQ37gRatKa57LFdxknZsp2AMbOyQdvELJgoUQXTjJUz18o9VV8artymhb9X657bv3R1hHEqDDCiU5Rg1QRHuPQsgWCAu4e9aIp3YU')">
+</div>
+</div>
+<div class="absolute bottom-1 right-1 bg-green-500 text-white rounded-full p-1 border-2 border-background-light dark:border-background-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-sm font-bold">verified</span>
+</div>
+</div>
+<h2 class="text-2xl font-bold">María Alejandra G.</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Verified Member / Miembro Verificado</p>
+<div class="flex gap-4 mt-6 w-full">
+<div class="flex-1 neo-card rounded-2xl p-4 text-center">
+<p class="text-xl font-bold text-brand-orange">4.9 ⭐</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Rating</p>
+</div>
+<div class="flex-1 neo-card rounded-2xl p-4 text-center">
+<p class="text-xl font-bold text-brand-orange">124</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Rides</p>
+</div>
+</div>
+</section>
+<section class="px-6 space-y-4 flex-grow">
+<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">Personal Information</p>
+<p class="text-xs text-slate-500">Información Personal</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
+<div class="w-10 h-10 rounded-xl bg-brand-cerulean/10 flex items-center justify-center text-brand-cerulean">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">My Vehicles / Mis Vehículos</p>
+<p class="text-xs text-slate-500">Toyota Corolla (AB123CD)</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
+<div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">Verification Status</p>
+<div class="flex items-center gap-1">
+<span class="text-xs text-green-500 font-bold uppercase">Verified / Verificado</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400">check_circle</span>
+</div>
+<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
+<div class="w-10 h-10 rounded-xl bg-brand-orange/10 flex items-center justify-center text-brand-orange">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">Payment Methods</p>
+<p class="text-xs text-slate-500">Métodos de Pago</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
+<div class="w-10 h-10 rounded-xl bg-slate-500/10 flex items-center justify-center text-slate-500">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">App Settings / Configuración</p>
+<p class="text-xs text-slate-500">Language, Notifications, Dark Mode</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform text-red-500">
+<div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined">emergency</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">Security / Seguridad</p>
+<p class="text-xs text-red-400">SOS Contacts / Contactos SOS</p>
+</div>
+<span class="material-symbols-outlined text-red-300">chevron_right</span>
+</div>
+<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
+<div class="w-10 h-10 rounded-xl bg-brand-mid/10 flex items-center justify-center text-brand-mid dark:text-brand-cerulean">
+<span class="material-symbols-outlined">help</span>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm">Help &amp; Support</p>
+<p class="text-xs text-slate-500">Ayuda y Soporte</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+</section>
+<div class="px-6 py-8">
+<button class="w-full neo-card py-4 rounded-2xl text-slate-500 dark:text-slate-400 font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-2 active:neo-inset transition-all">
+<span class="material-symbols-outlined">logout</span>
+                Logout / Cerrar Sesión
+            </button>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">commute</span>
+<span class="text-[10px] font-bold uppercase">Rides</span>
+</a>
+<a class="flex flex-col items-center gap-1 -mt-8" href="#">
+<div class="w-14 h-14 neo-btn-primary rounded-full flex items-center justify-center text-white border-4 border-background-light dark:border-background-dark">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+<span class="text-[10px] font-bold uppercase mt-1 text-primary">Create</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-bold uppercase">Chat</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined font-fill">person</span>
+<span class="text-[10px] font-bold uppercase">Profile</span>
+</a>
+</nav>
+</div>
+</body></html>

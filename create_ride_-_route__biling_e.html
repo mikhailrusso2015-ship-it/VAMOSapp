@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Set Route - Ride Creation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#F59A2F",
+                "background-light": "#f8f6f6",
+                "background-dark": "#040521",
+                "space-dark": "#040521",
+                "space-card": "#0a0c3d",
+                "space-border": "#1a1c4e"
+              },
+              fontFamily: {
+                "display": ["Public Sans"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .neumorphic-inset {
+            background: #040521;
+            box-shadow: inset 4px 4px 8px #020211, 
+                        inset -4px -4px 8px #060831;
+        }
+        .neumorphic-card {
+            background: #040521;
+            box-shadow: 8px 8px 16px #020211, 
+                        -8px -8px 16px #060831;
+        }
+        .neumorphic-button {
+            background: #040521;
+            box-shadow: 5px 5px 10px #020211, 
+                        -5px -5px 10px #060831;
+        }
+        .neumorphic-button-primary {
+            background: #F59A2F;
+            box-shadow: 4px 4px 8px #9e631e, 
+                        -2px -2px 6px #ffcc8d;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+<!-- Header Section -->
+<div class="flex items-center dark:bg-space-dark p-6 pb-2 justify-between">
+<button class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center rounded-full neumorphic-button">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex-1 text-center pr-12">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Set Route / Establecer Ruta</h2>
+<p class="text-slate-500 dark:text-primary/70 text-xs font-semibold uppercase tracking-widest mt-1">Step 1 of 4</p>
+</div>
+</div>
+<!-- Progress Indicator -->
+<div class="flex w-full flex-row items-center justify-center gap-4 py-6">
+<div class="h-2.5 w-10 rounded-full bg-primary shadow-[0_0_10px_rgba(245,154,47,0.5)]"></div>
+<div class="h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-space-border"></div>
+<div class="h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-space-border"></div>
+<div class="h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-space-border"></div>
+</div>
+<main class="flex-1 max-w-xl mx-auto w-full px-6 pb-24">
+<!-- Inputs Section -->
+<div class="space-y-6 mt-4">
+<!-- Origin -->
+<div class="flex flex-col gap-2">
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal pb-2 ml-1">Origin / Origen</p>
+<div class="flex w-full items-stretch rounded-xl neumorphic-inset">
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent h-14 placeholder:text-slate-400 dark:placeholder:text-slate-600 px-5 text-base font-normal focus:ring-0 text-slate-900 dark:text-white" placeholder="Start location" value="Altamira, Caracas"/>
+<div class="text-primary flex items-center justify-center px-4">
+<span class="material-symbols-outlined">my_location</span>
+</div>
+</div>
+</label>
+</div>
+<!-- Destination -->
+<div class="flex flex-col gap-2">
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal pb-2 ml-1">Destination / Destino</p>
+<div class="flex w-full items-stretch rounded-xl neumorphic-inset border-2 border-primary/20">
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent h-14 placeholder:text-slate-400 dark:placeholder:text-slate-600 px-5 text-base font-normal focus:ring-0 text-slate-900 dark:text-white" placeholder="Where to?" value="La Guaira, Vargas"/>
+<div class="text-primary flex items-center justify-center px-4">
+<span class="material-symbols-outlined">map</span>
+</div>
+</div>
+</label>
+</div>
+<!-- Add Stopover Button -->
+<div class="flex justify-center py-2">
+<button class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl neumorphic-button text-primary hover:text-primary/80 transition-all font-bold text-sm">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+<span>Add Stopover / Agregar Parada</span>
+</button>
+</div>
+<!-- Map Preview Container -->
+<div class="relative w-full aspect-video rounded-3xl overflow-hidden neumorphic-card border-4 border-space-border/50 group">
+<div class="absolute inset-0 bg-gradient-to-t from-space-dark/80 to-transparent z-10 pointer-events-none"></div>
+<img alt="Map view showing route from Caracas to La Guaira coast" class="w-full h-full object-cover grayscale-[20%] contrast-[1.1]" data-alt="Map view of highway route between mountains and sea" data-location="Caracas, Venezuela" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxUPqkjQ91iIqDmWCbWS6qeEsFk36hCWFvw1_sDFO1vnPJ0ZoJ7MnQwCIi-yPeV8CAPSYjrN8LyGIJoWR83P4TXB4v72kYnirsJA82mLneHD08n-0mNyX60bmb39o1-jP-7LWrX1la2pydnggL9MCpGD3y43rjHUCOvTknGdmNbvdLdgtA1BPHlmXD0R3BPqnj7Tl1YvtDU2YgslS2K96Kaal0ehjXAXQL40-ONAVP4Jp462cUs-CY7lm9p4k6r4LEJ9QEpbulM_U"/>
+<div class="absolute bottom-4 left-4 z-20 flex items-center gap-2">
+<div class="bg-primary px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-tighter shadow-lg">Route Preview</div>
+<div class="bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-tighter">~45 mins</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 right-0 p-6 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-xl border-t border-slate-200 dark:border-space-border/30">
+<div class="max-w-xl mx-auto flex items-center gap-4">
+<div class="flex flex-col flex-1">
+<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Total Distance</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">32.4 km</span>
+</div>
+<button class="flex-[2] py-4 rounded-2xl neumorphic-button-primary text-white font-bold text-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span>Next / Siguiente</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>
