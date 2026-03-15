@@ -1,363 +1,285 @@
 <!DOCTYPE html>
-
-<html class="light" lang="es"><head>
+<html lang="es" class="dark">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>VAMOS – Alerta SOS</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#ec5b13",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#040521",
-                        "space-blue": "#040521",
-                        "deep-blue": "#081D56",
-                        "cerulean": "#62AAE5",
-                        "vibrant-orange": "#F59A2F"
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#F59A2F","space-blue":"#040521"},fontFamily:{display:["Public Sans"]}}}}</script>
 <style>
-        .neumorphic-inset {
-            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.5), inset -4px -4px 8px rgba(255,255,255,0.05);
-        }
-        .neumorphic-outset {
-            box-shadow: 6px 6px 12px rgba(0,0,0,0.4), -4px -4px 10px rgba(255,255,255,0.05);
-        }
-        .neumorphic-button-orange {
-            box-shadow: 0 0 20px rgba(245, 154, 47, 0.4), inset 2px 2px 4px rgba(255,255,255,0.3);
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
-<div class="relative flex h-auto min-h-screen w-full max-w-md mx-auto flex-col bg-space-blue dark overflow-x-hidden shadow-2xl">
+  body{font-family:'Public Sans',sans-serif;background:#040521;min-height:100dvh;}
+  .nm-flat{background:#040521;box-shadow:6px 6px 14px #020211,-6px -6px 14px #060831;}
+  .sos-pulse{animation:sosPulse 1.2s ease-in-out infinite;}
+  @keyframes sosPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.7),0 0 0 0 rgba(239,68,68,.4);}50%{box-shadow:0 0 0 24px rgba(239,68,68,0),0 0 0 48px rgba(239,68,68,0);}}
+  .ring-animate{animation:ringPulse 2s linear infinite;}
+  @keyframes ringPulse{0%{transform:scale(1);opacity:.6;}100%{transform:scale(1.6);opacity:0;}}
+  .contact-card{transition:all .2s;}
+  .contact-card:active{transform:scale(.97);}
+</style>
+</head>
+<body class="flex flex-col text-white" style="min-height:100dvh">
+
 <!-- Header -->
-<div class="flex items-center bg-space-blue/80 backdrop-blur-md p-4 sticky top-0 z-50 justify-between border-b border-white/10">
-<div class="text-white flex size-10 shrink-0 items-center justify-center rounded-full neumorphic-outset bg-deep-blue">
-<span class="material-symbols-outlined">arrow_back</span>
-</div>
-<div class="flex flex-col items-center">
-<h2 class="text-vibrant-orange text-lg font-extrabold leading-tight tracking-tight uppercase italic">VAMOS</h2>
-<p class="text-white/60 text-[10px] font-bold tracking-widest uppercase">SOS Emergency</p>
-</div>
-<div class="flex items-center gap-1 bg-deep-blue px-3 py-1 rounded-full neumorphic-inset">
-<p class="text-cerulean text-xs font-bold leading-normal tracking-wider">EN</p>
-<div class="w-4 h-2 bg-white/20 rounded-full relative">
-<div class="absolute right-0 top-0 w-2 h-2 bg-vibrant-orange rounded-full"></div>
-</div>
-<p class="text-white text-xs font-bold leading-normal tracking-wider">ES</p>
-</div>
-</div>
-<!-- Main Emergency Layout -->
-<div class="flex flex-col flex-1 px-6 pt-6 pb-24">
-<!-- Map Snippet & Coordinates -->
-<div class="relative w-full aspect-video rounded-xl overflow-hidden neumorphic-outset mb-6 border border-white/5">
-<div class="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-60" data-alt="Dark stylized map of Caracas Venezuela with route line" data-location="Caracas, Venezuela" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWUNlh8mPLBpw9Y5Lnq7Bug-oZ14GwuHxTwLx18yapAKlgvcMfb08NHTxT-e51O5tZUgIupqPlXQdAiNYBFXWBiL_tPyB8j4IDaomd-N2wQ2s0t8uZ1aJPTq3-em37o2sXMO70YYr8ZY7o2qSeDmqDLnb5n5ABw8rTRf-7UmNxztaINvB_Bw608N7YpzOlIupFLoEf4SEtFRY6l3rKca_Xp8Fp80i-tDE04yPnGsIhnVjVf6f4HFjyVZ9b9Lw15apIQfZAEr2AbKE");'></div>
-<div class="absolute inset-0 bg-gradient-to-t from-space-blue via-transparent to-transparent"></div>
-<div class="absolute bottom-3 left-3 flex flex-col">
-<div class="flex items-center gap-1 text-cerulean">
-<span class="material-symbols-outlined text-sm">location_on</span>
-<span class="text-[10px] font-bold tracking-wider uppercase">Seguimiento en Vivo Active</span>
-</div>
-<p class="text-white text-xs font-mono bg-space-blue/60 backdrop-blur-sm px-2 py-1 rounded mt-1 border border-white/10">
-                        10.4806° N, 66.9036° W
-                    </p>
-</div>
-<div class="absolute top-3 right-3">
-<div class="flex items-center gap-2 bg-red-600/20 border border-red-500/50 px-2 py-1 rounded-full">
-<span class="flex h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
-<span class="text-[10px] text-red-100 font-bold uppercase">Emergency Signal</span>
-</div>
-</div>
-</div>
-<!-- Countdown Section -->
-<div class="flex flex-col items-center mb-8">
-<h3 class="text-white/80 tracking-wide text-sm font-medium leading-tight text-center mb-4 uppercase">Automatic Alert broadcast in:</h3>
-<div class="flex gap-4 justify-center w-full">
-<div class="flex flex-col items-center gap-2">
-<div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-deep-blue border border-white/10 neumorphic-inset">
-<p class="text-white text-2xl font-black leading-tight">00</p>
-</div>
-<p class="text-cerulean text-[10px] font-bold uppercase tracking-tighter">Minutes</p>
-</div>
-<div class="flex h-16 items-center">
-<p class="text-white text-2xl font-black animate-pulse">:</p>
-</div>
-<div class="flex flex-col items-center gap-2">
-<div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-deep-blue border border-white/10 neumorphic-inset">
-<p class="text-vibrant-orange text-2xl font-black leading-tight">42</p>
-</div>
-<p class="text-cerulean text-[10px] font-bold uppercase tracking-tighter">Seconds</p>
-</div>
-</div>
-</div>
-<!-- Central SOS Button -->
-<div class="flex flex-col items-center justify-center mb-10">
-<div class="relative flex items-center justify-center">
-<div class="absolute w-40 h-40 rounded-full bg-vibrant-orange/10 animate-ping"></div>
-<div class="absolute w-36 h-36 rounded-full bg-vibrant-orange/20"></div>
-<button class="relative z-10 flex flex-col items-center justify-center size-32 rounded-full bg-gradient-to-br from-vibrant-orange to-primary neumorphic-button-orange border-4 border-white/20 active:scale-95 transition-transform">
-<span class="material-symbols-outlined text-space-blue text-5xl font-bold">sos</span>
-<span class="text-space-blue text-xs font-black uppercase mt-1">Push Now</span>
-</button>
-</div>
-<p class="text-white/40 text-[10px] mt-6 text-center px-8 uppercase font-medium tracking-widest">
-                    Hold for 3 seconds to trigger immediate alert
-                </p>
-</div>
-<!-- Action Grid -->
-<div class="grid grid-cols-2 gap-4 mb-6">
-<button class="flex flex-col items-center justify-center p-4 rounded-2xl bg-deep-blue border border-white/5 neumorphic-outset group">
-<div class="size-12 rounded-full bg-white/5 flex items-center justify-center mb-2 group-active:bg-vibrant-orange/20">
-<span class="material-symbols-outlined text-cerulean group-active:text-vibrant-orange">call</span>
-</div>
-<span class="text-white text-xs font-bold uppercase tracking-tighter">Call Ven 911</span>
-</button>
-<button class="flex flex-col items-center justify-center p-4 rounded-2xl bg-deep-blue border border-white/5 neumorphic-outset group">
-<div class="size-12 rounded-full bg-white/5 flex items-center justify-center mb-2 group-active:bg-vibrant-orange/20">
-<span class="material-symbols-outlined text-cerulean group-active:text-vibrant-orange">groups</span>
-</div>
-<span class="text-white text-xs font-bold uppercase tracking-tighter">Notify Contacts</span>
-</button>
-</div>
-<!-- Confirmaration/Cancelar Footer -->
-<div class="mt-auto">
-<div class="flex flex-col gap-3">
-<div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10">
-<span class="material-symbols-outlined text-cerulean text-sm">info</span>
-<p class="text-[11px] text-white/70 leading-snug">
-                            Su ubicación actual y audio se están grabando y enviando a su contacto de emergencia.
-                        </p>
-</div>
-<button class="w-full py-4 rounded-xl text-white/50 text-sm font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5 active:bg-red-900/20 active:text-red-400 transition-colors">
-                        Cancelarar Alerta / Cancelar Alert
-                    </button>
-</div>
-</div>
-</div>
-<!-- System Bottom Bar -->
-<div class="h-6 bg-space-blue flex justify-center items-center pb-2">
-<div class="w-20 h-1 bg-white/20 rounded-full"></div>
-</div>
-</div>
-<!-- VAMOS-V2 -->
-<script id="vamos-nav-v2">
-(function(){
-  var PAGE = "sos_alert__biling_e_venezuela.html";
-  var S = {"login": "login___sign_up.html", "home": "home__biling_e_venezuela.html", "dashboard": "main_dashboard.html", "dashboard_ve": "dashboard__biling_e_venezuela.html", "create_route": "create_ride_-_route__biling_e.html", "create_schedule": "create_ride_-_schedule__biling_e.html", "create_pricing": "create_ride_-_pricing__biling_e.html", "create_review": "create_ride_-_review__biling_e.html", "matching": "ride_matching__biling_e.html", "tracking": "live_tracking__biling_e.html", "ride_review": "ride_review__biling_e.html", "history": "ride_history__biling_e.html", "profile": "user_profile___settings__biling_e.html", "kyc": "kyc_verification__biling_e_venezuela.html", "vehicles": "vehicle_management__biling_e.html", "wallet": "wallet__biling_e.html", "payments": "payment_methods__biling_e_venezuela.html", "chat": "chat_interface__biling_e.html", "notifications": "notifications__biling_e.html", "refer": "refer_a_friend__biling_e.html", "sos": "sos_alert__biling_e_venezuela.html", "how": "how_it_works__biling_e.html", "faq": "faq___preguntas_frecuentes__biling_e.html"};
+<header class="flex items-center gap-3 px-4 pt-4 pb-2">
+  <button onclick="back()" class="nm-flat p-2 rounded-xl">
+    <span class="material-symbols-outlined text-slate-400">arrow_back</span>
+  </button>
+  <div>
+    <h1 class="font-bold text-lg text-white">Alerta de Emergencia</h1>
+    <p class="text-xs text-slate-400">Venezuela · Emergencias: 171</p>
+  </div>
+</header>
 
-  function go(key){ var t = S[key]||key; if(window.parent!==window){ window.parent.postMessage({nav:t},'*'); } else { window.location.href=t; } }
-  function back(){ if(window.parent!==window){ window.parent.postMessage({back:true},'*'); } else { window.history.back(); } }
+<!-- Countdown + SOS button -->
+<div class="flex flex-col items-center justify-center pt-6 pb-4 gap-6 px-4">
+  <!-- Animated rings -->
+  <div class="relative flex items-center justify-center w-56 h-56">
+    <div class="absolute inset-0 rounded-full bg-red-600/10 ring-animate" style="animation-delay:0s"></div>
+    <div class="absolute inset-0 rounded-full bg-red-600/10 ring-animate" style="animation-delay:.6s;"></div>
+    <div class="absolute inset-4 rounded-full bg-red-600/10 ring-animate" style="animation-delay:1.2s;"></div>
+    
+    <!-- Main SOS Button -->
+    <button id="sos-main-btn" onclick="activateSOS()"
+      class="w-40 h-40 rounded-full bg-red-600 sos-pulse flex flex-col items-center justify-center text-white border-4 border-red-400/40 relative z-10">
+      <span class="material-symbols-outlined text-5xl font-bold mb-1">sos</span>
+      <span class="text-sm font-bold uppercase tracking-widest">Presiona</span>
+    </button>
+  </div>
 
-  function wire(){
-    // ─── 1. Back buttons ───────────────────────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && /arrow_back|chevron_left|arrow_back_ios/.test(ic.textContent.trim())){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();back();};
-      }
-    });
+  <!-- Auto-call countdown -->
+  <div id="countdown-section" class="hidden text-center">
+    <p class="text-red-400 font-bold text-lg animate-pulse">Llamando al 171 en...</p>
+    <p id="countdown-num" class="text-6xl font-black text-red-500">5</p>
+    <button onclick="cancelSOS()" class="mt-2 px-6 py-2 rounded-xl border border-slate-600 text-slate-400 text-sm font-bold">
+      Cancelar
+    </button>
+  </div>
 
-    // ─── 2. SOS floating red button ────────────────────────────
-    document.querySelectorAll('[class*="bg-red-"], [class*="red-600"]').forEach(function(el){
-      el.style.cursor='pointer';
-      el.onclick=function(e){e.stopPropagation();go('sos');};
-    });
+  <!-- Active SOS banner -->
+  <div id="active-sos" class="hidden w-full bg-red-600/20 border border-red-600/40 rounded-2xl p-4 text-center">
+    <p class="text-red-400 font-bold">🚨 SOS Activado</p>
+    <p class="text-xs text-slate-400 mt-1">Contactos notificados por WhatsApp</p>
+  </div>
+</div>
 
-    // ─── 3. Notification bell in header ────────────────────────
-    document.querySelectorAll('header button, header [role="button"]').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && ic.textContent.trim()==='notifications'){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();go('notifications');};
-      }
-    });
+<!-- Quick Actions -->
+<div class="px-4 grid grid-cols-2 gap-3 mb-4">
+  <button onclick="callEmergency()" class="nm-flat rounded-2xl p-4 flex flex-col items-center gap-2 border border-red-600/30 active:scale-95 transition-transform">
+    <div class="w-12 h-12 rounded-xl bg-red-600/20 flex items-center justify-center">
+      <span class="material-symbols-outlined text-red-400 text-2xl">call</span>
+    </div>
+    <p class="font-bold text-white text-sm">Llamar al 171</p>
+    <p class="text-xs text-slate-400">Emergencias Venezuela</p>
+  </button>
 
-    // ─── 4. Profile avatar in header ──────────────────────────
-    document.querySelectorAll('header img[alt*="rofile"], header img[alt*="User"]').forEach(function(img){
-      var wrap = img.parentElement;
-      if(wrap){ wrap.style.cursor='pointer'; wrap.onclick=function(e){e.stopPropagation();go('profile');}; }
-    });
+  <button onclick="shareLocation()" class="nm-flat rounded-2xl p-4 flex flex-col items-center gap-2 border border-primary/30 active:scale-95 transition-transform">
+    <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary text-2xl">share_location</span>
+    </div>
+    <p class="font-bold text-white text-sm">Compartir Ubicación</p>
+    <p class="text-xs text-slate-400">A tus contactos</p>
+  </button>
+</div>
 
-    // ─── 5. Bottom navigation by icon ─────────────────────────
-    var navMap = {
-      'home':'home','explore':'home','inicio':'home',
-      'search':'dashboard','buscar':'dashboard','near_me':'dashboard',
-      'directions_car':'history','route':'history','viajes':'history',
-      'payments':'wallet','billetera':'wallet','account_balance_wallet':'wallet',
-      'person':'profile','perfil':'profile','account_circle':'profile',
-      'notifications':'notifications',
-      'chat':'chat','message':'chat','forum':'chat',
-      'settings':'profile','tune':'profile',
-      'add_circle':'create_route','add':'create_route',
-    };
-    document.querySelectorAll('nav a, nav button, [class*="bottom"] a').forEach(function(el){
-      var ico = el.querySelector('[class*="material"]');
-      var txt = (el.textContent||'').trim().toLowerCase().replace(/\s+/g,' ');
-      var icon = ico ? ico.textContent.trim() : '';
-      var key = navMap[icon] || navMap[txt];
-      if(!key){
-        // fuzzy match on label text
-        if(/inicio|home/.test(txt)) key='home';
-        else if(/buscar|search/.test(txt)) key='dashboard';
-        else if(/viajes|rides|trips/.test(txt)) key='history';
-        else if(/billetera|wallet/.test(txt)) key='wallet';
-        else if(/perfil|profile/.test(txt)) key='profile';
-        else if(/notif/.test(txt)) key='notifications';
-        else if(/mensajes|chat/.test(txt)) key='chat';
-        else if(/configur|settings/.test(txt)) key='profile';
-        else if(/crear|create|add/.test(txt)) key='create_route';
-        else if(/explorar|explore/.test(txt)) key='home';
-        else if(/historial|history/.test(txt)) key='history';
-      }
-      if(key){
-        el.setAttribute('href','javascript:void(0)');
-        el.style.cursor='pointer';
-        (function(k){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(k);}; })(key);
-      }
-    });
+<!-- Emergency Contacts -->
+<div class="px-4 flex-1">
+  <div class="flex items-center justify-between mb-3">
+    <h2 class="font-bold text-white">Contactos de Emergencia</h2>
+    <button onclick="showAddContact()" class="text-xs text-primary font-bold flex items-center gap-1">
+      <span class="material-symbols-outlined text-sm">add</span> Agregar
+    </button>
+  </div>
 
-    // ─── 6. Per-page specific button rules ─────────────────────
-    var rules = [["button[class*=\"outline\"], [class*=\"border-primary\"]", "home"]];
-    rules.forEach(function(r){
-      try {
-        document.querySelectorAll(r[0]).forEach(function(el){
-          if(r[1]===null) return; // input fields etc., skip
-          el.style.cursor='pointer';
-          (function(k){ el.onclick=function(e){e.stopPropagation();go(k);}; })(r[1]);
-        });
-      } catch(x){}
-    });
+  <div id="contacts-list" class="space-y-2">
+    <!-- Contacts loaded from localStorage -->
+  </div>
 
-    // ─── 7. Generic CTA button wiring by text ─────────────────
-    var textMap = [
-      [/^(buscar un viaje|buscar viaje|find a ride)$/i, 'dashboard'],
-      [/^(ofrecer un viaje|ofrecer viaje|offer a ride|crear viaje)$/i, 'create_route'],
-      [/^(iniciar sesi[oó]n|login|sign in|entrar)$/i, 'home'],
-      [/^(registrarse|sign up|crear cuenta)$/i, 'kyc'],
-      [/^(siguiente|next)$/i, (function(){ 
-        if(PAGE.indexOf('route')>-1)    return 'create_schedule';
-        if(PAGE.indexOf('schedule')>-1) return 'create_pricing';
-        if(PAGE.indexOf('pric')>-1)     return 'create_review';
-        if(PAGE.indexOf('review')>-1 && PAGE.indexOf('ride_review')===-1) return 'matching';
-        return 'home';
-      })()],
-      [/^(confirmar|confirmar viaje|confirm ride|confirm)$/i, 'matching'],
-      [/^(seguir viaje|track ride|track|seguir)$/i, 'tracking'],
-      [/^(calificar|rate|calificar conductor|rate driver)$/i, 'ride_review'],
-      [/^(finalizar|done|finish|enviar rese[nñ]a|submit review)$/i, 'home'],
-      [/^(ver todos|see all|ver todo)$/i, 'dashboard'],
-      [/^(activar ahora|activate now)$/i, 'payments'],
-      [/^(agregar saldo|add money)$/i, 'payments'],
-      [/^(retirar|withdraw)$/i, 'payments'],
-      [/^(enviar dinero|send money)$/i, 'payments'],
-      [/^(agregar m[eé]todo de pago|add payment method|add card)$/i, 'payments'],
-      [/^(billetera|wallet)$/i, 'wallet'],
-      [/^(verificar|verify|completar kyc)$/i, 'kyc'],
-      [/^(historial|ride history|ver historial)$/i, 'history'],
-      [/^(mis veh[ií]culos|my vehicles|agregar veh[ií]culo|add vehicle)$/i, 'vehicles'],
-      [/^(cerrar sesi[oó]n|log out|logout)$/i, 'login'],
-      [/^(editar perfil|edit profile)$/i, 'profile'],
-      [/^(alerta sos|send sos|enviar sos)$/i, 'sos'],
-      [/^(compartir ubicaci[oó]n|share location)$/i, 'sos'],
-      [/^(compartir|share)$/i, 'refer'],
-      [/^(copiar c[oó]digo|copy code)$/i, 'refer'],
-      [/^(referir un amigo|refer a friend|invitar amigos|invite friends)$/i, 'refer'],
-      [/^(mensajes|chat)$/i, 'chat'],
-      [/^(notificaciones|notifications)$/i, 'notifications'],
-      [/^(c[oó]mo funciona|how it works|comenzar|get started)$/i, 'how'],
-      [/^(preguntas frecuentes|faq)$/i, 'faq'],
-      [/^(contactar soporte|contact support)$/i, 'chat'],
-      [/^(volver al inicio|back to home)$/i, 'home'],
-      [/^(cancelar|cancel)$/i, 'home'],
-      [/^(guardar|save)$/i, 'profile'],
-      [/^(publicar viaje|offer ride)$/i, 'matching'],
-      [/^(viajar de nuevo|book again)$/i, 'dashboard'],
-      [/información personal/i, 'profile'],
-      [/mis vehículos/i, 'vehicles'],
-      [/estado de verificaci/i, 'kyc'],
-      [/métodos de pago/i, 'payments'],
-      [/configuración de la app/i, 'profile'],
-      [/ayuda y soporte/i, 'how'],
-      [/referir un amigo/i, 'refer'],
-      [/marcar todo como le[ií]do/i, 'notifications'],
-      [/mensaje a conductor/i, 'chat'],
-    ];
+  <!-- Add contact form (hidden by default) -->
+  <div id="add-contact-form" class="hidden nm-flat rounded-2xl p-4 mt-3 border border-primary/20">
+    <h3 class="font-bold text-sm mb-3 text-primary">Nuevo Contacto de Emergencia</h3>
+    <div class="space-y-3">
+      <input id="contact-name" type="text" placeholder="Nombre completo"
+        class="w-full h-12 px-4 rounded-xl bg-space-blue text-white border border-slate-700 focus:border-primary focus:ring-0 text-sm"/>
+      <div class="flex items-center gap-2 bg-space-blue rounded-xl border border-slate-700 focus-within:border-primary overflow-hidden">
+        <span class="px-3 text-sm text-primary font-bold whitespace-nowrap">🇻🇪 +58</span>
+        <input id="contact-phone" type="tel" placeholder="(04xx) xxx-xx.xx"
+          class="flex-1 h-12 bg-transparent text-white border-none focus:ring-0 text-sm"
+          oninput="formatPhone(this)"/>
+      </div>
+      <select id="contact-relation" class="w-full h-12 px-4 rounded-xl bg-space-blue text-white border border-slate-700 focus:border-primary focus:ring-0 text-sm">
+        <option value="">Relación...</option>
+        <option>Familiar</option>
+        <option>Amigo/a</option>
+        <option>Pareja</option>
+        <option>Colega</option>
+      </select>
+      <div class="flex gap-2">
+        <button onclick="hideAddContact()" class="flex-1 py-2 rounded-xl border border-slate-600 text-slate-400 text-sm font-bold">Cancelar</button>
+        <button onclick="saveContact()" class="flex-1 py-2 rounded-xl bg-primary text-white text-sm font-bold">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    document.querySelectorAll('button, a').forEach(function(el){
-      // Skip nav elements already handled
-      if(el.closest('nav')) return;
-      var txt = (el.textContent||'').trim().replace(/\s+/g,' ');
-      for(var i=0;i<textMap.length;i++){
-        if(textMap[i][0].test(txt)){
-          var k = textMap[i][1];
-          el.setAttribute('href','javascript:void(0)');
-          el.style.cursor='pointer';
-          (function(key){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(key);}; })(k);
-          break;
-        }
-      }
-    });
+<!-- Bottom padding -->
+<div class="h-6"></div>
 
-    // ─── 8. Language toggle: ES|EN button ─────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var t = (b.textContent||'').trim();
-      if(t==='ES | EN' || (t.indexOf('ES')>-1 && t.indexOf('EN')>-1)){
-        b.onclick=function(e){
-          e.stopPropagation();
-          alert('Opciones de idioma: actualmente Español');
-        };
-      }
-    });
+<script>
+function nav(t){if(window.parent!==window){window.parent.postMessage({nav:t},'*');}else{window.location.href=t;}}
+function back(){if(window.parent!==window){window.parent.postMessage({back:true},'*');}else{window.history.back();}  }
 
-    // ─── 9. "Viajes Cercanos" card → dashboard ──────────────────
-    document.querySelectorAll('[class*="neumorph-card"], [class*="neu-flat"]').forEach(function(card){
-      var isNav = card.closest('nav') || card.closest('header');
-      if(isNav) return;
-      var txt = (card.textContent||'').toLowerCase();
-      if(txt.indexOf('altamira')>-1 || txt.indexOf('min away')>-1 || txt.indexOf('disponible ahora')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-      if(txt.indexOf('alejandro medina')>-1 || txt.indexOf('sofía rodríguez')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-    });
+// Load contacts from localStorage
+var CONTACTS_KEY = 'vamos_sos_contacts';
+function getContacts(){ return JSON.parse(localStorage.getItem(CONTACTS_KEY)||'[]'); }
+function saveContacts(arr){ localStorage.setItem(CONTACTS_KEY, JSON.stringify(arr)); }
+
+function renderContacts(){
+  var contacts = getContacts();
+  var list = document.getElementById('contacts-list');
+  if(contacts.length === 0){
+    list.innerHTML = '<div class="text-center py-6 text-slate-500"><span class="material-symbols-outlined text-3xl block mb-2 opacity-30">contacts</span><p class="text-sm">Sin contactos de emergencia</p><p class="text-xs mt-1">Toca + Agregar para configurar hasta 3 contactos</p></div>';
+    return;
   }
+  list.innerHTML = contacts.map(function(c,i){
+    return '<div class="contact-card nm-flat rounded-xl p-3 flex items-center gap-3 border border-slate-800">'+
+      '<div class="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center text-primary font-bold text-lg">'+c.name[0]+'</div>'+
+      '<div class="flex-1">'+
+        '<p class="font-bold text-sm text-white">'+c.name+'</p>'+
+        '<p class="text-xs text-slate-400">🇻🇪 +58 '+c.phone+' · '+c.relation+'</p>'+
+      '</div>'+
+      '<div class="flex gap-2">'+
+        '<button onclick="sendWhatsApp('+i+')" class="w-9 h-9 rounded-xl bg-green-600/20 border border-green-600/30 flex items-center justify-center text-green-400">'+
+          '<span class="material-symbols-outlined text-base">chat</span>'+
+        '</button>'+
+        '<button onclick="deleteContact('+i+')" class="w-9 h-9 rounded-xl bg-red-600/10 border border-red-600/20 flex items-center justify-center text-red-400">'+
+          '<span class="material-symbols-outlined text-base">delete</span>'+
+        '</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
 
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',wire);
-  } else { wire(); }
-})();
+// Add contact
+function showAddContact(){
+  var contacts = getContacts();
+  if(contacts.length >= 3){ alert('Máximo 3 contactos de emergencia permitidos.'); return; }
+  document.getElementById('add-contact-form').classList.remove('hidden');
+}
+function hideAddContact(){ document.getElementById('add-contact-form').classList.add('hidden'); }
+function saveContact(){
+  var name = document.getElementById('contact-name').value.trim();
+  var phone = document.getElementById('contact-phone').value.trim();
+  var relation = document.getElementById('contact-relation').value;
+  if(!name || !phone){ alert('Nombre y teléfono son requeridos.'); return; }
+  var contacts = getContacts();
+  contacts.push({name:name, phone:phone, relation:relation});
+  saveContacts(contacts);
+  hideAddContact();
+  renderContacts();
+  document.getElementById('contact-name').value='';
+  document.getElementById('contact-phone').value='';
+}
+function deleteContact(i){
+  var contacts = getContacts();
+  contacts.splice(i,1);
+  saveContacts(contacts);
+  renderContacts();
+}
+
+// WhatsApp individual
+function sendWhatsApp(i){
+  var contacts = getContacts();
+  var c = contacts[i];
+  var phone = '58' + c.phone.replace(/\D/g,'').replace(/^0/,'');
+  var msg = encodeURIComponent('🚨 ALERTA SOS - VAMOS App\n\nHola '+c.name+', necesito ayuda de emergencia. Esta es mi ubicación actual:\nhttps://maps.google.com/?q=10.4806,-66.9036\nUsuario VAMOS.');
+  window.open('https://api.whatsapp.com/send?phone='+phone+'&text='+msg, '_blank');
+}
+
+// Send WhatsApp to all contacts
+function sendAllWhatsApp(){
+  var contacts = getContacts();
+  if(contacts.length === 0){ alert('No tienes contactos de emergencia configurados.\nAgrega hasta 3 contactos en esta pantalla.'); return; }
+  contacts.forEach(function(c, i){
+    setTimeout(function(){
+      var phone = '58' + c.phone.replace(/\D/g,'').replace(/^0/,'');
+      var msg = encodeURIComponent('🚨 ALERTA SOS URGENTE - VAMOS App\n\nHola '+c.name+', NECESITO AYUDA de emergencia ahora mismo.\n📍 Mi ubicación: https://maps.google.com/?q=10.4806,-66.9036\n⚠️ Enviado automáticamente desde la app VAMOS.');
+      window.open('https://api.whatsapp.com/send?phone='+phone+'&text='+msg, '_blank');
+    }, i * 1200);
+  });
+}
+
+// Call 171
+function callEmergency(){
+  if(confirm('¿Confirmas llamar al 171 (Emergencias Venezuela)?')){
+    window.location.href = 'tel:171';
+  }
+}
+
+// Share location via maps
+function shareLocation(){
+  var text = encodeURIComponent('📍 Mi ubicación actual (VAMOS App):\nhttps://maps.google.com/?q=10.4806,-66.9036');
+  if(navigator.share){ navigator.share({title:'Mi ubicación - VAMOS',text:text}); }
+  else { window.open('https://api.whatsapp.com/send?text='+text,'_blank'); }
+}
+
+// SOS main activation
+var sosActive = false;
+var countdown = 5;
+var countdownTimer = null;
+
+function activateSOS(){
+  if(sosActive) return;
+  sosActive = true;
+  document.getElementById('sos-main-btn').style.opacity = '.4';
+  document.getElementById('countdown-section').classList.remove('hidden');
+  countdown = 5;
+  document.getElementById('countdown-num').textContent = '5';
+
+  countdownTimer = setInterval(function(){
+    countdown--;
+    var el = document.getElementById('countdown-num');
+    if(el) el.textContent = countdown;
+    if(countdown <= 0){
+      clearInterval(countdownTimer);
+      // Auto call and message
+      triggerFullSOS();
+    }
+  }, 1000);
+}
+
+function cancelSOS(){
+  sosActive = false;
+  clearInterval(countdownTimer);
+  document.getElementById('countdown-section').classList.add('hidden');
+  document.getElementById('sos-main-btn').style.opacity = '1';
+}
+
+function triggerFullSOS(){
+  document.getElementById('countdown-section').classList.add('hidden');
+  document.getElementById('active-sos').classList.remove('hidden');
+  // 1. Call 171
+  window.location.href = 'tel:171';
+  // 2. WhatsApp to all contacts after small delay
+  setTimeout(sendAllWhatsApp, 1500);
+}
+
+// Format phone
+function formatPhone(inp){
+  var v = inp.value.replace(/\D/g,'');
+  if(v.length>11) v=v.slice(0,11);
+  var f='';
+  if(v.length>=4) f='(0'+v.slice(1,4)+') ';
+  else if(v.length>=1) f='(0'+v.slice(1);
+  if(v.length>=7) f+=v.slice(4,7)+'-';
+  else if(v.length>4) f+=v.slice(4);
+  if(v.length>=9) f+=v.slice(7,9)+'.'+v.slice(9);
+  else if(v.length>7) f+=v.slice(7);
+  inp.value=f;
+}
+
+renderContacts();
 </script>
-<!-- /VAMOS-V2 --></body></html>
+</body>
+</html>

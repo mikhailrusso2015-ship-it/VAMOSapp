@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>VAMOS Chofer – Panel Principal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#F59A2F","space-blue":"#040521","deep-blue":"#081D56","cerulean":"#62AAE5"},fontFamily:{display:["Public Sans","sans-serif"]}}}}</script>
+<style>
+  body{font-family:'Public Sans',sans-serif;background:#040521;color:#fff;min-height:100dvh;}
+  .nm-flat{background:#040521;box-shadow:6px 6px 14px #020211,-6px -6px 14px #060831;}
+  #map{width:100%;height:100%;z-index:0;}
+  .status-online{background:#22c55e;box-shadow:0 0 12px rgba(34,197,94,.6);}
+  .status-offline{background:#ef4444;}
+  .toggle-btn{width:72px;height:36px;border-radius:999px;transition:all .3s;position:relative;cursor:pointer;}
+  .toggle-btn.on{background:#22c55e;}
+  .toggle-btn.off{background:#475569;}
+  .toggle-thumb{width:28px;height:28px;background:#fff;border-radius:50%;position:absolute;top:4px;transition:.3s;}
+  .toggle-btn.on .toggle-thumb{left:40px;}
+  .toggle-btn.off .toggle-thumb{left:4px;}
+  #request-card{position:absolute;bottom:0;left:0;right:0;z-index:20;transform:translateY(100%);transition:.35s cubic-bezier(.4,0,.2,1);}
+  #request-card.show{transform:translateY(0);}
+  .leaflet-tile{filter:brightness(.7) saturate(.8);}
+</style>
+</head>
+<body class="relative flex flex-col" style="height:100dvh;overflow:hidden">
+
+<!-- ── MAP FULLSCREEN ──────────────────────────────── -->
+<div id="map" style="position:absolute;inset:0;z-index:0;"></div>
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,5,33,.85) 0%,transparent 35%,transparent 60%,rgba(4,5,33,.95) 100%);z-index:1;pointer-events:none;"></div>
+
+<!-- ── HEADER ──────────────────────────────────────── -->
+<header style="position:relative;z-index:10;" class="flex items-center justify-between px-4 pt-4 pb-3">
+  <div class="flex items-center gap-3">
+    <div class="nm-flat p-2 rounded-xl flex items-center justify-center border border-primary/20">
+      <span class="material-symbols-outlined text-primary">menu</span>
+    </div>
+    <div>
+      <div class="flex items-center gap-2">
+        <h1 class="text-xl font-extrabold uppercase tracking-tight">VAMOS</h1>
+        <span class="text-[10px] bg-primary/20 text-primary font-bold px-2 py-0.5 rounded-full uppercase">CHOFER</span>
+      </div>
+      <p id="chofer-name" class="text-xs text-cerulean/80">Alejandro Medina</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-3">
+    <!-- Earnings today -->
+    <div class="nm-flat px-3 py-2 rounded-xl text-right">
+      <p class="text-[9px] text-slate-400 uppercase tracking-wide">Hoy</p>
+      <p class="text-primary font-bold text-sm">$0.00</p>
+    </div>
+    <!-- Notificaciones -->
+    <button onclick="nav('notifications__biling_e.html')" class="nm-flat p-2 rounded-xl relative">
+      <span class="material-symbols-outlined text-cerulean">notifications</span>
+      <span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+    </button>
+  </div>
+</header>
+
+<!-- ── STATUS TOGGLE (Online/Offline) ─────────────── -->
+<div style="position:relative;z-index:10;" class="flex items-center justify-center gap-4 py-3">
+  <div class="nm-flat rounded-2xl px-6 py-3 flex items-center gap-4">
+    <div>
+      <p class="text-xs text-slate-400">Estado</p>
+      <p id="status-text" class="font-bold text-green-400">En línea</p>
+    </div>
+    <div class="toggle-btn on" id="status-toggle" onclick="toggleStatus()">
+      <div class="toggle-thumb"></div>
+    </div>
+    <div class="w-2.5 h-2.5 rounded-full status-online" id="status-dot"></div>
+  </div>
+</div>
+
+<!-- ── STATS ROW ───────────────────────────────────── -->
+<div style="position:relative;z-index:10;" class="flex gap-3 px-4 pb-2">
+  <div class="nm-flat flex-1 rounded-xl p-3 text-center">
+    <p class="text-[9px] text-slate-400 uppercase tracking-wide">Viajes Hoy</p>
+    <p class="text-lg font-bold text-white" id="trips-today">0</p>
+  </div>
+  <div class="nm-flat flex-1 rounded-xl p-3 text-center">
+    <p class="text-[9px] text-slate-400 uppercase tracking-wide">Galificación</p>
+    <p class="text-lg font-bold text-primary">⭐ 4.9</p>
+  </div>
+  <div class="nm-flat flex-1 rounded-xl p-3 text-center">
+    <p class="text-[9px] text-slate-400 uppercase tracking-wide">Tiempo Activo</p>
+    <p class="text-lg font-bold text-cerulean" id="active-time">00:00</p>
+  </div>
+</div>
+
+<!-- MAP SPACE (fills remaining height) -->
+<div style="flex:1;"></div>
+
+<!-- ── SOS FLOATING ───────────────────────────────── -->
+<div style="position:absolute;right:16px;bottom:180px;z-index:30;">
+  <button onclick="nav('sos_alert__biling_e_venezuela.html')"
+    class="w-14 h-14 rounded-full bg-red-600 shadow-lg flex items-center justify-center text-white border-4 border-white/20"
+    style="box-shadow:0 0 20px rgba(239,68,68,.6)">
+    <span class="material-symbols-outlined text-2xl font-bold">sos</span>
+  </button>
+</div>
+
+<!-- ── ACTIVITY CARD (Esperando solicitudes) ──────── -->
+<div style="position:relative;z-index:20;" class="px-4 pb-3">
+  <div id="waiting-card" class="nm-flat rounded-2xl p-4 border border-cerulean/20">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-10 h-10 rounded-xl bg-cerulean/10 flex items-center justify-center">
+        <span class="material-symbols-outlined text-cerulean">radar</span>
+      </div>
+      <div>
+        <p class="font-bold text-white">Esperando solicitudes...</p>
+        <p class="text-xs text-slate-400">Zona: Caracas Centro</p>
+      </div>
+      <div class="ml-auto flex items-center gap-1">
+        <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+        <p class="text-xs text-green-400">Activo</p>
+      </div>
+    </div>
+    <!-- Simulated request button -->
+    <button onclick="showRequest()" class="w-full py-3 rounded-xl text-sm font-bold text-cerulean border border-cerulean/30 hover:bg-cerulean/10 transition-colors">
+      Simular Solicitud de Viaje →
+    </button>
+  </div>
+</div>
+
+<!-- ── BOTTOM NAV (CHOFER) ───────────────────────── -->
+<nav style="position:relative;z-index:20;background:#040521;border-top:1px solid rgba(98,170,229,.1);" class="flex pb-4 pt-2 px-2">
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-primary" onclick="nav('chofer_home.html')">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">explore</span>
+    <span class="text-[9px] font-bold uppercase">Inicio</span>
+  </a>
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-slate-500" onclick="nav('create_ride_-_route__biling_e.html')">
+    <span class="material-symbols-outlined">add_circle</span>
+    <span class="text-[9px] font-bold uppercase">Crear Viaje</span>
+  </a>
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-slate-500" onclick="nav('ride_history__biling_e.html')">
+    <span class="material-symbols-outlined">route</span>
+    <span class="text-[9px] font-bold uppercase">Mis Viajes</span>
+  </a>
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-slate-500" onclick="nav('wallet__biling_e.html')">
+    <span class="material-symbols-outlined">payments</span>
+    <span class="text-[9px] font-bold uppercase">Billetera</span>
+  </a>
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-slate-500" onclick="nav('user_profile___settings__biling_e.html')">
+    <span class="material-symbols-outlined">person</span>
+    <span class="text-[9px] font-bold uppercase">Perfil</span>
+  </a>
+</nav>
+
+<!-- ── INCOMING RIDE REQUEST CARD ────────────────── -->
+<div id="request-card" class="nm-flat rounded-t-3xl p-5 border-t border-primary/30">
+  <div class="w-10 h-1 rounded-full bg-slate-600 mx-auto mb-4"></div>
+  <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+        <span class="material-symbols-outlined text-primary">person</span>
+      </div>
+      <div>
+        <p class="font-bold text-white">Sofía Rodríguez</p>
+        <div class="flex items-center gap-1 text-xs text-slate-400">
+          <span class="material-symbols-outlined text-yellow-400" style="font-size:12px">star</span>
+          4.8 • Pasajero verificado
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <p class="text-2xl font-black text-primary">$6.50</p>
+      <p class="text-[10px] text-slate-400">Bs. 237.00</p>
+    </div>
+  </div>
+  <div class="space-y-2 mb-4 bg-space-blue/50 rounded-xl p-3">
+    <div class="flex items-start gap-2 text-sm">
+      <span class="material-symbols-outlined text-green-400 text-base mt-0.5">circle</span>
+      <span class="text-slate-300">Altamira, Caracas</span>
+    </div>
+    <div class="ml-3 border-l-2 border-dashed border-slate-600 h-3"></div>
+    <div class="flex items-start gap-2 text-sm">
+      <span class="material-symbols-outlined text-primary text-base mt-0.5">location_on</span>
+      <span class="text-slate-300">Las Mercedes, Caracas</span>
+    </div>
+    <div class="flex items-center gap-4 mt-2 pt-2 border-t border-slate-700 text-xs text-slate-400">
+      <span><span class="material-symbols-outlined text-xs">route</span> 5.8 km</span>
+      <span><span class="material-symbols-outlined text-xs">schedule</span> ~18 min</span>
+      <span><span class="material-symbols-outlined text-xs">person</span> 1 pasajero</span>
+    </div>
+  </div>
+  <div class="flex gap-3">
+    <button onclick="declineRequest()"
+      class="flex-1 py-3 rounded-xl border border-red-500/40 text-red-400 font-bold hover:bg-red-500/10 transition-colors">
+      Rechazar
+    </button>
+    <button onclick="acceptRequest()"
+      class="flex-[2] py-3 rounded-xl font-bold text-white flex items-center justify-center gap-2"
+      style="background:#F59A2F;box-shadow:0 0 16px rgba(245,154,47,.4)">
+      <span class="material-symbols-outlined">check_circle</span>
+      Aceptar Viaje
+    </button>
+  </div>
+</div>
+
+<script>
+function nav(t){ if(window.parent!==window){window.parent.postMessage({nav:t},'*');}else{window.location.href=t;} }
+function back(){ if(window.parent!==window){window.parent.postMessage({back:true},'*');}else{window.history.back();} }
+
+// Load user
+var user = JSON.parse(localStorage.getItem('vamos_user')||'{}');
+if(user.name) document.getElementById('chofer-name').textContent = user.name;
+
+// Timer
+var seconds = 0;
+setInterval(function(){
+  seconds++;
+  var m = Math.floor(seconds/60), s = seconds%60;
+  var el = document.getElementById('active-time');
+  if(el) el.textContent = (m<10?'0'+m:m)+':'+(s<10?'0'+s:s);
+}, 1000);
+
+// Status toggle
+var isOnline = true;
+function toggleStatus(){
+  isOnline = !isOnline;
+  var toggle = document.getElementById('status-toggle');
+  var dot = document.getElementById('status-dot');
+  var txt = document.getElementById('status-text');
+  if(isOnline){
+    toggle.classList.add('on'); toggle.classList.remove('off');
+    dot.className = 'w-2.5 h-2.5 rounded-full status-online';
+    txt.textContent = 'En línea'; txt.className = 'font-bold text-green-400';
+  } else {
+    toggle.classList.remove('on'); toggle.classList.add('off');
+    dot.className = 'w-2.5 h-2.5 rounded-full status-offline';
+    txt.textContent = 'Desconectado'; txt.className = 'font-bold text-red-400';
+  }
+}
+
+// Leaflet Map
+var map = L.map('map', {zoomControl:false, attributionControl:false}).setView([10.4806, -66.9036], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19}).addTo(map);
+
+// Chofer position marker (Caracas)
+var choferIcon = L.divIcon({
+  className:'',
+  html:'<div style="width:44px;height:44px;background:#F59A2F;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(245,154,47,.6);font-size:20px;">🚗</div>',
+  iconSize:[44,44], iconAnchor:[22,22]
+});
+var choferMarker = L.marker([10.4806, -66.9036], {icon:choferIcon}).addTo(map);
+
+// Request card
+function showRequest(){
+  document.getElementById('request-card').classList.add('show');
+  document.getElementById('waiting-card').style.display = 'none';
+}
+function declineRequest(){
+  document.getElementById('request-card').classList.remove('show');
+  document.getElementById('waiting-card').style.display = '';
+}
+function acceptRequest(){
+  // Update trips count
+  var tc = document.getElementById('trips-today');
+  if(tc) tc.textContent = parseInt(tc.textContent||0)+1;
+  nav('live_tracking__biling_e.html');
+}
+
+// Simulate moving car
+var lat = 10.4806, lng = -66.9036;
+setInterval(function(){
+  lat += (Math.random()-0.5)*0.001;
+  lng += (Math.random()-0.5)*0.001;
+  choferMarker.setLatLng([lat,lng]);
+}, 3000);
+</script>
+</body>
+</html>

@@ -1,368 +1,309 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
+<html lang="es" class="dark">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>VAMOS – Calculadora de Precio</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#ec5b13",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#040521",
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#F59A2F","space-blue":"#040521","deep-blue":"#081D56","cerulean":"#62AAE5"},fontFamily:{display:["Public Sans","sans-serif"]}}}}</script>
 <style>
-        .neumorphic-inset {
-            background: #040521;
-            box-shadow: inset 4px 4px 8px #020210, 
-                        inset -4px -4px 8px #060832;
-        }
-        .neumorphic-flat {
-            background: #040521;
-            box-shadow: 6px 6px 12px #020210, 
-                        -6px -6px 12px #060832;
-        }
-        .neumorphic-button {
-            background: #040521;
-            box-shadow: 4px 4px 8px #020210, 
-                        -4px -4px 8px #060832;
-            transition: all 0.2s ease;
-        }
-        .neumorphic-button:active {
-            box-shadow: inset 2px 2px 5px #020210, 
-                        inset -2px -2px 5px #060832;
-        }
-        .neumorphic-primary {
-            background: #ec5b13;
-            box-shadow: 4px 4px 10px #020210, 
-                        -2px -2px 6px #ff7a3a33;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-dark font-display text-slate-100 min-h-screen flex flex-col">
-<div class="flex items-center p-6 justify-between">
-<button class="neumorphic-button size-10 flex items-center justify-center rounded-xl text-slate-100">
-<span class="material-symbols-outlined">arrow_back</span>
-</button>
-<div class="flex-1 text-center">
-<h2 class="text-slate-100 text-lg font-bold leading-tight tracking-tight">Step 3: Pricing &amp; Seats</h2>
-<p class="text-slate-400 text-xs uppercase tracking-widest">Paso 3: Precios y Asientos</p>
+  body{font-family:'Public Sans',sans-serif;background:#040521;color:#fff;min-height:100dvh;}
+  .nm-flat{background:#040521;box-shadow:6px 6px 14px #020211,-6px -6px 14px #060831;}
+  .nm-inset{background:rgba(4,5,33,.9);box-shadow:inset 4px 4px 8px #020211,inset -4px -4px 8px #060831;}
+  .nm-btn-primary{background:#F59A2F;box-shadow:4px 4px 10px #9e631e,-2px -2px 6px #ffcc8d;}
+  .counter-btn{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:bold;cursor:pointer;transition:all .15s;}
+  .counter-btn:active{transform:scale(.92);}
+  .price-slider{-webkit-appearance:none;appearance:none;height:6px;border-radius:999px;background:linear-gradient(to right,#F59A2F var(--pct,50%),#1e2060 var(--pct,50%));outline:none;}
+  .price-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#F59A2F;border:3px solid #fff;box-shadow:0 0 8px rgba(245,154,47,.5);cursor:pointer;}
+</style>
+</head>
+<body class="flex flex-col" style="min-height:100dvh">
+
+<!-- HEADER -->
+<header class="flex items-center gap-3 px-4 pt-4 pb-2">
+  <button onclick="back()" class="nm-flat p-2 rounded-xl">
+    <span class="material-symbols-outlined text-slate-300">arrow_back</span>
+  </button>
+  <div class="flex-1 text-center">
+    <h1 class="font-bold text-lg text-white">Precio por Asiento</h1>
+    <p class="text-[10px] text-primary uppercase font-bold tracking-wider">Paso 3 de 4</p>
+  </div>
+  <div class="w-10"></div>
+</header>
+
+<!-- PROGRESS -->
+<div class="px-6 mb-4">
+  <div class="h-2 w-full bg-space-blue rounded-full nm-inset p-0.5">
+    <div class="h-full bg-primary rounded-full" style="width:75%"></div>
+  </div>
 </div>
-<div class="size-10"></div>
-</div>
-<div class="flex w-full flex-row items-center justify-center gap-4 py-6">
-<div class="h-1.5 w-8 rounded-full bg-primary/20"></div>
-<div class="h-1.5 w-8 rounded-full bg-primary/20"></div>
-<div class="h-1.5 w-12 rounded-full bg-primary neumorphic-primary"></div>
-<div class="h-1.5 w-8 rounded-full bg-primary/20"></div>
-</div>
-<main class="flex-1 px-6 space-y-8 max-w-md mx-auto w-full">
-<section class="space-y-4">
-<div class="flex flex-col">
-<h3 class="text-slate-100 text-xl font-bold">Asientos Disponibles</h3>
-<p class="text-slate-400 text-sm">Asientos disponibles</p>
-</div>
-<div class="neumorphic-flat p-6 rounded-2xl flex items-center justify-between">
-<button class="neumorphic-button size-12 flex items-center justify-center rounded-full text-primary">
-<span class="material-symbols-outlined text-3xl">remove</span>
-</button>
-<div class="text-center">
-<span class="text-5xl font-bold text-slate-100">3</span>
-<p class="text-slate-500 text-xs font-medium uppercase mt-1">Seats / Puestos</p>
-</div>
-<button class="neumorphic-button size-12 flex items-center justify-center rounded-full text-primary">
-<span class="material-symbols-outlined text-3xl">add</span>
-</button>
-</div>
-<p class="text-slate-500 text-xs text-center italic">Max capacity for standard sedans is 4 seats.</p>
-</section>
-<section class="space-y-4">
-<div class="flex flex-col">
-<h3 class="text-slate-100 text-xl font-bold">Price per Seat</h3>
-<p class="text-slate-400 text-sm">Precio por asiento</p>
-</div>
-<div class="neumorphic-inset p-5 rounded-2xl space-y-4">
-<div class="flex items-center justify-between bg-background-dark/50 p-4 rounded-xl border border-slate-800/30">
-<div class="flex flex-col">
-<span class="text-slate-400 text-xs font-semibold">USD Amount</span>
-<span class="text-slate-500 text-xs">Monto en Dólares</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="text-2xl font-bold text-slate-100">$</span>
-<input class="bg-transparent border-none text-right text-2xl font-bold text-primary w-24 focus:ring-0 p-0" type="number" value="15.00"/>
-</div>
-</div>
-<div class="flex items-center justify-between px-2">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-sm">account_balance</span>
-<span class="text-slate-400 text-xs font-medium uppercase tracking-wider">Ref. BCV Rate</span>
-</div>
-<span class="text-slate-300 font-mono font-medium">36.45 Bs/$</span>
-</div>
-<div class="h-px w-full bg-slate-800/50"></div>
-<div class="flex items-center justify-between p-4 rounded-xl">
-<div class="flex flex-col">
-<span class="text-slate-400 text-xs font-semibold text-left">Total in Bolívares</span>
-<span class="text-slate-500 text-xs text-left">Total estimado</span>
-</div>
-<div class="text-right">
-<span class="text-xl font-bold text-slate-100">546,75 Bs.</span>
-</div>
-</div>
-</div>
-</section>
-<div class="neumorphic-flat p-4 rounded-xl flex items-start gap-3 border-l-4 border-primary/40">
-<span class="material-symbols-outlined text-primary">info</span>
-<p class="text-slate-400 text-xs leading-relaxed">
-                Prices are calculated based on the official BCV exchange rate of the day. 
-                <span class="block mt-1 italic">Los precios se calculan según la tasa oficial BCV del día.</span>
-</p>
-</div>
+
+<main class="flex-1 px-5 pb-28 space-y-5 overflow-y-auto">
+
+  <!-- BCV Rate Banner -->
+  <div id="bcv-banner" class="nm-flat rounded-2xl p-3 flex items-center gap-3 border border-cerulean/20">
+    <div class="w-10 h-10 rounded-xl bg-cerulean/10 flex items-center justify-center">
+      <span class="material-symbols-outlined text-cerulean text-xl">currency_exchange</span>
+    </div>
+    <div class="flex-1">
+      <p class="text-xs text-slate-400 uppercase tracking-wide font-bold">Tasa BCV Oficial</p>
+      <p class="font-bold text-white" id="bcv-rate-display">Actualizando...</p>
+    </div>
+    <button onclick="fetchBCV()" class="text-xs text-cerulean font-bold flex items-center gap-1">
+      <span class="material-symbols-outlined text-sm">refresh</span>
+    </button>
+  </div>
+
+  <!-- ASIENTOS DISPONIBLES (CON +/-) -->
+  <div class="nm-flat rounded-2xl p-5">
+    <div class="flex items-center justify-between mb-1">
+      <div>
+        <h2 class="font-bold text-white">Asientos Disponibles</h2>
+        <p class="text-xs text-slate-400">Cuántos pasajeros puedes llevar</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="counter-btn nm-flat text-white" onclick="changeSeats(-1)">−</button>
+        <span id="seats-display" class="text-3xl font-black text-primary w-8 text-center">3</span>
+        <button class="counter-btn nm-flat text-primary" onclick="changeSeats(1)">+</button>
+      </div>
+    </div>
+    <div class="flex gap-2 mt-2">
+      <span id="seat-icon-1" class="material-symbols-outlined text-primary text-xl">airline_seat_recline_extra</span>
+      <span id="seat-icon-2" class="material-symbols-outlined text-primary text-xl">airline_seat_recline_extra</span>
+      <span id="seat-icon-3" class="material-symbols-outlined text-primary text-xl">airline_seat_recline_extra</span>
+      <span id="seat-icon-4" class="material-symbols-outlined text-slate-600 text-xl">airline_seat_recline_extra</span>
+      <span id="seat-icon-5" class="material-symbols-outlined text-slate-600 text-xl">airline_seat_recline_extra</span>
+    </div>
+  </div>
+
+  <!-- PRECIO USD -->
+  <div class="nm-flat rounded-2xl p-5">
+    <h2 class="font-bold text-white mb-1">Precio por Asiento (USD)</h2>
+    <p class="text-xs text-slate-400 mb-4">Ajusta con el control deslizante o escribe el monto</p>
+
+    <!-- Precio display -->
+    <div class="flex items-end gap-3 mb-5">
+      <div class="nm-inset flex-1 rounded-xl flex items-center px-4" style="height:56px">
+        <span class="text-slate-400 font-bold mr-2">$</span>
+        <input type="number" id="price-usd" min="0.5" max="50" step="0.5" value="5.00"
+          class="flex-1 bg-transparent border-none focus:ring-0 text-white text-2xl font-black"
+          oninput="updatePriceFromInput(this.value)"/>
+        <span class="text-slate-400 text-sm ml-1">USD</span>
+      </div>
+      <div class="nm-inset flex-1 rounded-xl flex flex-col justify-center px-4" style="height:56px">
+        <p class="text-[10px] text-slate-400 uppercase tracking-wide">Eq. Bs. (BCV)</p>
+        <p id="price-bs" class="text-lg font-black text-cerulean">Bs. 182</p>
+      </div>
+    </div>
+
+    <!-- Slider -->
+    <input type="range" id="price-slider" class="price-slider w-full"
+      min="0.5" max="25" step="0.5" value="5"
+      oninput="updatePriceFromSlider(this.value)"/>
+    <div class="flex justify-between text-xs text-slate-500 mt-1 px-1">
+      <span>$0.50</span>
+      <span>$12.50</span>
+      <span>$25</span>
+    </div>
+
+    <!-- Suggested prices -->
+    <div class="mt-4">
+      <p class="text-xs text-slate-400 font-bold uppercase tracking-wide mb-2">Precios Sugeridos</p>
+      <div class="grid grid-cols-3 gap-2">
+        <button onclick="setPrice(3)" class="nm-flat rounded-xl py-2 text-center text-sm font-bold text-white hover:text-primary transition-colors">$3.00</button>
+        <button onclick="setPrice(5)" class="nm-flat rounded-xl py-2 text-center text-sm font-bold text-primary border border-primary/30">$5.00 ⭐</button>
+        <button onclick="setPrice(8)" class="nm-flat rounded-xl py-2 text-center text-sm font-bold text-white hover:text-primary transition-colors">$8.00</button>
+        <button onclick="setPrice(10)" class="nm-flat rounded-xl py-2 text-center text-sm font-bold text-white hover:text-primary transition-colors">$10.00</button>
+        <button onclick="setPrice(12)" class="nm-flat rounded-xl py-2 text-center text-sm font-bold text-white hover:text-primary transition-colors">$12.00</button>
+        <button onclick="setPrice(15)" class="nm-flat rounded-xl py-2 text-center text-sm font-bold text-white hover:text-primary transition-colors">$15.00</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMEN DE INGRESOS ESTIMADOS -->
+  <div class="nm-flat rounded-2xl p-5 border border-primary/20">
+    <h2 class="font-bold text-white mb-3 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary text-xl">calculate</span>
+      Ingresos Estimados
+    </h2>
+    <div class="space-y-2 text-sm">
+      <div class="flex justify-between">
+        <span class="text-slate-400">Precio por asiento</span>
+        <span class="font-bold text-white" id="sum-per-seat">$5.00</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-slate-400">Asientos ofrecidos</span>
+        <span class="font-bold text-white" id="sum-seats">3</span>
+      </div>
+      <div class="border-t border-slate-700 my-2"></div>
+      <div class="flex justify-between text-base">
+        <span class="text-slate-300 font-medium">Total si se llenan</span>
+        <span class="font-black text-primary text-lg" id="sum-total">$15.00</span>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-slate-500">Equivale en Bs.</span>
+        <span class="text-cerulean font-bold" id="sum-total-bs">Bs. 546</span>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-slate-500">Comisión VAMOS (5%)</span>
+        <span class="text-red-400 font-bold" id="sum-commission">-$0.75</span>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-slate-400 font-bold">Tus ingresos netos</span>
+        <span class="text-green-400 font-bold" id="sum-net">$14.25</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPO DE PAGO ACEPTADO -->
+  <div class="nm-flat rounded-2xl p-4">
+    <h2 class="font-bold text-white mb-3 text-sm">Métodos de Pago Aceptados</h2>
+    <div class="space-y-2">
+      <label class="flex items-center gap-3 cursor-pointer">
+        <input type="checkbox" checked class="w-5 h-5 accent-primary/80 rounded"/>
+        <span class="text-sm text-slate-300">💵 Efectivo USD</span>
+      </label>
+      <label class="flex items-center gap-3 cursor-pointer">
+        <input type="checkbox" checked class="w-5 h-5 accent-primary/80 rounded"/>
+        <span class="text-sm text-slate-300">📲 Pago Móvil / Zelle</span>
+      </label>
+      <label class="flex items-center gap-3 cursor-pointer">
+        <input type="checkbox" class="w-5 h-5 accent-primary/80 rounded"/>
+        <span class="text-sm text-slate-300">💳 Tarjeta</span>
+      </label>
+      <label class="flex items-center gap-3 cursor-pointer">
+        <input type="checkbox" class="w-5 h-5 accent-primary/80 rounded"/>
+        <span class="text-sm text-slate-300">🏦 Transferencia Bs.</span>
+      </label>
+    </div>
+  </div>
+
 </main>
-<footer class="p-6 mt-auto">
-<div class="max-w-md mx-auto flex flex-col gap-4">
-<button class="neumorphic-primary w-full py-4 rounded-xl text-white font-bold text-lg uppercase tracking-widest">
-                Continue / Continuar
-            </button>
-<div class="flex gap-2 border-t border-slate-800/50 pt-4 mt-2">
-<a class="flex flex-1 flex-col items-center gap-1 text-slate-500" href="#">
-<span class="material-symbols-outlined">home</span>
-<p class="text-[10px] font-medium">Inicio</p>
-</a>
-<a class="flex flex-1 flex-col items-center gap-1 text-slate-500" href="#">
-<span class="material-symbols-outlined">directions_car</span>
-<p class="text-[10px] font-medium">My Viajes</p>
-</a>
-<a class="flex flex-1 flex-col items-center gap-1 text-primary" href="#">
-<span class="material-symbols-outlined fill-1">add_circle</span>
-<p class="text-[10px] font-medium">Create</p>
-</a>
-<a class="flex flex-1 flex-col items-center gap-1 text-slate-500" href="#">
-<span class="material-symbols-outlined">chat_bubble</span>
-<p class="text-[10px] font-medium">Mensajes</p>
-</a>
-<a class="flex flex-1 flex-col items-center gap-1 text-slate-500" href="#">
-<span class="material-symbols-outlined">person</span>
-<p class="text-[10px] font-medium">Perfil</p>
-</a>
+
+<!-- FIXED BOTTOM BAR -->
+<div class="fixed bottom-0 left-0 right-0 px-5 py-4 bg-space-blue/95 backdrop-blur border-t border-slate-800/60">
+  <div class="max-w-md mx-auto flex items-center gap-3">
+    <div class="flex-1">
+      <p class="text-[10px] text-slate-400 uppercase tracking-wide">Por asiento</p>
+      <p class="text-xl font-black text-white"><span id="footer-price">$5.00</span> <span class="text-xs text-cerulean font-normal" id="footer-bs">Bs. 182</span></p>
+    </div>
+    <button onclick="confirmAndContinue()"
+      class="flex-[2] py-4 rounded-2xl nm-btn-primary text-white font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition-transform">
+      Siguiente
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+  </div>
 </div>
-</div>
-</footer>
-<!-- VAMOS-V2 -->
-<script id="vamos-nav-v2">
-(function(){
-  var PAGE = "create_ride_-_pricing__biling_e.html";
-  var S = {"login": "login___sign_up.html", "home": "home__biling_e_venezuela.html", "dashboard": "main_dashboard.html", "dashboard_ve": "dashboard__biling_e_venezuela.html", "create_route": "create_ride_-_route__biling_e.html", "create_schedule": "create_ride_-_schedule__biling_e.html", "create_pricing": "create_ride_-_pricing__biling_e.html", "create_review": "create_ride_-_review__biling_e.html", "matching": "ride_matching__biling_e.html", "tracking": "live_tracking__biling_e.html", "ride_review": "ride_review__biling_e.html", "history": "ride_history__biling_e.html", "profile": "user_profile___settings__biling_e.html", "kyc": "kyc_verification__biling_e_venezuela.html", "vehicles": "vehicle_management__biling_e.html", "wallet": "wallet__biling_e.html", "payments": "payment_methods__biling_e_venezuela.html", "chat": "chat_interface__biling_e.html", "notifications": "notifications__biling_e.html", "refer": "refer_a_friend__biling_e.html", "sos": "sos_alert__biling_e_venezuela.html", "how": "how_it_works__biling_e.html", "faq": "faq___preguntas_frecuentes__biling_e.html"};
 
-  function go(key){ var t = S[key]||key; if(window.parent!==window){ window.parent.postMessage({nav:t},'*'); } else { window.location.href=t; } }
-  function back(){ if(window.parent!==window){ window.parent.postMessage({back:true},'*'); } else { window.history.back(); } }
+<script>
+function nav(t){if(window.parent!==window){window.parent.postMessage({nav:t},'*');}else{window.location.href=t;}}
+function back(){if(window.parent!==window){window.parent.postMessage({back:true},'*');}else{window.history.back();}  }
 
-  function wire(){
-    // ─── 1. Back buttons ───────────────────────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && /arrow_back|chevron_left|arrow_back_ios/.test(ic.textContent.trim())){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();back();};
-      }
+var seats = 3;
+var priceUSD = 5.00;
+var bcvRate = 36.4; // Fallback rate
+
+// Fetch BCV rate from free API
+function fetchBCV(){
+  document.getElementById('bcv-rate-display').textContent = 'Actualizando...';
+  // Try multiple free VEF rate APIs
+  fetch('https://pydolarve.org/api/v1/dollar?monitor=bcv')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data && data.price){ 
+        bcvRate = parseFloat(data.price);
+        document.getElementById('bcv-rate-display').textContent = '1 USD = Bs. '+bcvRate.toFixed(2)+' (BCV)';
+      } else { useFallback(); }
+    })
+    .catch(function(){
+      // Try alternative
+      fetch('https://ve.dolarapi.com/v1/dolares/oficial')
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+          if(data && data.promedio){ 
+            bcvRate = parseFloat(data.promedio);
+            document.getElementById('bcv-rate-display').textContent = '1 USD = Bs. '+bcvRate.toFixed(2)+' (BCV)';
+          } else { useFallback(); }
+        })
+        .catch(useFallback);
     });
+}
 
-    // ─── 2. SOS floating red button ────────────────────────────
-    document.querySelectorAll('[class*="bg-red-"], [class*="red-600"]').forEach(function(el){
-      el.style.cursor='pointer';
-      el.onclick=function(e){e.stopPropagation();go('sos');};
-    });
+function useFallback(){
+  document.getElementById('bcv-rate-display').textContent = '1 USD ≈ Bs. '+bcvRate.toFixed(2)+' (ref. BCV)';
+}
 
-    // ─── 3. Notification bell in header ────────────────────────
-    document.querySelectorAll('header button, header [role="button"]').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && ic.textContent.trim()==='notifications'){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();go('notifications');};
-      }
-    });
-
-    // ─── 4. Profile avatar in header ──────────────────────────
-    document.querySelectorAll('header img[alt*="rofile"], header img[alt*="User"]').forEach(function(img){
-      var wrap = img.parentElement;
-      if(wrap){ wrap.style.cursor='pointer'; wrap.onclick=function(e){e.stopPropagation();go('profile');}; }
-    });
-
-    // ─── 5. Bottom navigation by icon ─────────────────────────
-    var navMap = {
-      'home':'home','explore':'home','inicio':'home',
-      'search':'dashboard','buscar':'dashboard','near_me':'dashboard',
-      'directions_car':'history','route':'history','viajes':'history',
-      'payments':'wallet','billetera':'wallet','account_balance_wallet':'wallet',
-      'person':'profile','perfil':'profile','account_circle':'profile',
-      'notifications':'notifications',
-      'chat':'chat','message':'chat','forum':'chat',
-      'settings':'profile','tune':'profile',
-      'add_circle':'create_route','add':'create_route',
-    };
-    document.querySelectorAll('nav a, nav button, [class*="bottom"] a').forEach(function(el){
-      var ico = el.querySelector('[class*="material"]');
-      var txt = (el.textContent||'').trim().toLowerCase().replace(/\s+/g,' ');
-      var icon = ico ? ico.textContent.trim() : '';
-      var key = navMap[icon] || navMap[txt];
-      if(!key){
-        // fuzzy match on label text
-        if(/inicio|home/.test(txt)) key='home';
-        else if(/buscar|search/.test(txt)) key='dashboard';
-        else if(/viajes|rides|trips/.test(txt)) key='history';
-        else if(/billetera|wallet/.test(txt)) key='wallet';
-        else if(/perfil|profile/.test(txt)) key='profile';
-        else if(/notif/.test(txt)) key='notifications';
-        else if(/mensajes|chat/.test(txt)) key='chat';
-        else if(/configur|settings/.test(txt)) key='profile';
-        else if(/crear|create|add/.test(txt)) key='create_route';
-        else if(/explorar|explore/.test(txt)) key='home';
-        else if(/historial|history/.test(txt)) key='history';
-      }
-      if(key){
-        el.setAttribute('href','javascript:void(0)');
-        el.style.cursor='pointer';
-        (function(k){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(k);}; })(key);
-      }
-    });
-
-    // ─── 6. Per-page specific button rules ─────────────────────
-    var rules = [[".neumorphic-button-primary", "create_review"]];
-    rules.forEach(function(r){
-      try {
-        document.querySelectorAll(r[0]).forEach(function(el){
-          if(r[1]===null) return; // input fields etc., skip
-          el.style.cursor='pointer';
-          (function(k){ el.onclick=function(e){e.stopPropagation();go(k);}; })(r[1]);
-        });
-      } catch(x){}
-    });
-
-    // ─── 7. Generic CTA button wiring by text ─────────────────
-    var textMap = [
-      [/^(buscar un viaje|buscar viaje|find a ride)$/i, 'dashboard'],
-      [/^(ofrecer un viaje|ofrecer viaje|offer a ride|crear viaje)$/i, 'create_route'],
-      [/^(iniciar sesi[oó]n|login|sign in|entrar)$/i, 'home'],
-      [/^(registrarse|sign up|crear cuenta)$/i, 'kyc'],
-      [/^(siguiente|next)$/i, (function(){ 
-        if(PAGE.indexOf('route')>-1)    return 'create_schedule';
-        if(PAGE.indexOf('schedule')>-1) return 'create_pricing';
-        if(PAGE.indexOf('pric')>-1)     return 'create_review';
-        if(PAGE.indexOf('review')>-1 && PAGE.indexOf('ride_review')===-1) return 'matching';
-        return 'home';
-      })()],
-      [/^(confirmar|confirmar viaje|confirm ride|confirm)$/i, 'matching'],
-      [/^(seguir viaje|track ride|track|seguir)$/i, 'tracking'],
-      [/^(calificar|rate|calificar conductor|rate driver)$/i, 'ride_review'],
-      [/^(finalizar|done|finish|enviar rese[nñ]a|submit review)$/i, 'home'],
-      [/^(ver todos|see all|ver todo)$/i, 'dashboard'],
-      [/^(activar ahora|activate now)$/i, 'payments'],
-      [/^(agregar saldo|add money)$/i, 'payments'],
-      [/^(retirar|withdraw)$/i, 'payments'],
-      [/^(enviar dinero|send money)$/i, 'payments'],
-      [/^(agregar m[eé]todo de pago|add payment method|add card)$/i, 'payments'],
-      [/^(billetera|wallet)$/i, 'wallet'],
-      [/^(verificar|verify|completar kyc)$/i, 'kyc'],
-      [/^(historial|ride history|ver historial)$/i, 'history'],
-      [/^(mis veh[ií]culos|my vehicles|agregar veh[ií]culo|add vehicle)$/i, 'vehicles'],
-      [/^(cerrar sesi[oó]n|log out|logout)$/i, 'login'],
-      [/^(editar perfil|edit profile)$/i, 'profile'],
-      [/^(alerta sos|send sos|enviar sos)$/i, 'sos'],
-      [/^(compartir ubicaci[oó]n|share location)$/i, 'sos'],
-      [/^(compartir|share)$/i, 'refer'],
-      [/^(copiar c[oó]digo|copy code)$/i, 'refer'],
-      [/^(referir un amigo|refer a friend|invitar amigos|invite friends)$/i, 'refer'],
-      [/^(mensajes|chat)$/i, 'chat'],
-      [/^(notificaciones|notifications)$/i, 'notifications'],
-      [/^(c[oó]mo funciona|how it works|comenzar|get started)$/i, 'how'],
-      [/^(preguntas frecuentes|faq)$/i, 'faq'],
-      [/^(contactar soporte|contact support)$/i, 'chat'],
-      [/^(volver al inicio|back to home)$/i, 'home'],
-      [/^(cancelar|cancel)$/i, 'home'],
-      [/^(guardar|save)$/i, 'profile'],
-      [/^(publicar viaje|offer ride)$/i, 'matching'],
-      [/^(viajar de nuevo|book again)$/i, 'dashboard'],
-      [/información personal/i, 'profile'],
-      [/mis vehículos/i, 'vehicles'],
-      [/estado de verificaci/i, 'kyc'],
-      [/métodos de pago/i, 'payments'],
-      [/configuración de la app/i, 'profile'],
-      [/ayuda y soporte/i, 'how'],
-      [/referir un amigo/i, 'refer'],
-      [/marcar todo como le[ií]do/i, 'notifications'],
-      [/mensaje a conductor/i, 'chat'],
-    ];
-
-    document.querySelectorAll('button, a').forEach(function(el){
-      // Skip nav elements already handled
-      if(el.closest('nav')) return;
-      var txt = (el.textContent||'').trim().replace(/\s+/g,' ');
-      for(var i=0;i<textMap.length;i++){
-        if(textMap[i][0].test(txt)){
-          var k = textMap[i][1];
-          el.setAttribute('href','javascript:void(0)');
-          el.style.cursor='pointer';
-          (function(key){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(key);}; })(k);
-          break;
-        }
-      }
-    });
-
-    // ─── 8. Language toggle: ES|EN button ─────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var t = (b.textContent||'').trim();
-      if(t==='ES | EN' || (t.indexOf('ES')>-1 && t.indexOf('EN')>-1)){
-        b.onclick=function(e){
-          e.stopPropagation();
-          alert('Opciones de idioma: actualmente Español');
-        };
-      }
-    });
-
-    // ─── 9. "Viajes Cercanos" card → dashboard ──────────────────
-    document.querySelectorAll('[class*="neumorph-card"], [class*="neu-flat"]').forEach(function(card){
-      var isNav = card.closest('nav') || card.closest('header');
-      if(isNav) return;
-      var txt = (card.textContent||'').toLowerCase();
-      if(txt.indexOf('altamira')>-1 || txt.indexOf('min away')>-1 || txt.indexOf('disponible ahora')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-      if(txt.indexOf('alejandro medina')>-1 || txt.indexOf('sofía rodríguez')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-    });
+// Seats counter
+function changeSeats(delta){
+  seats = Math.max(1, Math.min(5, seats + delta));
+  document.getElementById('seats-display').textContent = seats;
+  // Update seat icons
+  for(var i=1;i<=5;i++){
+    var icon = document.getElementById('seat-icon-'+i);
+    if(icon){ icon.classList.toggle('text-primary', i <= seats); icon.classList.toggle('text-slate-600', i > seats); }
   }
+  updateSummary();
+}
 
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',wire);
-  } else { wire(); }
-})();
+// Price updates
+function updatePriceFromSlider(val){
+  priceUSD = parseFloat(val);
+  document.getElementById('price-usd').value = priceUSD.toFixed(2);
+  updateSliderStyle(val);
+  updateSummary();
+}
+function updatePriceFromInput(val){
+  priceUSD = Math.max(0.5, Math.min(50, parseFloat(val)||0));
+  var sliderVal = Math.min(priceUSD, 25);
+  document.getElementById('price-slider').value = sliderVal;
+  updateSliderStyle(sliderVal);
+  updateSummary();
+}
+function setPrice(p){
+  priceUSD = p;
+  document.getElementById('price-usd').value = p.toFixed(2);
+  document.getElementById('price-slider').value = Math.min(p,25);
+  updateSliderStyle(Math.min(p,25));
+  updateSummary();
+}
+function updateSliderStyle(val){
+  var pct = ((val - 0.5) / (25 - 0.5) * 100).toFixed(1);
+  document.getElementById('price-slider').style.setProperty('--pct', pct+'%');
+}
+
+function updateSummary(){
+  var bs = (priceUSD * bcvRate).toFixed(0);
+  var total = (priceUSD * seats).toFixed(2);
+  var totalBs = (priceUSD * seats * bcvRate).toFixed(0);
+  var commission = (priceUSD * seats * 0.05).toFixed(2);
+  var net = (priceUSD * seats * 0.95).toFixed(2);
+  
+  document.getElementById('price-bs').textContent = 'Bs. '+bs;
+  document.getElementById('sum-per-seat').textContent = '$'+priceUSD.toFixed(2);
+  document.getElementById('sum-seats').textContent = seats;
+  document.getElementById('sum-total').textContent = '$'+total;
+  document.getElementById('sum-total-bs').textContent = 'Bs. '+totalBs;
+  document.getElementById('sum-commission').textContent = '-$'+commission;
+  document.getElementById('sum-net').textContent = '$'+net;
+  document.getElementById('footer-price').textContent = '$'+priceUSD.toFixed(2);
+  document.getElementById('footer-bs').textContent = 'Bs. '+bs;
+}
+
+function confirmAndContinue(){
+  // Save ride data
+  localStorage.setItem('vamos_ride_pricing', JSON.stringify({
+    priceUSD: priceUSD, seats: seats, bcvRate: bcvRate,
+    priceBS: (priceUSD * bcvRate).toFixed(0)
+  }));
+  nav('create_ride_-_review__biling_e.html');
+}
+
+// Init
+fetchBCV();
+updateSummary();
+updateSliderStyle(5);
 </script>
-<!-- /VAMOS-V2 --></body></html>
+</body>
+</html>

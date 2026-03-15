@@ -129,7 +129,8 @@
   <div class="side-item" data-screen="login___sign_up.html">🔑 Login / Registro</div>
 
   <div class="side-section">Inicio</div>
-  <div class="side-item active" data-screen="home__biling_e_venezuela.html">🏠 Home Venezuela</div>
+  <div class="side-item" data-screen="chofer_home.html">🚗 Modo Chofer</div>
+  <div class="side-item" data-screen="home__biling_e_venezuela.html">🏠 Modo Pasajero - Inicio</div>
   <div class="side-item" data-screen="main_dashboard.html">📍 Dashboard Principal</div>
   <div class="side-item" data-screen="dashboard__biling_e_venezuela.html">🗺️ Dashboard Venezuela</div>
 
@@ -171,7 +172,8 @@
       <span style="color:#F59A2F;font-size:13px;font-weight:600;letter-spacing:.05em">CARGANDO…</span>
     </div>
     <div id="back-btn" title="Atrás">arrow_back</div>
-    <iframe id="screen-frame" src="home__biling_e_venezuela.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    <iframe id="screen-frame" src="login___sign_up.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"></iframe>
+
   </div>
 </div>
 
@@ -183,6 +185,8 @@
 const SCREENS = {
   // Login
   login:           'login___sign_up.html',
+
+  choferHome:      'chofer_home.html',
 
   // Home / Dashboard
   home:            'home__biling_e_venezuela.html',
@@ -224,7 +228,7 @@ const SCREENS = {
 
 // Navigation history stack
 const history = [];
-let currentScreen = 'home__biling_e_venezuela.html';
+let currentScreen = 'login___sign_up.html';
 
 const frame     = document.getElementById('screen-frame');
 const loader    = document.getElementById('loader');

@@ -1,328 +1,265 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html lang="es" class="dark">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>VAMOS – Ingresar</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#ec5b13", // Adjusted vibrant orange from theme
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#040521", // Deep space blue from request
-                        "surface-dark": "#0a0c3d",
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                    boxShadow: {
-                        'neumorphic-dark': '8px 8px 16px #020212, -4px -4px 12px #0a0c4d',
-                        'neumorphic-inset': 'inset 4px 4px 8px #020212, inset -2px -2px 6px #0a0c4d',
-                    }
-                },
-            },
-        }
-    </script>
-<style>
-        .neumorphic-card {
-            background: #040521;
-            box-shadow: 12px 12px 24px #020212, -8px -8px 24px #0a0c4d;
-        }
-        .neumorphic-input {
-            background: #040521;
-            box-shadow: inset 4px 4px 8px #020212, inset -2px -2px 6px #0a0c4d;
-        }
-        .neumorphic-button {
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.4), -2px -2px 8px rgba(255,255,255,0.05);
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="font-display bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4">
-<div class="relative w-full max-w-[420px] neumorphic-card rounded-[2.5rem] overflow-hidden flex flex-col p-8 border border-white/5">
-<!-- Header/Logo Area -->
-<div class="flex flex-col items-center mb-10">
-<div class="w-20 h-20 rounded-full bg-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
-<span class="material-symbols-outlined text-white text-4xl">rocket_launch</span>
-</div>
-<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">Vamos</h1>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">¿Listo para tu próximo viaje?</p>
-</div>
-<!-- Login Form -->
-<div class="space-y-6">
-<!-- Phone Input -->
-<div class="space-y-2">
-<label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 ml-1">Número de Teléfono</label>
-<div class="relative group">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary text-xl">call</span>
-<input class="w-full h-14 pl-12 pr-4 rounded-2xl neumorphic-input border-none focus:ring-2 focus:ring-primary/50 text-slate-900 dark:text-white placeholder:text-slate-600" placeholder="+1 (555) 000-0000" type="tel"/>
-</div>
-</div>
-<!-- Contraseña Input -->
-<div class="space-y-2">
-<div class="flex justify-between items-center ml-1">
-<label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Contraseña</label>
-<a class="text-xs font-semibold text-primary hover:text-primary/80 transition-colors" href="#">¿Olvidaste?</a>
-</div>
-<div class="relative group">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary text-xl">lock</span>
-<input class="w-full h-14 pl-12 pr-12 rounded-2xl neumorphic-input border-none focus:ring-2 focus:ring-primary/50 text-slate-900 dark:text-white placeholder:text-slate-600" placeholder="••••••••" type="password"/>
-<button class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
-<span class="material-symbols-outlined text-xl">visibility</span>
-</button>
-</div>
-</div>
-<!-- Action Button -->
-<div class="pt-4">
-<button class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-2xl transition-all neumorphic-button flex items-center justify-center gap-2">
-                    Iniciar Sesión
-                    <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-</div>
-</div>
-<!-- Twilio OTP Notice -->
-<div class="mt-8 flex items-center justify-center gap-2 bg-primary/10 py-3 px-4 rounded-xl border border-primary/20">
-<span class="material-symbols-outlined text-primary text-sm">shield</span>
-<p class="text-[11px] text-slate-300 font-medium">Verificación OTP segura</p>
-</div>
-<!-- Footer Links -->
-<div class="mt-auto pt-10 text-center">
-<p class="text-slate-400 text-sm">
-                ¿No tienes cuenta? 
-                <a class="text-primary font-bold hover:underline ml-1" href="#">Registrarse</a>
-</p>
-</div>
-<!-- Abstract Decorative Element -->
-<div class="absolute -bottom-12 -right-12 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
-<div class="absolute -top-12 -left-12 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
-</div>
-<!-- Bottom Navigation Copy from Component List (Themed) -->
-<div class="fixed bottom-0 left-0 right-0 max-w-[480px] mx-auto">
-<div class="flex gap-2 border-t border-white/5 bg-surface-dark px-4 pb-6 pt-2 rounded-t-[2rem] shadow-2xl">
-<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
-<div class="flex h-10 items-center justify-center">
-<span class="material-symbols-outlined">home</span>
-</div>
-</a>
-<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
-<div class="flex h-10 items-center justify-center">
-<span class="material-symbols-outlined">search</span>
-</div>
-</a>
-<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
-<div class="flex h-10 items-center justify-center">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person</span>
-</div>
-</a>
-</div>
-</div>
-<!-- VAMOS-V2 -->
-<script id="vamos-nav-v2">
-(function(){
-  var PAGE = "login___sign_up.html";
-  var S = {"login": "login___sign_up.html", "home": "home__biling_e_venezuela.html", "dashboard": "main_dashboard.html", "dashboard_ve": "dashboard__biling_e_venezuela.html", "create_route": "create_ride_-_route__biling_e.html", "create_schedule": "create_ride_-_schedule__biling_e.html", "create_pricing": "create_ride_-_pricing__biling_e.html", "create_review": "create_ride_-_review__biling_e.html", "matching": "ride_matching__biling_e.html", "tracking": "live_tracking__biling_e.html", "ride_review": "ride_review__biling_e.html", "history": "ride_history__biling_e.html", "profile": "user_profile___settings__biling_e.html", "kyc": "kyc_verification__biling_e_venezuela.html", "vehicles": "vehicle_management__biling_e.html", "wallet": "wallet__biling_e.html", "payments": "payment_methods__biling_e_venezuela.html", "chat": "chat_interface__biling_e.html", "notifications": "notifications__biling_e.html", "refer": "refer_a_friend__biling_e.html", "sos": "sos_alert__biling_e_venezuela.html", "how": "how_it_works__biling_e.html", "faq": "faq___preguntas_frecuentes__biling_e.html"};
-
-  function go(key){ var t = S[key]||key; if(window.parent!==window){ window.parent.postMessage({nav:t},'*'); } else { window.location.href=t; } }
-  function back(){ if(window.parent!==window){ window.parent.postMessage({back:true},'*'); } else { window.history.back(); } }
-
-  function wire(){
-    // ─── 1. Back buttons ───────────────────────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && /arrow_back|chevron_left|arrow_back_ios/.test(ic.textContent.trim())){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();back();};
-      }
-    });
-
-    // ─── 2. SOS floating red button ────────────────────────────
-    document.querySelectorAll('[class*="bg-red-"], [class*="red-600"]').forEach(function(el){
-      el.style.cursor='pointer';
-      el.onclick=function(e){e.stopPropagation();go('sos');};
-    });
-
-    // ─── 3. Notification bell in header ────────────────────────
-    document.querySelectorAll('header button, header [role="button"]').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && ic.textContent.trim()==='notifications'){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();go('notifications');};
-      }
-    });
-
-    // ─── 4. Profile avatar in header ──────────────────────────
-    document.querySelectorAll('header img[alt*="rofile"], header img[alt*="User"]').forEach(function(img){
-      var wrap = img.parentElement;
-      if(wrap){ wrap.style.cursor='pointer'; wrap.onclick=function(e){e.stopPropagation();go('profile');}; }
-    });
-
-    // ─── 5. Bottom navigation by icon ─────────────────────────
-    var navMap = {
-      'home':'home','explore':'home','inicio':'home',
-      'search':'dashboard','buscar':'dashboard','near_me':'dashboard',
-      'directions_car':'history','route':'history','viajes':'history',
-      'payments':'wallet','billetera':'wallet','account_balance_wallet':'wallet',
-      'person':'profile','perfil':'profile','account_circle':'profile',
-      'notifications':'notifications',
-      'chat':'chat','message':'chat','forum':'chat',
-      'settings':'profile','tune':'profile',
-      'add_circle':'create_route','add':'create_route',
-    };
-    document.querySelectorAll('nav a, nav button, [class*="bottom"] a').forEach(function(el){
-      var ico = el.querySelector('[class*="material"]');
-      var txt = (el.textContent||'').trim().toLowerCase().replace(/\s+/g,' ');
-      var icon = ico ? ico.textContent.trim() : '';
-      var key = navMap[icon] || navMap[txt];
-      if(!key){
-        // fuzzy match on label text
-        if(/inicio|home/.test(txt)) key='home';
-        else if(/buscar|search/.test(txt)) key='dashboard';
-        else if(/viajes|rides|trips/.test(txt)) key='history';
-        else if(/billetera|wallet/.test(txt)) key='wallet';
-        else if(/perfil|profile/.test(txt)) key='profile';
-        else if(/notif/.test(txt)) key='notifications';
-        else if(/mensajes|chat/.test(txt)) key='chat';
-        else if(/configur|settings/.test(txt)) key='profile';
-        else if(/crear|create|add/.test(txt)) key='create_route';
-        else if(/explorar|explore/.test(txt)) key='home';
-        else if(/historial|history/.test(txt)) key='history';
-      }
-      if(key){
-        el.setAttribute('href','javascript:void(0)');
-        el.style.cursor='pointer';
-        (function(k){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(k);}; })(key);
-      }
-    });
-
-    // ─── 6. Per-page specific button rules ─────────────────────
-    var rules = [["button.w-full", "home"], ["a.text-primary.font-bold", "kyc"]];
-    rules.forEach(function(r){
-      try {
-        document.querySelectorAll(r[0]).forEach(function(el){
-          if(r[1]===null) return; // input fields etc., skip
-          el.style.cursor='pointer';
-          (function(k){ el.onclick=function(e){e.stopPropagation();go(k);}; })(r[1]);
-        });
-      } catch(x){}
-    });
-
-    // ─── 7. Generic CTA button wiring by text ─────────────────
-    var textMap = [
-      [/^(buscar un viaje|buscar viaje|find a ride)$/i, 'dashboard'],
-      [/^(ofrecer un viaje|ofrecer viaje|offer a ride|crear viaje)$/i, 'create_route'],
-      [/^(iniciar sesi[oó]n|login|sign in|entrar)$/i, 'home'],
-      [/^(registrarse|sign up|crear cuenta)$/i, 'kyc'],
-      [/^(siguiente|next)$/i, (function(){ 
-        if(PAGE.indexOf('route')>-1)    return 'create_schedule';
-        if(PAGE.indexOf('schedule')>-1) return 'create_pricing';
-        if(PAGE.indexOf('pric')>-1)     return 'create_review';
-        if(PAGE.indexOf('review')>-1 && PAGE.indexOf('ride_review')===-1) return 'matching';
-        return 'home';
-      })()],
-      [/^(confirmar|confirmar viaje|confirm ride|confirm)$/i, 'matching'],
-      [/^(seguir viaje|track ride|track|seguir)$/i, 'tracking'],
-      [/^(calificar|rate|calificar conductor|rate driver)$/i, 'ride_review'],
-      [/^(finalizar|done|finish|enviar rese[nñ]a|submit review)$/i, 'home'],
-      [/^(ver todos|see all|ver todo)$/i, 'dashboard'],
-      [/^(activar ahora|activate now)$/i, 'payments'],
-      [/^(agregar saldo|add money)$/i, 'payments'],
-      [/^(retirar|withdraw)$/i, 'payments'],
-      [/^(enviar dinero|send money)$/i, 'payments'],
-      [/^(agregar m[eé]todo de pago|add payment method|add card)$/i, 'payments'],
-      [/^(billetera|wallet)$/i, 'wallet'],
-      [/^(verificar|verify|completar kyc)$/i, 'kyc'],
-      [/^(historial|ride history|ver historial)$/i, 'history'],
-      [/^(mis veh[ií]culos|my vehicles|agregar veh[ií]culo|add vehicle)$/i, 'vehicles'],
-      [/^(cerrar sesi[oó]n|log out|logout)$/i, 'login'],
-      [/^(editar perfil|edit profile)$/i, 'profile'],
-      [/^(alerta sos|send sos|enviar sos)$/i, 'sos'],
-      [/^(compartir ubicaci[oó]n|share location)$/i, 'sos'],
-      [/^(compartir|share)$/i, 'refer'],
-      [/^(copiar c[oó]digo|copy code)$/i, 'refer'],
-      [/^(referir un amigo|refer a friend|invitar amigos|invite friends)$/i, 'refer'],
-      [/^(mensajes|chat)$/i, 'chat'],
-      [/^(notificaciones|notifications)$/i, 'notifications'],
-      [/^(c[oó]mo funciona|how it works|comenzar|get started)$/i, 'how'],
-      [/^(preguntas frecuentes|faq)$/i, 'faq'],
-      [/^(contactar soporte|contact support)$/i, 'chat'],
-      [/^(volver al inicio|back to home)$/i, 'home'],
-      [/^(cancelar|cancel)$/i, 'home'],
-      [/^(guardar|save)$/i, 'profile'],
-      [/^(publicar viaje|offer ride)$/i, 'matching'],
-      [/^(viajar de nuevo|book again)$/i, 'dashboard'],
-      [/información personal/i, 'profile'],
-      [/mis vehículos/i, 'vehicles'],
-      [/estado de verificaci/i, 'kyc'],
-      [/métodos de pago/i, 'payments'],
-      [/configuración de la app/i, 'profile'],
-      [/ayuda y soporte/i, 'how'],
-      [/referir un amigo/i, 'refer'],
-      [/marcar todo como le[ií]do/i, 'notifications'],
-      [/mensaje a conductor/i, 'chat'],
-    ];
-
-    document.querySelectorAll('button, a').forEach(function(el){
-      // Skip nav elements already handled
-      if(el.closest('nav')) return;
-      var txt = (el.textContent||'').trim().replace(/\s+/g,' ');
-      for(var i=0;i<textMap.length;i++){
-        if(textMap[i][0].test(txt)){
-          var k = textMap[i][1];
-          el.setAttribute('href','javascript:void(0)');
-          el.style.cursor='pointer';
-          (function(key){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(key);}; })(k);
-          break;
-        }
-      }
-    });
-
-    // ─── 8. Language toggle: ES|EN button ─────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var t = (b.textContent||'').trim();
-      if(t==='ES | EN' || (t.indexOf('ES')>-1 && t.indexOf('EN')>-1)){
-        b.onclick=function(e){
-          e.stopPropagation();
-          alert('Opciones de idioma: actualmente Español');
-        };
-      }
-    });
-
-    // ─── 9. "Viajes Cercanos" card → dashboard ──────────────────
-    document.querySelectorAll('[class*="neumorph-card"], [class*="neu-flat"]').forEach(function(card){
-      var isNav = card.closest('nav') || card.closest('header');
-      if(isNav) return;
-      var txt = (card.textContent||'').toLowerCase();
-      if(txt.indexOf('altamira')>-1 || txt.indexOf('min away')>-1 || txt.indexOf('disponible ahora')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-      if(txt.indexOf('alejandro medina')>-1 || txt.indexOf('sofía rodríguez')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-    });
-  }
-
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',wire);
-  } else { wire(); }
-})();
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode:"class",
+  theme:{ extend:{ colors:{
+    "primary":"#F59A2F","space-blue":"#040521","deep-blue":"#081D56","cerulean":"#62AAE5","bg-light":"#f8f6f6","bg-dark":"#040521"
+  }, fontFamily:{display:["Public Sans","sans-serif"]} }}
+}
 </script>
-<!-- /VAMOS-V2 --></body></html>
+<style>
+  body { font-family:'Public Sans',sans-serif; min-height:100dvh; background:#040521; }
+  .nm-card { background:#040521; box-shadow:8px 8px 20px #020211,-8px -8px 20px #060831; }
+  .nm-inset { background:#040521; box-shadow:inset 4px 4px 8px #020211,inset -4px -4px 8px #060831; }
+  .nm-btn { background:#F59A2F; box-shadow:4px 4px 10px #9e631e,-2px -2px 6px #ffcc8d; }
+  .role-card { transition:all .2s; cursor:pointer; border:2px solid transparent; }
+  .role-card:hover, .role-card.selected { border-color:#F59A2F; box-shadow:0 0 24px rgba(245,154,47,.3); transform:translateY(-2px); }
+  .role-card.selected .role-icon { background:#F59A2F; }
+  .screen { display:none; }
+  .screen.active { display:flex; }
+  input { color:#fff; }
+  input::placeholder { color:#64748b; }
+  .phone-input { display:flex; align-items:center; gap:0; }
+  .phone-prefix { background:#040521; color:#F59A2F; font-weight:700; padding:0 12px; border-right:1px solid #1e2060; height:56px; display:flex; align-items:center; border-radius:12px 0 0 12px; white-space:nowrap; font-size:15px; }
+  .phone-field { flex:1; border-radius:0 12px 12px 0 !important; }
+</style>
+</head>
+<body class="flex items-center justify-center p-4 min-h-screen">
+
+<!-- SCREEN 1: Selector de Rol -->
+<div id="screen-role" class="screen active flex-col items-center w-full max-w-[420px] min-h-screen justify-center py-10 gap-8">
+  
+  <!-- Logo -->
+  <div class="flex flex-col items-center gap-3">
+    <div class="w-20 h-20 rounded-2xl bg-deep-blue flex items-center justify-center shadow-xl border border-primary/20">
+      <span class="material-symbols-outlined text-primary text-4xl">directions_car</span>
+    </div>
+    <h1 class="text-4xl font-extrabold text-white tracking-tight">VAMOS</h1>
+    <p class="text-cerulean text-sm font-medium">Carpooling Premium Venezuela</p>
+  </div>
+
+  <!-- Pregunta rol -->
+  <div class="w-full text-center">
+    <h2 class="text-xl font-bold text-white mb-1">¿Cómo deseas usar la app?</h2>
+    <p class="text-slate-400 text-sm">Selecciona tu modo de uso</p>
+  </div>
+
+  <!-- Tarjetas de rol -->
+  <div class="grid grid-cols-2 gap-4 w-full">
+    <!-- PASAJERO -->
+    <div class="role-card nm-card rounded-2xl p-6 flex flex-col items-center gap-4" id="card-pasajero" onclick="selectRole('pasajero')">
+      <div class="role-icon w-16 h-16 rounded-2xl bg-deep-blue flex items-center justify-center transition-all">
+        <span class="material-symbols-outlined text-white text-3xl">person</span>
+      </div>
+      <div class="text-center">
+        <p class="font-bold text-white text-lg">Pasajero</p>
+        <p class="text-xs text-slate-400 mt-1">Busco un viaje</p>
+      </div>
+      <div id="check-pasajero" class="hidden w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-white text-sm">check</span>
+      </div>
+    </div>
+
+    <!-- CHOFER -->
+    <div class="role-card nm-card rounded-2xl p-6 flex flex-col items-center gap-4" id="card-chofer" onclick="selectRole('chofer')">
+      <div class="role-icon w-16 h-16 rounded-2xl bg-deep-blue flex items-center justify-center transition-all">
+        <span class="material-symbols-outlined text-white text-3xl">airline_seat_recline_normal</span>
+      </div>
+      <div class="text-center">
+        <p class="font-bold text-white text-lg">Chofer</p>
+        <p class="text-xs text-slate-400 mt-1">Ofrezco un viaje</p>
+      </div>
+      <div id="check-chofer" class="hidden w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-white text-sm">check</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón continuar -->
+  <button id="btn-continuar-rol" onclick="continueToLogin()" disabled
+    class="w-full h-14 nm-btn text-white font-bold text-lg rounded-2xl flex items-center justify-center gap-2 opacity-40 transition-all"
+    style="opacity:.4;cursor:not-allowed">
+    Continuar
+    <span class="material-symbols-outlined">arrow_forward</span>
+  </button>
+
+  <p class="text-slate-500 text-xs text-center">Puedes cambiar tu modo desde el perfil</p>
+</div>
+
+<!-- SCREEN 2: Formulario de Login -->
+<div id="screen-login" class="screen flex-col items-center w-full max-w-[420px] min-h-screen justify-center py-8 gap-6">
+  
+  <!-- Header con modo seleccionado -->
+  <div class="w-full flex items-center gap-3 mb-2">
+    <button onclick="showRole()" class="w-10 h-10 nm-card rounded-xl flex items-center justify-center text-primary">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <div id="rol-badge" class="flex items-center gap-2 nm-card px-4 py-2 rounded-xl">
+      <span id="rol-icon" class="material-symbols-outlined text-primary text-lg">person</span>
+      <span id="rol-label" class="text-primary font-bold text-sm">PASAJERO</span>
+    </div>
+  </div>
+
+  <!-- Logo pequeño -->
+  <div class="flex items-center gap-3">
+    <div class="w-12 h-12 rounded-xl bg-deep-blue flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary">directions_car</span>
+    </div>
+    <div>
+      <h1 class="text-2xl font-extrabold text-white">VAMOS</h1>
+      <p class="text-slate-400 text-xs">¿Listo para tu próximo viaje?</p>
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <div class="w-full nm-card rounded-3xl p-6 space-y-5 border border-white/5">
+    
+    <!-- Teléfono -->
+    <div class="space-y-2">
+      <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Número de Teléfono</label>
+      <div class="nm-inset rounded-xl overflow-hidden phone-input">
+        <span class="phone-prefix">
+          <span style="margin-right:4px">🇻🇪</span> +58
+        </span>
+        <input id="input-phone" type="tel" placeholder="(04xx) xxx-xx.xx"
+          class="phone-field h-14 px-4 bg-transparent border-none focus:ring-0 text-white placeholder-slate-600 text-base"
+          oninput="formatVEPhone(this)" maxlength="18"/>
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="space-y-2">
+      <div class="flex justify-between">
+        <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Contraseña</label>
+        <span class="text-xs text-primary font-semibold cursor-pointer">¿Olvidaste?</span>
+      </div>
+      <div class="nm-inset rounded-xl flex items-center px-4 gap-3" style="height:56px">
+        <span class="material-symbols-outlined text-primary text-xl">lock</span>
+        <input id="input-pass" type="password" placeholder="••••••••"
+          class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-slate-600 text-base"/>
+        <button onclick="togglePass()" class="text-slate-400">
+          <span id="eye-icon" class="material-symbols-outlined text-xl">visibility</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Botón Iniciar Sesión -->
+    <button onclick="doLogin()"
+      class="w-full h-14 nm-btn text-white font-bold text-lg rounded-2xl flex items-center justify-center gap-2 active:scale-95 transition-transform">
+      Iniciar Sesión
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+
+    <!-- OTP -->
+    <div class="flex items-center gap-2 bg-primary/10 py-3 px-4 rounded-xl border border-primary/20">
+      <span class="material-symbols-outlined text-primary text-sm">shield</span>
+      <p class="text-xs text-slate-300">Verificación OTP segura por código SMS</p>
+    </div>
+  </div>
+
+  <!-- Registro -->
+  <p class="text-slate-400 text-sm">
+    ¿No tienes cuenta?
+    <span class="text-primary font-bold cursor-pointer" onclick="doRegister()"> Regístrate</span>
+  </p>
+
+  <!-- Decorative -->
+  <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -top-12 -left-12 w-40 h-40 bg-cerulean/5 rounded-full blur-3xl pointer-events-none"></div>
+</div>
+
+<script>
+var selectedRole = null;
+
+function selectRole(role) {
+  selectedRole = role;
+  // Reset cards
+  document.getElementById('card-pasajero').classList.remove('selected');
+  document.getElementById('card-chofer').classList.remove('selected');
+  document.getElementById('check-pasajero').classList.add('hidden');
+  document.getElementById('check-chofer').classList.add('hidden');
+
+  // Activate selected
+  document.getElementById('card-' + role).classList.add('selected');
+  document.getElementById('check-' + role).classList.remove('hidden');
+
+  // Enable button
+  var btn = document.getElementById('btn-continuar-rol');
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  btn.style.cursor = 'pointer';
+}
+
+function continueToLogin() {
+  if(!selectedRole) return;
+  document.getElementById('screen-role').classList.remove('active');
+  document.getElementById('screen-login').classList.add('active');
+  // Update badge
+  if(selectedRole === 'chofer') {
+    document.getElementById('rol-icon').textContent = 'airline_seat_recline_normal';
+    document.getElementById('rol-label').textContent = 'MODO CHOFER';
+  } else {
+    document.getElementById('rol-icon').textContent = 'person';
+    document.getElementById('rol-label').textContent = 'MODO PASAJERO';
+  }
+}
+
+function showRole() {
+  document.getElementById('screen-login').classList.remove('active');
+  document.getElementById('screen-role').classList.add('active');
+}
+
+function formatVEPhone(input) {
+  var v = input.value.replace(/\D/g,'');
+  if(v.length > 11) v = v.slice(0,11);
+  var fmt = '';
+  if(v.length >= 4) fmt = '(0' + v.slice(1,4) + ') ';
+  else if(v.length >= 1) fmt = '(0' + v.slice(1);
+  if(v.length >= 7) fmt += v.slice(4,7) + '-';
+  else if(v.length > 4) fmt += v.slice(4);
+  if(v.length >= 9) fmt += v.slice(7,9) + '.' + v.slice(9);
+  else if(v.length > 7) fmt += v.slice(7);
+  input.value = fmt;
+}
+
+function togglePass() {
+  var inp = document.getElementById('input-pass');
+  var eye = document.getElementById('eye-icon');
+  if(inp.type === 'password') { inp.type='text'; eye.textContent='visibility_off'; }
+  else { inp.type='password'; eye.textContent='visibility'; }
+}
+
+function doLogin() {
+  if(!selectedRole) { alert('Selecciona si eres Chofer o Pasajero'); return; }
+  // Save role
+  localStorage.setItem('vamos_role', selectedRole);
+  localStorage.setItem('vamos_user', JSON.stringify({
+    name: selectedRole === 'chofer' ? 'Alejandro Medina' : 'María Alejandra G.',
+    role: selectedRole,
+    phone: document.getElementById('input-phone').value || '(0412) 555-12.34',
+    rating: 4.9,
+    photo: ''
+  }));
+  // Navigate based on role
+  navigate(selectedRole === 'chofer' ? 'chofer_home.html' : 'home__biling_e_venezuela.html');
+}
+
+function doRegister() {
+  navigate('kyc_verification__biling_e_venezuela.html');
+}
+
+function navigate(target){
+  if(window.parent !== window){ window.parent.postMessage({nav: target}, '*'); }
+  else { window.location.href = target; }
+}
+</script>
+</body>
+</html>

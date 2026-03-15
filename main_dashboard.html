@@ -1,408 +1,283 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html lang="es" class="dark">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Vamos - Panel de Pasajero</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>VAMOS – Buscar Viaje</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#F59A2F",
-                        "brand-dark": "#040521",
-                        "brand-navy": "#081D56",
-                        "brand-blue": "#62AAE5",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#040521",
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                    boxShadow: {
-                        'neu-light': '8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff',
-                        'neu-dark': '8px 8px 16px #020314, -8px -8px 16px #06072e',
-                        'neu-inset': 'inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff',
-                    }
-                },
-            },
-        }
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#F59A2F","space-blue":"#040521","deep-blue":"#081D56","cerulean":"#62AAE5"},fontFamily:{display:["Public Sans","sans-serif"]}}}}</script>
 <style>
-        .neu-flat {
-            background: #f8f6f6;
-            box-shadow: 8px 8px 16px #e0dede, -8px -8px 16px #ffffff;
-        }
-        .dark .neu-flat {
-            background: #040521;
-            box-shadow: 8px 8px 16px #020210, -8px -8px 16px #060832;
-        }
-        .neu-pressed {
-            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
-        }
-        .dark .neu-pressed {
-            box-shadow: inset 4px 4px 8px #020210, inset -4px -4px 8px #060832;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
-<div class="relative flex h-screen w-full flex-col overflow-hidden">
-<!-- Atrásground Map Layer -->
-<div class="absolute inset-0 z-0">
-<div class="h-full w-full bg-cover bg-center grayscale-[0.2] opacity-80" data-alt="Modern interactive map of a metropolitan city area" data-location="New York City" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAB8DLdIfUYGn9PnchYaIFezhWYaIkI3Hinyr1Zy13MHZbFrTs-mb1W6P5HdQ9i6-5vYglADtBOgBN1N6EVXW0zRNOW6IXmTNT2mY-czOFJI4Fnc3mN8NHLW5bzAsHM60eFDakk3Sf6td5b6VcJ3ROXwabz_smhEJF0JFeeUKjz4DBAOZykXiF22ST3rLSI2ARc1aqSe_XTuLbQc9PYpy__6nXn7N0b0X2mtvN2P-Mg1eofBAEoVF8YyA1Uj5OrKietD5YVECYSGNg')">
-</div>
-<!-- Map Overlay Gradient -->
-<div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-light/90 dark:to-background-dark/90"></div>
-</div>
-<!-- Top Header Navigation -->
-<header class="relative z-10 flex items-center justify-between p-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
-<div class="flex items-center gap-3">
-<div class="neu-flat p-2 rounded-xl flex items-center justify-center border border-primary/20">
-<span class="material-symbols-outlined text-primary">menu</span>
-</div>
-<h1 class="text-2xl font-bold tracking-tighter text-brand-navy dark:text-brand-blue uppercase">Vamos</h1>
-</div>
-<div class="flex items-center gap-4">
-<button class="neu-flat p-2 rounded-xl text-brand-navy dark:text-brand-blue relative">
-<span class="material-symbols-outlined">notifications</span>
-<span class="absolute top-1 right-1 size-2 bg-primary rounded-full"></span>
-</button>
-<div class="w-10 h-10 rounded-full border-2 border-primary neu-flat flex items-center justify-center overflow-hidden">
-<img alt="Perfil" class="w-full h-full object-cover" data-alt="Close up portrait of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCgtSRHEzeXr8vEpwkflWLSlbWwaLQnbdCHRY_Lk4T-CJaaopw1xozGPRMKST_dLAg-FyKN27a0lP6ek6ab3_pqMRawTgQ_l6JCU9cV0EMMrYLa5dYlUoBfS68bVWM40yN9g79KiSdM4oNd_Wi3URgYgSEwv4OfyOmcrjyUlclKr1jpihy-5-CYdYJuOQiLvTo3BYUMUOq-YrMRbn9UsiZJBAVn35AYX2Bb3HPWc-t9CM_z876UhUeF-GZFd8WGJqXKSlAqh1h53E"/>
-</div>
-</div>
+  body{font-family:'Public Sans',sans-serif;background:#040521;color:#fff;overflow:hidden;}
+  .nm-flat{background:#040521;box-shadow:6px 6px 14px #020211,-6px -6px 14px #060831;}
+  .nm-inset{background:rgba(4,5,33,.8);box-shadow:inset 3px 3px 7px #020211,inset -3px -3px 7px #060831;}
+  #map{width:100%;height:100%;}
+  .leaflet-tile{filter:brightness(.65) saturate(.7) hue-rotate(200deg);}
+  .bottom-panel{position:absolute;bottom:0;left:0;right:0;z-index:20;transition:.35s cubic-bezier(.4,0,.2,1);}
+  .search-results{max-height:200px;overflow-y:auto;}
+  .search-result-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;}
+  .search-result-item:hover{background:rgba(245,154,47,.1);color:#F59A2F;}
+  .driver-card{animation:slideUp .3s ease;}
+  @keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+</style>
+</head>
+<body class="relative flex flex-col" style="height:100dvh">
+
+<!-- MAP FULLSCREEN -->
+<div id="map" style="position:absolute;inset:0;z-index:0;"></div>
+<!-- Gradient overlay -->
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,5,33,.9) 0%,transparent 30%,transparent 55%,rgba(4,5,33,.97) 100%);z-index:1;pointer-events:none;"></div>
+
+<!-- HEADER -->
+<header style="position:relative;z-index:10;" class="flex items-center justify-between px-4 pt-3 pb-2">
+  <div class="flex items-center gap-2">
+    <div class="nm-flat p-2 rounded-xl">
+      <span class="material-symbols-outlined text-primary">directions_car</span>
+    </div>
+    <div>
+      <h1 class="text-lg font-extrabold uppercase">VAMOS</h1>
+      <p class="text-[10px] text-cerulean" id="user-greeting">Busca tu viaje</p>
+    </div>
+  </div>
+  <div class="flex gap-2">
+    <button onclick="nav('notifications__biling_e.html')" class="nm-flat p-2 rounded-xl relative">
+      <span class="material-symbols-outlined text-cerulean text-xl">notifications</span>
+      <span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+    </button>
+    <button onclick="nav('user_profile___settings__biling_e.html')" class="w-9 h-9 rounded-full border-2 border-primary nm-flat overflow-hidden flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary">person</span>
+    </button>
+  </div>
 </header>
-<!-- Main UI Overlay Content -->
-<main class="relative z-10 flex flex-col flex-1 p-4 gap-6 overflow-y-auto">
-<!-- Buscar Bar Neumorphic -->
-<div class="w-full">
-<div class="neu-flat p-2 rounded-2xl border border-white/50 dark:border-brand-navy/50">
-<div class="neu-pressed bg-white/40 dark:bg-brand-dark/40 rounded-xl flex items-center px-4 py-3 gap-3">
-<span class="material-symbols-outlined text-primary">near_me</span>
-<input class="bg-transparent border-none focus:ring-0 text-lg font-medium w-full placeholder-slate-400 dark:placeholder-slate-500" placeholder="¿A dónde vamos?" type="text"/>
-<span class="material-symbols-outlined text-slate-400">mic</span>
+
+<!-- SEARCH PANEL -->
+<div style="position:relative;z-index:10;" class="px-4 pt-1 pb-2 space-y-2">
+  <!-- Origen -->
+  <div class="nm-flat rounded-2xl overflow-hidden">
+    <div class="nm-inset rounded-xl mx-2 my-2 flex items-center px-3 gap-2" style="height:48px">
+      <span class="material-symbols-outlined text-green-400 text-lg">my_location</span>
+      <input id="input-origin" type="text" placeholder="📍 Tu ubicación actual"
+        class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-slate-500 text-sm font-medium"
+        oninput="searchPlace(this.value,'origin')" value="Altamira, Caracas"/>
+    </div>
+    <div id="results-origin" class="search-results hidden bg-space-blue rounded-b-2xl"></div>
+  </div>
+
+  <!-- Destino -->
+  <div class="nm-flat rounded-2xl overflow-hidden">
+    <div class="nm-inset rounded-xl mx-2 my-2 flex items-center px-3 gap-2" style="height:48px">
+      <span class="material-symbols-outlined text-primary text-lg">location_on</span>
+      <input id="input-dest" type="text" placeholder="🔍 ¿A dónde vas?"
+        class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-slate-500 text-sm font-medium"
+        oninput="searchPlace(this.value,'dest')"/>
+      <button onclick="searchRides()" class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-white text-sm">search</span>
+      </button>
+    </div>
+    <div id="results-dest" class="search-results hidden bg-space-blue rounded-b-2xl"></div>
+  </div>
 </div>
+
+<!-- VEHICLE TYPE SELECTOR -->
+<div style="position:relative;z-index:10;" class="flex gap-2 px-4 py-1 overflow-x-auto no-scrollbar">
+  <button class="nm-flat min-w-[90px] px-4 py-2 rounded-xl text-xs font-bold text-primary border border-primary/30 flex items-center gap-1 whitespace-nowrap">
+    <span class="material-symbols-outlined text-sm">directions_car</span>Estándar
+  </button>
+  <button class="nm-flat min-w-[90px] px-4 py-2 rounded-xl text-xs font-bold text-slate-400 flex items-center gap-1 whitespace-nowrap hover:text-cerulean transition-colors" onclick="selectVehicle(this)">
+    <span class="material-symbols-outlined text-sm">electric_car</span>Eco
+  </button>
+  <button class="nm-flat min-w-[90px] px-4 py-2 rounded-xl text-xs font-bold text-slate-400 flex items-center gap-1 whitespace-nowrap hover:text-cerulean transition-colors" onclick="selectVehicle(this)">
+    <span class="material-symbols-outlined text-sm">group</span>Compartido
+  </button>
+  <button class="nm-flat min-w-[90px] px-4 py-2 rounded-xl text-xs font-bold text-slate-400 flex items-center gap-1 whitespace-nowrap hover:text-cerulean transition-colors" onclick="selectVehicle(this)">
+    <span class="material-symbols-outlined text-sm">star</span>Lujo
+  </button>
 </div>
+
+<!-- SPACER -->
+<div style="flex:1;"></div>
+
+<!-- SOS BUTTON -->
+<div style="position:absolute;right:16px;bottom:220px;z-index:30;">
+  <button onclick="nav('sos_alert__biling_e_venezuela.html')"
+    class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center text-white border-4 border-red-400/30"
+    style="box-shadow:0 0 20px rgba(239,68,68,.6)">
+    <span class="material-symbols-outlined text-2xl">sos</span>
+  </button>
 </div>
-<!-- Vehicle Quick Select -->
-<div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-<button class="neu-flat min-w-[100px] p-4 rounded-2xl flex flex-col items-center gap-2 border-b-4 border-primary bg-primary/10">
-<span class="material-symbols-outlined text-3xl text-primary">directions_car</span>
-<span class="text-xs font-bold uppercase">Estándar</span>
-</button>
-<button class="neu-flat min-w-[100px] p-4 rounded-2xl flex flex-col items-center gap-2">
-<span class="material-symbols-outlined text-3xl text-brand-blue">electric_car</span>
-<span class="text-xs font-bold uppercase">Eco</span>
-</button>
-<button class="neu-flat min-w-[100px] p-4 rounded-2xl flex flex-col items-center gap-2">
-<span class="material-symbols-outlined text-3xl text-slate-500">group</span>
-<span class="text-xs font-bold uppercase">Compartido</span>
-</button>
-<button class="neu-flat min-w-[100px] p-4 rounded-2xl flex flex-col items-center gap-2">
-<span class="material-symbols-outlined text-3xl text-slate-500">high_quality</span>
-<span class="text-xs font-bold uppercase">Lujo</span>
-</button>
+
+<!-- DRIVERS BOTTOM PANEL -->
+<div class="bottom-panel px-4 pb-2">
+  <!-- Section header -->
+  <div class="flex items-center justify-between mb-2 px-1">
+    <h2 class="font-bold text-white flex items-center gap-2">
+      <span id="drivers-count" class="bg-primary text-white text-xs font-black px-2 py-0.5 rounded-full">4</span>
+      Conductores Disponibles
+    </h2>
+    <button onclick="nav('ride_history__biling_e.html')" class="text-xs text-primary font-bold">Ver historial</button>
+  </div>
+
+  <!-- Driver cards -->
+  <div class="space-y-2" id="drivers-list">
+    <!-- DRIVER 1 -->
+    <div class="driver-card nm-flat rounded-2xl p-3 flex items-center justify-between border border-slate-800 cursor-pointer active:scale-99"
+      onclick="nav('ride_matching__biling_e.html')">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-lg text-primary">A</div>
+        <div>
+          <p class="font-bold text-white text-sm">Alejandro Medina</p>
+          <div class="flex items-center gap-1 text-xs text-slate-400">
+            <span class="material-symbols-outlined text-yellow-400" style="font-size:11px">star</span>
+            4.9 · Toyota Corolla (Blanco)
+          </div>
+          <p class="text-[10px] text-green-400 font-bold mt-0.5">2 MIN · Altamira</p>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-xl font-black text-white">$8.50</p>
+        <p class="text-[10px] text-slate-400">Bs. 309</p>
+        <p class="text-[10px] text-primary font-bold">VERIFICADO</p>
+      </div>
+    </div>
+
+    <!-- DRIVER 2 -->
+    <div class="driver-card nm-flat rounded-2xl p-3 flex items-center justify-between border border-slate-800 cursor-pointer"
+      onclick="nav('ride_matching__biling_e.html')">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-cerulean/10 border border-cerulean/20 flex items-center justify-center font-bold text-lg text-cerulean">C</div>
+        <div>
+          <p class="font-bold text-white text-sm">Carlos Bermúdez</p>
+          <div class="flex items-center gap-1 text-xs text-slate-400">
+            <span class="material-symbols-outlined text-yellow-400" style="font-size:11px">star</span>
+            4.7 · Chevrolet Aveo (Gris)
+          </div>
+          <p class="text-[10px] text-green-400 font-bold mt-0.5">5 MIN · Chacaíto</p>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-xl font-black text-white">$6.00</p>
+        <p class="text-[10px] text-slate-400">Bs. 218</p>
+        <p class="text-[10px] text-primary font-bold">VERIFICADO</p>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- Nearby Drivers List -->
-<div class="flex flex-col gap-4">
-<h3 class="text-lg font-bold flex items-center justify-between">
-                    Disponibles cerca
-                    <span class="text-primary text-sm font-semibold">Ver Todos</span>
-</h3>
-<!-- Driver Card 1 -->
-<div class="neu-flat p-4 rounded-2xl flex items-center justify-between group">
-<div class="flex items-center gap-4">
-<div class="size-14 rounded-xl neu-pressed flex items-center justify-center p-1">
-<img alt="Driver" class="w-full h-full rounded-lg object-cover" data-alt="Portrait of a professional male driver" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlZrL_RUogfPEhCM17xa0LfZ_Y2ZhU168W26eZ6uD8tpbf7OzvRd61X2DcyRjCH9ABX9IOKjrEvllcUlnY5TTOSFz_BJte5Ae3ai1Q45AZxJAwaKcH8JPc4N-k9laOLr-6b8pM-Dpvz79AAVVgwszOh4srBjanUpljaV4tUFrdHSYQoG7f4N96CB80FTlLgZpodeF70lHE8BUe4jeiLASlitDTI6b5wztub5kw9kcamHimuJ3AlsUZR6R7TxSg_wN21fJ1AcbpGAw"/>
-</div>
-<div>
-<p class="font-bold text-brand-navy dark:text-white">Alejandro Medina</p>
-<div class="flex items-center gap-1 text-xs font-medium">
-<span class="material-symbols-outlined text-[14px] text-yellow-500 fill-current">star</span>
-<span>4.9</span>
-<span class="mx-1">•</span>
-<span class="text-slate-500">Toyota Camry (White)</span>
-</div>
-</div>
-</div>
-<div class="text-right">
-<p class="text-xl font-black text-brand-navy dark:text-brand-blue">$12.50</p>
-<p class="text-[10px] text-primary font-bold">2 MIN</p>
-</div>
-</div>
-<!-- Driver Card 2 -->
-<div class="neu-flat p-4 rounded-2xl flex items-center justify-between group">
-<div class="flex items-center gap-4">
-<div class="size-14 rounded-xl neu-pressed flex items-center justify-center p-1">
-<img alt="Driver" class="w-full h-full rounded-lg object-cover" data-alt="Portrait of a friendly female driver" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWhIQ0NI_vikH-NTq6PdnCShB_Dhj_UC_PB1oENXWYg68ZW0FacGjV8c3VCZm8qr8t_Gw6cxaWfhXbLQ8T5BRVNu8SNwVzliwx3Bv9fSem3uIzGRtHmygoy5z1XfYR6L67horSOvrPPAjOlU5lZOxIytmWiYmDOqz8pi9Z6ora6xqx50p6w1S57xZV-6tJ3f-kZkUovp3TgyGBguIxGqzZjb0Vo6xQSoZVeqPdjgY8DKkUnZIJbRHJB2KZLW7tSbDQ7xy1tXmJ6H8"/>
-</div>
-<div>
-<p class="font-bold text-brand-navy dark:text-white">Sofía Rodríguez</p>
-<div class="flex items-center gap-1 text-xs font-medium">
-<span class="material-symbols-outlined text-[14px] text-yellow-500 fill-current">star</span>
-<span>4.8</span>
-<span class="mx-1">•</span>
-<span class="text-slate-500">Honda Civic (Blue)</span>
-</div>
-</div>
-</div>
-<div class="text-right">
-<p class="text-xl font-black text-brand-navy dark:text-brand-blue">$10.20</p>
-<p class="text-[10px] text-primary font-bold">5 MIN</p>
-</div>
-</div>
-</div>
-<!-- Promo/Info Section -->
-<div class="bg-brand-navy dark:bg-brand-dark p-6 rounded-3xl text-white relative overflow-hidden shadow-xl mt-2 border border-brand-blue/30">
-<div class="relative z-10">
-<p class="text-brand-blue font-bold uppercase tracking-wider text-xs mb-1">Oferta de Fin de Semana</p>
-<h4 class="text-xl font-bold mb-2">Obtén 20% off en tu primer <br/>viaje nocturno</h4>
-<button class="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm">Activar Ahora</button>
-</div>
-<div class="absolute -right-4 -bottom-4 opacity-20">
-<span class="material-symbols-outlined text-[120px]">local_taxi</span>
-</div>
-</div>
-</main>
-<!-- SOS Fixed Floating Button -->
-<div class="fixed bottom-24 right-4 z-50">
-<button class="size-16 rounded-full bg-red-600 shadow-lg shadow-red-600/50 flex items-center justify-center text-white border-4 border-white dark:border-brand-dark">
-<span class="material-symbols-outlined text-3xl font-bold">sos</span>
-</button>
-</div>
-<!-- Bottom Navigation Bar -->
-<nav class="relative z-20 flex bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-brand-navy p-3 gap-2">
-<a class="flex flex-1 flex-col items-center justify-center gap-1 py-1 text-primary" href="#">
-<span class="material-symbols-outlined fill-current">explore</span>
-<span class="text-[10px] font-bold uppercase">Explorar</span>
-</a>
-<a class="flex flex-1 flex-col items-center justify-center gap-1 py-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">route</span>
-<span class="text-[10px] font-bold uppercase">Mis Viajes</span>
-</a>
-<a class="flex flex-1 flex-col items-center justify-center gap-1 py-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">payments</span>
-<span class="text-[10px] font-bold uppercase">Billetera</span>
-</a>
-<a class="flex flex-1 flex-col items-center justify-center gap-1 py-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="text-[10px] font-bold uppercase">Perfil</span>
-</a>
-<a class="flex flex-1 flex-col items-center justify-center gap-1 py-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="text-[10px] font-bold uppercase">Configuración</span>
-</a>
+
+<!-- BOTTOM NAV -->
+<nav style="position:relative;z-index:20;background:#040521;border-top:1px solid rgba(98,170,229,.1);" class="flex pb-4 pt-2 px-2">
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-slate-500" onclick="nav('home__biling_e_venezuela.html')">
+    <span class="material-symbols-outlined">home</span>
+    <span class="text-[9px] font-bold uppercase">Inicio</span>
+  </a>
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-primary" onclick="">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">search</span>
+    <span class="text-[9px] font-bold uppercase">Buscar</span>
+  </a>
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-slate-500" onclick="nav('ride_history__biling_e.html')">
+    <span class="material-symbols-outlined">route</span>
+    <span class="text-[9px] font-bold uppercase">Viajes</span>
+  </a>
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-slate-500" onclick="nav('wallet__biling_e.html')">
+    <span class="material-symbols-outlined">payments</span>
+    <span class="text-[9px] font-bold uppercase">Billetera</span>
+  </a>
+  <a class="flex flex-1 flex-col items-center gap-1 py-1 text-slate-500" onclick="nav('user_profile___settings__biling_e.html')">
+    <span class="material-symbols-outlined">person</span>
+    <span class="text-[9px] font-bold uppercase">Perfil</span>
+  </a>
 </nav>
-<!-- Safe Area for Notch -->
-<div class="h-6 bg-background-light dark:bg-background-dark md:hidden"></div>
-</div>
-<!-- VAMOS-V2 -->
-<script id="vamos-nav-v2">
-(function(){
-  var PAGE = "main_dashboard.html";
-  var S = {"login": "login___sign_up.html", "home": "home__biling_e_venezuela.html", "dashboard": "main_dashboard.html", "dashboard_ve": "dashboard__biling_e_venezuela.html", "create_route": "create_ride_-_route__biling_e.html", "create_schedule": "create_ride_-_schedule__biling_e.html", "create_pricing": "create_ride_-_pricing__biling_e.html", "create_review": "create_ride_-_review__biling_e.html", "matching": "ride_matching__biling_e.html", "tracking": "live_tracking__biling_e.html", "ride_review": "ride_review__biling_e.html", "history": "ride_history__biling_e.html", "profile": "user_profile___settings__biling_e.html", "kyc": "kyc_verification__biling_e_venezuela.html", "vehicles": "vehicle_management__biling_e.html", "wallet": "wallet__biling_e.html", "payments": "payment_methods__biling_e_venezuela.html", "chat": "chat_interface__biling_e.html", "notifications": "notifications__biling_e.html", "refer": "refer_a_friend__biling_e.html", "sos": "sos_alert__biling_e_venezuela.html", "how": "how_it_works__biling_e.html", "faq": "faq___preguntas_frecuentes__biling_e.html"};
 
-  function go(key){ var t = S[key]||key; if(window.parent!==window){ window.parent.postMessage({nav:t},'*'); } else { window.location.href=t; } }
-  function back(){ if(window.parent!==window){ window.parent.postMessage({back:true},'*'); } else { window.history.back(); } }
+<script>
+function nav(t){if(window.parent!==window){window.parent.postMessage({nav:t},'*');}else{window.location.href=t;}}
+function back(){if(window.parent!==window){window.parent.postMessage({back:true},'*');}else{window.history.back();}  }
 
-  function wire(){
-    // ─── 1. Back buttons ───────────────────────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && /arrow_back|chevron_left|arrow_back_ios/.test(ic.textContent.trim())){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();back();};
-      }
-    });
+var user = JSON.parse(localStorage.getItem('vamos_user')||'{}');
+if(user.name){ document.getElementById('user-greeting').textContent = 'Hola, '+user.name.split(' ')[0]+'!'; }
 
-    // ─── 2. SOS floating red button ────────────────────────────
-    document.querySelectorAll('[class*="bg-red-"], [class*="red-600"]').forEach(function(el){
-      el.style.cursor='pointer';
-      el.onclick=function(e){e.stopPropagation();go('sos');};
-    });
+// ── LEAFLET MAP ─────────────────────────────────────────────────
+var map = L.map('map',{zoomControl:false,attributionControl:false}).setView([10.4806,-66.9036],13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
 
-    // ─── 3. Notification bell in header ────────────────────────
-    document.querySelectorAll('header button, header [role="button"]').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && ic.textContent.trim()==='notifications'){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();go('notifications');};
-      }
-    });
+// User location marker
+var userIcon = L.divIcon({
+  className:'',
+  html:'<div style="width:36px;height:36px;background:#62AAE5;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(98,170,229,.7)"><span style="font-size:18px">📍</span></div>',
+  iconSize:[36,36],iconAnchor:[18,18]
+});
+var userMarker = L.marker([10.4806,-66.9036],{icon:userIcon}).addTo(map).bindPopup('Tu ubicación');
 
-    // ─── 4. Profile avatar in header ──────────────────────────
-    document.querySelectorAll('header img[alt*="rofile"], header img[alt*="User"]').forEach(function(img){
-      var wrap = img.parentElement;
-      if(wrap){ wrap.style.cursor='pointer'; wrap.onclick=function(e){e.stopPropagation();go('profile');}; }
-    });
+// Car markers
+var carIcon = L.divIcon({
+  className:'',
+  html:'<div style="font-size:24px">🚗</div>',
+  iconSize:[32,32],iconAnchor:[16,16]
+});
+var drivers = [
+  [10.4820,-66.9050],[10.4790,-66.9010],[10.4850,-66.9020],[10.4775,-66.9060]
+];
+drivers.forEach(function(pos){ L.marker(pos,{icon:carIcon}).addTo(map); });
 
-    // ─── 5. Bottom navigation by icon ─────────────────────────
-    var navMap = {
-      'home':'home','explore':'home','inicio':'home',
-      'search':'dashboard','buscar':'dashboard','near_me':'dashboard',
-      'directions_car':'history','route':'history','viajes':'history',
-      'payments':'wallet','billetera':'wallet','account_balance_wallet':'wallet',
-      'person':'profile','perfil':'profile','account_circle':'profile',
-      'notifications':'notifications',
-      'chat':'chat','message':'chat','forum':'chat',
-      'settings':'profile','tune':'profile',
-      'add_circle':'create_route','add':'create_route',
-    };
-    document.querySelectorAll('nav a, nav button, [class*="bottom"] a').forEach(function(el){
-      var ico = el.querySelector('[class*="material"]');
-      var txt = (el.textContent||'').trim().toLowerCase().replace(/\s+/g,' ');
-      var icon = ico ? ico.textContent.trim() : '';
-      var key = navMap[icon] || navMap[txt];
-      if(!key){
-        // fuzzy match on label text
-        if(/inicio|home/.test(txt)) key='home';
-        else if(/buscar|search/.test(txt)) key='dashboard';
-        else if(/viajes|rides|trips/.test(txt)) key='history';
-        else if(/billetera|wallet/.test(txt)) key='wallet';
-        else if(/perfil|profile/.test(txt)) key='profile';
-        else if(/notif/.test(txt)) key='notifications';
-        else if(/mensajes|chat/.test(txt)) key='chat';
-        else if(/configur|settings/.test(txt)) key='profile';
-        else if(/crear|create|add/.test(txt)) key='create_route';
-        else if(/explorar|explore/.test(txt)) key='home';
-        else if(/historial|history/.test(txt)) key='history';
-      }
-      if(key){
-        el.setAttribute('href','javascript:void(0)');
-        el.style.cursor='pointer';
-        (function(k){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(k);}; })(key);
-      }
-    });
+// Try geolocation
+if(navigator.geolocation){
+  navigator.geolocation.getCurrentPosition(function(pos){
+    var lt=pos.coords.latitude, ln=pos.coords.longitude;
+    userMarker.setLatLng([lt,ln]);
+    map.setView([lt,ln],14);
+    document.getElementById('input-origin').value='Mi ubicación actual';
+  });
+}
 
-    // ─── 6. Per-page specific button rules ─────────────────────
-    var rules = [[".neu-pressed input", null], [".neu-flat:nth-of-type(3)", "matching"], [".neu-flat:nth-of-type(4)", "matching"], [".bg-primary.text-white.px-4", "payments"], [".text-primary.text-sm.font-semibold", "history"]];
-    rules.forEach(function(r){
-      try {
-        document.querySelectorAll(r[0]).forEach(function(el){
-          if(r[1]===null) return; // input fields etc., skip
-          el.style.cursor='pointer';
-          (function(k){ el.onclick=function(e){e.stopPropagation();go(k);}; })(r[1]);
-        });
-      } catch(x){}
-    });
+// Search with Nominatim (OpenStreetMap geocoder)
+var searchTimeout;
+function searchPlace(query, type){
+  clearTimeout(searchTimeout);
+  var resDiv = document.getElementById('results-'+type);
+  if(!query || query.length < 3){ resDiv.classList.add('hidden'); return; }
+  resDiv.classList.remove('hidden');
+  resDiv.innerHTML = '<div class="search-result-item text-slate-400">Buscando...</div>';
 
-    // ─── 7. Generic CTA button wiring by text ─────────────────
-    var textMap = [
-      [/^(buscar un viaje|buscar viaje|find a ride)$/i, 'dashboard'],
-      [/^(ofrecer un viaje|ofrecer viaje|offer a ride|crear viaje)$/i, 'create_route'],
-      [/^(iniciar sesi[oó]n|login|sign in|entrar)$/i, 'home'],
-      [/^(registrarse|sign up|crear cuenta)$/i, 'kyc'],
-      [/^(siguiente|next)$/i, (function(){ 
-        if(PAGE.indexOf('route')>-1)    return 'create_schedule';
-        if(PAGE.indexOf('schedule')>-1) return 'create_pricing';
-        if(PAGE.indexOf('pric')>-1)     return 'create_review';
-        if(PAGE.indexOf('review')>-1 && PAGE.indexOf('ride_review')===-1) return 'matching';
-        return 'home';
-      })()],
-      [/^(confirmar|confirmar viaje|confirm ride|confirm)$/i, 'matching'],
-      [/^(seguir viaje|track ride|track|seguir)$/i, 'tracking'],
-      [/^(calificar|rate|calificar conductor|rate driver)$/i, 'ride_review'],
-      [/^(finalizar|done|finish|enviar rese[nñ]a|submit review)$/i, 'home'],
-      [/^(ver todos|see all|ver todo)$/i, 'dashboard'],
-      [/^(activar ahora|activate now)$/i, 'payments'],
-      [/^(agregar saldo|add money)$/i, 'payments'],
-      [/^(retirar|withdraw)$/i, 'payments'],
-      [/^(enviar dinero|send money)$/i, 'payments'],
-      [/^(agregar m[eé]todo de pago|add payment method|add card)$/i, 'payments'],
-      [/^(billetera|wallet)$/i, 'wallet'],
-      [/^(verificar|verify|completar kyc)$/i, 'kyc'],
-      [/^(historial|ride history|ver historial)$/i, 'history'],
-      [/^(mis veh[ií]culos|my vehicles|agregar veh[ií]culo|add vehicle)$/i, 'vehicles'],
-      [/^(cerrar sesi[oó]n|log out|logout)$/i, 'login'],
-      [/^(editar perfil|edit profile)$/i, 'profile'],
-      [/^(alerta sos|send sos|enviar sos)$/i, 'sos'],
-      [/^(compartir ubicaci[oó]n|share location)$/i, 'sos'],
-      [/^(compartir|share)$/i, 'refer'],
-      [/^(copiar c[oó]digo|copy code)$/i, 'refer'],
-      [/^(referir un amigo|refer a friend|invitar amigos|invite friends)$/i, 'refer'],
-      [/^(mensajes|chat)$/i, 'chat'],
-      [/^(notificaciones|notifications)$/i, 'notifications'],
-      [/^(c[oó]mo funciona|how it works|comenzar|get started)$/i, 'how'],
-      [/^(preguntas frecuentes|faq)$/i, 'faq'],
-      [/^(contactar soporte|contact support)$/i, 'chat'],
-      [/^(volver al inicio|back to home)$/i, 'home'],
-      [/^(cancelar|cancel)$/i, 'home'],
-      [/^(guardar|save)$/i, 'profile'],
-      [/^(publicar viaje|offer ride)$/i, 'matching'],
-      [/^(viajar de nuevo|book again)$/i, 'dashboard'],
-      [/información personal/i, 'profile'],
-      [/mis vehículos/i, 'vehicles'],
-      [/estado de verificaci/i, 'kyc'],
-      [/métodos de pago/i, 'payments'],
-      [/configuración de la app/i, 'profile'],
-      [/ayuda y soporte/i, 'how'],
-      [/referir un amigo/i, 'refer'],
-      [/marcar todo como le[ií]do/i, 'notifications'],
-      [/mensaje a conductor/i, 'chat'],
-    ];
+  searchTimeout = setTimeout(function(){
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(query+' Venezuela')+'&limit=4&countrycodes=ve&accept-language=es')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(!data.length){ resDiv.innerHTML='<div class="search-result-item text-slate-500">Sin resultados en Venezuela</div>'; return; }
+        resDiv.innerHTML = data.map(function(r){
+          var name = r.display_name.split(',').slice(0,3).join(', ');
+          return '<div class="search-result-item" onclick="selectPlace('+r.lat+','+r.lon+',\''+name.replace(/'/g,'`')+'\',\''+type+'\')" >📍 '+name+'</div>';
+        }).join('');
+      })
+      .catch(function(){ resDiv.innerHTML='<div class="search-result-item text-slate-500">Error de conexión</div>'; });
+  }, 500);
+}
 
-    document.querySelectorAll('button, a').forEach(function(el){
-      // Skip nav elements already handled
-      if(el.closest('nav')) return;
-      var txt = (el.textContent||'').trim().replace(/\s+/g,' ');
-      for(var i=0;i<textMap.length;i++){
-        if(textMap[i][0].test(txt)){
-          var k = textMap[i][1];
-          el.setAttribute('href','javascript:void(0)');
-          el.style.cursor='pointer';
-          (function(key){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(key);}; })(k);
-          break;
-        }
-      }
-    });
-
-    // ─── 8. Language toggle: ES|EN button ─────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var t = (b.textContent||'').trim();
-      if(t==='ES | EN' || (t.indexOf('ES')>-1 && t.indexOf('EN')>-1)){
-        b.onclick=function(e){
-          e.stopPropagation();
-          alert('Opciones de idioma: actualmente Español');
-        };
-      }
-    });
-
-    // ─── 9. "Viajes Cercanos" card → dashboard ──────────────────
-    document.querySelectorAll('[class*="neumorph-card"], [class*="neu-flat"]').forEach(function(card){
-      var isNav = card.closest('nav') || card.closest('header');
-      if(isNav) return;
-      var txt = (card.textContent||'').toLowerCase();
-      if(txt.indexOf('altamira')>-1 || txt.indexOf('min away')>-1 || txt.indexOf('disponible ahora')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-      if(txt.indexOf('alejandro medina')>-1 || txt.indexOf('sofía rodríguez')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-    });
+function selectPlace(lat, lon, name, type){
+  document.getElementById('input-'+type).value = name;
+  document.getElementById('results-'+type).classList.add('hidden');
+  var latlng = [parseFloat(lat), parseFloat(lon)];
+  if(type==='origin'){
+    userMarker.setLatLng(latlng);
   }
+  map.flyTo(latlng, 14, {duration:1.5});
+}
 
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',wire);
-  } else { wire(); }
-})();
+function searchRides(){
+  var dest = document.getElementById('input-dest').value;
+  if(!dest){ alert('Indica tu destino'); return; }
+  // Give visual feedback and navigate to matching
+  nav('ride_matching__biling_e.html');
+}
+
+function selectVehicle(btn){
+  document.querySelectorAll('.flex.gap-2 button').forEach(function(b){
+    b.classList.remove('text-primary','border-primary/30');
+    b.classList.add('text-slate-400');
+  });
+  btn.classList.add('text-primary','border-primary/30');
+  btn.classList.remove('text-slate-400');
+}
 </script>
-<!-- /VAMOS-V2 --></body></html>
+</body>
+</html>
