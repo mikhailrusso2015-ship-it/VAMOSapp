@@ -54,60 +54,115 @@
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<body class="bg-[#040521] font-display text-slate-100 min-h-screen flex flex-col">
 <!-- Header -->
-<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-space-blue/80 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
+<header class="sticky top-0 z-50 bg-[#040521]/80 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-white/5">
 <div class="flex items-center gap-3">
-<div class="size-10 flex items-center justify-center rounded-xl bg-deep-blue">
-<img alt="Vamos Premium Logo" class="size-8 object-contain" data-alt="Abstract geometric orange and blue logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxOnDieptZLv83TL-DZ1oBB5X-I1X2CAz_RtF2fDTC_mNotxZnyuuK7FiRxrk4g9ffV4m5tR4J2kURzR7ZEQrW4_M7lB0D_EUXNdJFHgGwbXcjGzd6GmaVF0Xi0NKVo8YkN3yyUJYFtqh9bqetigK3uKAMzYJVDmBhu0hjoLzKUuxTdBqmGutkUa6sN5unSIFf3isjgxFo9iXh3nqwQ1rX02DpJ0qQBOVdzBQGQDaXwiKBp1hZvuIIo1VmftSbUjERAejnoXbdvDI"/>
+<div class="size-10 nm-card rounded-xl flex items-center justify-center p-2">
+<img alt="Vamos Logo" class="w-full h-full object-contain" src="logo_vamos.png"/>
 </div>
-<span class="text-2xl font-extrabold tracking-tight text-deep-blue dark:text-white uppercase">Vamos</span>
+<span class="text-2xl font-black tracking-tight text-white uppercase">Vamos</span>
 </div>
 <div class="flex items-center gap-3">
 <!-- Language Toggle -->
-<button class="neumorph-card px-3 py-1.5 rounded-full flex items-center gap-1.5 text-[10px] font-bold tracking-widest text-deep-blue dark:text-cerulean">
+<button class="nm-card px-4 py-2 rounded-full flex items-center gap-2 text-[10px] font-black tracking-widest text-primary border border-white/5">
 <span class="text-primary">ES</span>
-<span class="opacity-30">|</span>
-<span class="opacity-50">EN</span>
+<span class="opacity-20">|</span>
+<span class="opacity-40 text-slate-400">EN</span>
 </button>
-<button class="p-2 rounded-full neumorph-card flex items-center justify-center text-deep-blue dark:text-cerulean">
-<span class="material-symbols-outlined">notifications</span>
+<button class="size-10 rounded-full nm-card flex items-center justify-center text-primary border border-white/5">
+<span class="material-symbols-outlined text-xl">notifications</span>
 </button>
-<div class="size-10 rounded-full border-2 border-primary overflow-hidden">
-<img alt="User Perfil" class="w-full h-full object-cover" data-alt="Professional headshot of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA43ldSlTcjnUvDBHHkl_ps3u1oc0xXKzxoIRfVlr6r3x4G_9rbl1b88atvJGmeJkLlQky_p-d2cDF9rGrTSZTetWAqnVyPY2W0ep1UCdIOzr9dcWcKFSNNVWvLoExmR4Njk3fCWZ-FaNO1Hz0rRYzGCtaQh9lsAS0vCRsv2igofgM3KbhXNS0ZxNQ1aVj3iT3g4MA3xwbi7hvqQ2rJNPISltd6-tfhDwC7glt-I-mbOWgaxj48GZG_Q6KLtKXc9z0zkpW45rURmYY"/>
+<div class="size-10 rounded-full nm-card overflow-hidden border-2 border-primary/30 p-0.5">
+<img alt="User Perfil" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA43ldSlTcjnUvDBHHkl_ps3u1oc0xXKzxoIRfVlr6r3x4G_9rbl1b88atvJGmeJkLlQky_p-d2cDF9rGrTSZTetWAqnVyPY2W0ep1UCdIOzr9dcWcKFSNNVWvLoExmR4Njk3fCWZ-FaNO1Hz0rRYzGCtaQh9lsAS0vCRsv2igofgM3KbhXNS0ZxNQ1aVj3iT3g4MA3xwbi7hvqQ2rJNPISltd6-tfhDwC7glt-I-mbOWgaxj48GZG_Q6KLtKXc9z0zkpW45rURmYY"/>
 </div>
 </div>
 </header>
 <main class="flex-1 px-6 py-8 max-w-md mx-auto w-full">
-<!-- Hero Section -->
-<section class="mb-10 text-center">
-<h1 class="text-4xl font-extrabold text-space-blue dark:text-white leading-tight mb-3" data-i18n="hero-title">
-                Tu Viaje <span class="text-primary">Premium</span> en Vzla
-</h1>
-<p class="text-slate-600 dark:text-slate-400 text-lg" data-i18n="hero-subtitle">La mejor forma de moverte con comodidad y estilo.</p>
+    
+    <div class="space-y-4">
+      <!-- Origin -->
+      <div class="flex items-center gap-3 p-5 nm-inset rounded-2xl border border-white/5 transition-all focus-within:border-primary/50">
+        <span class="material-symbols-outlined text-primary">circle</span>
+        <input type="text" placeholder="¿De dónde sales?" class="bg-transparent border-none focus:ring-0 text-lg w-full text-white font-bold" value="Caracas"/>
+      </div>
+      
+      <!-- Destination -->
+      <div class="flex items-center gap-3 p-5 nm-inset rounded-2xl border border-white/5 transition-all focus-within:border-primary/50">
+        <span class="material-symbols-outlined text-primary">location_on</span>
+        <input type="text" placeholder="¿A dónde vas?" class="bg-transparent border-none focus:ring-0 text-lg w-full text-white font-bold"/>
+      </div>
+      
+      <!-- Date and Passengers -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex items-center gap-3 p-4 nm-inset rounded-2xl border border-white/5">
+          <span class="material-symbols-outlined text-slate-400 text-xl">calendar_month</span>
+          <span class="text-sm font-bold text-slate-200">Hoy</span>
+        </div>
+        <div class="flex items-center gap-3 p-4 nm-inset rounded-2xl border border-white/5">
+          <span class="material-symbols-outlined text-slate-400 text-xl">person</span>
+          <span class="text-sm font-bold text-slate-200">1 pasajero</span>
+        </div>
+      </div>
+    </div>
+    
+    <button onclick="go('dashboard')" class="w-full py-5 bg-primary text-white font-black text-xl rounded-2xl shadow-xl shadow-primary/20 active:scale-95 transition-all mt-6 uppercase tracking-widest border border-white/10">
+      BUSCAR VIAJE
+    </button>
+  </div>
 </section>
-<!-- Main CTAs -->
-<div class="grid grid-cols-1 gap-6 mb-12">
-<!-- Buscar un Viaje -->
-<button class="neumorph-card group p-6 rounded-3xl flex flex-col items-center gap-4 transition-all active:scale-95 border border-white/20">
-<div class="size-16 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30">
-<span class="material-symbols-outlined text-4xl">search</span>
+
+<!-- Tabs Selector (Hidden for new flow as per BlaBlaCar main search focus) -->
+<div class="hidden flex border-b border-slate-200 dark:border-slate-800 mb-6 mx-2">
+  <button onclick="switchTab('buscar')" id="tab-btn-buscar" class="flex-1 py-3 text-sm font-bold border-b-2 border-primary text-primary transition-all">Buscar</button>
+  <button onclick="switchTab('publicar')" id="tab-btn-publicar" class="flex-1 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 transition-all">Publicar</button>
 </div>
-<div class="text-center">
-<h3 class="text-xl font-bold text-deep-blue dark:text-white" data-i18n="search-ride">Buscar un Viaje</h3>
-<p class="text-sm text-slate-500 dark:text-cerulean/80" data-i18n="search-desc">Rutas premium disponibles</p>
+
+<!-- Recent Searches Section (Cleaned up for clarity) -->
+<div id="tab-buscar" class="tab-content space-y-6">
+  <div class="px-6">
+    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Búsquedas recientes</h3>
+    <div class="space-y-4">
+      <div class="flex items-center gap-4 py-3 border-b border-slate-200 dark:border-slate-800 cursor-pointer active:opacity-60 transition-opacity">
+        <div class="size-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">
+          <span class="material-symbols-outlined">history</span>
+        </div>
+        <div class="flex-1">
+          <p class="text-sm font-bold text-slate-900 dark:text-white">Caracas → Valencia</p>
+          <p class="text-[10px] text-slate-500 font-medium">Hoy, 1 pasajero</p>
+        </div>
+        <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+      </div>
+    </div>
+  </div>
 </div>
-</button>
-<!-- Ofrecer un Viaje -->
-<button id="offer-ride-btn" class="neumorph-card group p-6 rounded-3xl flex flex-col items-center gap-4 transition-all active:scale-95 border border-white/20">
-<div class="size-16 rounded-2xl bg-deep-blue dark:bg-cerulean flex items-center justify-center text-white shadow-lg shadow-deep-blue/30">
-<span class="material-symbols-outlined text-4xl">directions_car</span>
-</div>
-<div class="text-center">
-<h3 class="text-xl font-bold text-deep-blue dark:text-white" data-i18n="offer-ride">Ofrecer un Viaje</h3>
-<p class="text-sm text-slate-500 dark:text-cerulean/80" data-i18n="offer-desc">Comparte tu ruta y ahorra</p>
-</div>
-</button>
+
+<!-- Tab Content: PUBLICAR -->
+<div id="tab-publicar" class="tab-content hidden space-y-6">
+  <div class="nm-dark-flat p-8 rounded-[2rem] text-center space-y-6 border border-white/5 relative overflow-hidden group">
+    <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+    <div class="size-20 nm-inset rounded-[2rem] flex items-center justify-center mx-auto text-primary relative">
+      <span class="material-symbols-outlined text-5xl">add_circle</span>
+    </div>
+    <div class="relative">
+      <h2 class="text-2xl font-black text-white tracking-tight">¿A dónde vas con tu carro?</h2>
+      <p class="text-sm text-slate-400 mt-2 font-medium">Publica tu viaje y ahorra en gasolina y peajes.</p>
+    </div>
+    <button onclick="go('create_route')" class="w-full py-5 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/20 active:scale-95 transition-all relative z-10 uppercase tracking-widest border border-white/10">
+      Publicar un Viaje
+    </button>
+  </div>
+
+  <div class="px-2">
+    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Tus rutas sugeridas</h3>
+    <div class="neumorph-card p-4 rounded-2xl flex items-center gap-4 opacity-70">
+      <span class="material-symbols-outlined text-primary">route</span>
+      <div class="flex-1">
+        <p class="text-sm font-bold">Ccs → Maracay</p>
+        <p class="text-[10px]">Ruta frecuente</p>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- Featured Trip/Map Placeholder -->
 <section class="mb-12">
@@ -117,7 +172,7 @@
 </div>
 <div class="neumorph-card rounded-3xl overflow-hidden p-2">
 <div class="relative h-48 rounded-2xl bg-slate-200 overflow-hidden mb-4">
-<div class="absolute inset-0 bg-cover bg-center" data-alt="A stylized map showing driving routes in Caracas" data-location="Caracas, Venezuela" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0oObpbXrbZBCBfoD2BEpvCN1wwNo7iavEcWpX-dgXqb5oMcwhbGpU1k9qhcm0jNtb1qmININGXQMaJV_ezpEyD7eJ82oMuwQreeXeOyEegpCSaSOiVkn_v5d92_ZCk6luIrCJt0Z_Oelj6YvzeRxk0iO3qgC_COqWD-y2MlfPE6_kMUGUo1b9vmCJ7rDQWoCmfJf6Ijzx994FCDG8Ei3lTKtFRLcUo7QJRU2Fgy0yc2ivJnIIuCsgakW3K_Wtu8BoIvRmLzf_zwQ')"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A stylized map showing driving routes in Caracas" data-location="Caracas, Venezuela" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0oObpbXrbZBCBfoD2BEpvCN1wwNo7iavEcWpX-dgXqb5oMcwhbGpU1k9qhcm0jNtb1qmININGXQMaJV_ezpEyD7eJ82oMuwCreeXeOyEegpCSaSOiVkn_v5d92_ZCk6luIrCJt0Z_Oelj6YvzeRxk0iO3qgC_COqWD-y2MlfPE6_kMUGUo1b9vmCJ7rDQWoCmfJf6Ijzx994FCDG8Ei3lTKtFRLcUo7QJRU2Fgy0yc2ivJnIIuCsgakW3K_Wtu8BoIvRmLzf_zwQ')"></div>
 <div class="absolute top-4 right-4 glass-panel px-3 py-1 rounded-full flex items-center gap-1">
 <span class="material-symbols-outlined text-primary text-sm">security</span>
 <span class="text-xs font-bold text-white uppercase tracking-wider" data-i18n="verified">Verificado</span>
@@ -163,35 +218,55 @@
 </div>
 </section>
 </main>
-<!-- Bottom Navigation Bar -->
-<nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-deep-blue border-t border-slate-200 dark:border-slate-800 px-6 pb-6 pt-3 flex justify-between items-center z-50">
-<a class="flex flex-col items-center gap-1 text-primary" href="#">
-<span class="material-symbols-outlined fill-1">home</span>
-<span class="text-[10px] font-bold uppercase tracking-widest" data-i18n="nav-home">Inicio</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
-<span class="material-symbols-outlined">search</span>
-<span class="text-[10px] font-bold uppercase tracking-widest" data-i18n="nav-search">Buscar</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
-<span class="material-symbols-outlined">directions_car</span>
-<span class="text-[10px] font-bold uppercase tracking-widest" data-i18n="nav-rides">Viajes</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="text-[10px] font-bold uppercase tracking-widest" data-i18n="nav-profile">Perfil</span>
-</a>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 px-4 py-3 flex justify-between items-center z-50">
+    <a href="#" onclick="go('home')" class="flex flex-col items-center gap-1 text-primary">
+        <span class="material-symbols-outlined text-2xl font-fill">search</span>
+        <span class="text-[10px] font-bold uppercase tracking-tighter">Buscar</span>
+    </a>
+    <a href="#" onclick="go('create_route')" class="flex flex-col items-center gap-1 text-slate-400">
+        <span class="material-symbols-outlined text-2xl">add_circle</span>
+        <span class="text-[10px] font-bold uppercase tracking-tighter">Publicar</span>
+    </a>
+    <a href="#" onclick="go('history')" class="flex flex-col items-center gap-1 text-slate-400">
+        <span class="material-symbols-outlined text-2xl">commute</span>
+        <span class="text-[10px] font-bold uppercase tracking-tighter">Tus Viajes</span>
+    </a>
+    <a href="#" onclick="go('chat')" class="flex flex-col items-center gap-1 text-slate-400">
+        <span class="material-symbols-outlined text-2xl">chat_bubble</span>
+        <span class="text-[10px] font-bold uppercase tracking-tighter">Bandeja</span>
+    </a>
+    <a href="#" onclick="go('profile')" class="flex flex-col items-center gap-1 text-slate-400">
+        <span class="material-symbols-outlined text-2xl">account_circle</span>
+        <span class="text-[10px] font-bold uppercase tracking-tighter">Perfil</span>
+    </a>
 </nav>
 <!-- Space for fixed nav -->
 <div class="h-24"></div>
 <script>
-// RBAC: Hide "Ofrecer un Viaje" if role is Pasajero
+// RBAC and Tab Logic
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.getElementById('tab-' + tab).classList.remove('hidden');
+  
+  // Buttons
+  const btnB = document.getElementById('tab-btn-buscar');
+  const btnP = document.getElementById('tab-btn-publicar');
+  
+  if(tab === 'buscar') {
+    btnB.className = "flex-1 py-3 text-sm font-bold border-b-2 border-primary text-primary transition-all";
+    btnP.className = "flex-1 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 transition-all";
+  } else {
+    btnP.className = "flex-1 py-3 text-sm font-bold border-b-2 border-primary text-primary transition-all";
+    btnB.className = "flex-1 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 transition-all";
+  }
+}
+
 (function() {
   const role = localStorage.getItem('vamos_role') || 'pasajero';
-  const offerBtn = document.getElementById('offer-ride-btn');
-  if (role === 'pasajero' && offerBtn) {
-    offerBtn.style.display = 'none';
-  }
+  // If role is set, default to that tab
+  if(role === 'chofer') switchTab('publicar');
+  else switchTab('buscar');
 })();
 
 // i18n logic

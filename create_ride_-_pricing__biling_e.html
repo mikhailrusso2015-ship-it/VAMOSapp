@@ -157,25 +157,48 @@
     </div>
   </div>
 
+  <!-- RESERVA AUTOMÁTICA (TOGGLE PREMIUM) -->
+  <div class="nm-flat rounded-2xl p-5 border border-primary/10">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h2 class="font-bold text-white">Reserva Automática</h2>
+        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Configuración de Reserva</p>
+      </div>
+      <div class="relative inline-flex items-center cursor-pointer" onclick="toggleAutoBooking()">
+        <div id="booking-toggle-bg" class="w-14 h-7 bg-primary rounded-full transition-colors duration-300 nm-inset"></div>
+        <div id="booking-toggle-dot" class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-300 translate-x-7 shadow-lg"></div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-3">
+      <div id="booking-auto-card" class="nm-inset p-3 rounded-xl border border-primary/30 transition-all">
+        <div class="flex items-center gap-2 mb-1 text-primary">
+          <span class="material-symbols-outlined text-sm">flash_on</span>
+          <span class="text-[10px] font-black uppercase">Activada</span>
+        </div>
+        <p class="text-[9px] text-slate-300 leading-tight">Las reservas se confirman al instante sin que tengas que intervenir.</p>
+      </div>
+      <div id="booking-manual-card" class="nm-flat p-3 rounded-xl opacity-40 transition-all">
+        <div class="flex items-center gap-2 mb-1 text-slate-400">
+          <span class="material-symbols-outlined text-sm">front_hand</span>
+          <span class="text-[10px] font-black uppercase">Manual</span>
+        </div>
+        <p class="text-[9px] text-slate-500 leading-tight">Tú apruebas o rechazas cada solicitud de los pasajeros.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- TIPO DE PAGO ACEPTADO -->
   <div class="nm-flat rounded-2xl p-4">
     <h2 class="font-bold text-white mb-3 text-sm">Métodos de Pago Aceptados</h2>
     <div class="space-y-2">
       <label class="flex items-center gap-3 cursor-pointer">
-        <input type="checkbox" checked class="w-5 h-5 accent-primary/80 rounded"/>
-        <span class="text-sm text-slate-300">💵 Efectivo USD</span>
+        <input type="checkbox" checked class="w-5 h-5 accent-primary/80 rounded border-none bg-space-blue/50"/>
+        <span class="text-sm text-slate-300">💵 Efectivo USD / Bs.</span>
       </label>
       <label class="flex items-center gap-3 cursor-pointer">
-        <input type="checkbox" checked class="w-5 h-5 accent-primary/80 rounded"/>
+        <input type="checkbox" checked class="w-5 h-5 accent-primary/80 rounded border-none bg-space-blue/50"/>
         <span class="text-sm text-slate-300">📲 Pago Móvil / Zelle</span>
-      </label>
-      <label class="flex items-center gap-3 cursor-pointer">
-        <input type="checkbox" class="w-5 h-5 accent-primary/80 rounded"/>
-        <span class="text-sm text-slate-300">💳 Tarjeta</span>
-      </label>
-      <label class="flex items-center gap-3 cursor-pointer">
-        <input type="checkbox" class="w-5 h-5 accent-primary/80 rounded"/>
-        <span class="text-sm text-slate-300">🏦 Transferencia Bs.</span>
       </label>
     </div>
   </div>
@@ -293,11 +316,41 @@ function updateSummary(){
   document.getElementById('footer-bs').textContent = 'Bs. ' + parseFloat(bs).toLocaleString('es-VE');
 }
 
+var autoBooking = true;
+function toggleAutoBooking() {
+  autoBooking = !autoBooking;
+  const bg = document.getElementById('booking-toggle-bg');
+  const dot = document.getElementById('booking-toggle-dot');
+  const autoCard = document.getElementById('booking-auto-card');
+  const manualCard = document.getElementById('booking-manual-card');
+  
+  if (autoBooking) {
+    bg.classList.replace('bg-slate-700', 'bg-primary');
+    dot.style.transform = 'translateX(28px)';
+    autoCard.classList.replace('nm-flat', 'nm-inset');
+    autoCard.classList.replace('opacity-40', 'opacity-100');
+    autoCard.classList.add('border-primary/30');
+    manualCard.classList.replace('nm-inset', 'nm-flat');
+    manualCard.classList.add('opacity-40');
+    manualCard.classList.remove('border-primary/30');
+  } else {
+    bg.classList.replace('bg-primary', 'bg-slate-700');
+    dot.style.transform = 'translateX(0px)';
+    autoCard.classList.replace('nm-inset', 'nm-flat');
+    autoCard.classList.add('opacity-40');
+    autoCard.classList.remove('border-primary/30');
+    manualCard.classList.replace('nm-flat', 'nm-inset');
+    manualCard.classList.replace('opacity-40', 'opacity-100');
+    manualCard.classList.add('border-primary/30');
+  }
+}
+
 function confirmAndContinue(){
   // Save ride data
   localStorage.setItem('vamos_ride_pricing', JSON.stringify({
     priceUSD: priceUSD, seats: seats, bcvRate: bcvRate,
-    priceBS: (priceUSD * bcvRate).toFixed(0)
+    priceBS: (priceUSD * bcvRate).toFixed(0),
+    autoBooking: autoBooking
   }));
   nav('create_ride_-_review__biling_e.html');
 }

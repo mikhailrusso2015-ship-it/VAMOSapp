@@ -79,36 +79,46 @@
 <main class="flex-1 max-w-xl mx-auto w-full px-6 pb-24">
 <!-- Inputs Section -->
 <div class="space-y-6 mt-4">
-<!-- Origin -->
-<div class="flex flex-col gap-2">
-<label class="flex flex-col flex-1">
-<p class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal pb-2 ml-1">Origen</p>
-<div class="flex w-full items-stretch rounded-xl neumorphic-inset">
-<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent h-14 placeholder:text-slate-400 dark:placeholder:text-slate-600 px-5 text-base font-normal focus:ring-0 text-slate-900 dark:text-white" placeholder="Lugar de inicio" value="Altamira, Caracas"/>
-<div class="text-primary flex items-center justify-center px-4">
-<span class="material-symbols-outlined">my_location</span>
-</div>
-</div>
-</label>
-</div>
-<!-- Destination -->
-<div class="flex flex-col gap-2">
-<label class="flex flex-col flex-1">
-<p class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal pb-2 ml-1">Destino</p>
-<div class="flex w-full items-stretch rounded-xl neumorphic-inset border-2 border-primary/20">
-<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent h-14 placeholder:text-slate-400 dark:placeholder:text-slate-600 px-5 text-base font-normal focus:ring-0 text-slate-900 dark:text-white" placeholder="¿A dónde?" value="La Guaira, Vargas"/>
-<div class="text-primary flex items-center justify-center px-4">
-<span class="material-symbols-outlined">map</span>
-</div>
-</div>
-</label>
-</div>
-<!-- Add Stopover Button -->
-<div class="flex justify-center py-2">
-<button class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl neumorphic-button text-primary hover:text-primary/80 transition-all font-bold text-sm">
-<span class="material-symbols-outlined text-lg">add_circle</span>
-<span>Agregar Parada</span>
-</button>
+<!-- Origin and Endpoints -->
+<div class="space-y-6 mt-4">
+  <!-- Origin -->
+  <div class="flex flex-col gap-2">
+    <label class="flex flex-col flex-1">
+      <p class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal pb-2 ml-1">Punto de Partida</p>
+      <div class="flex w-full items-stretch rounded-xl neumorphic-inset">
+        <input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent h-14 placeholder:text-slate-400 dark:placeholder:text-slate-600 px-5 text-base font-normal focus:ring-0 text-slate-900 dark:text-white" placeholder="¿De dónde sales?" value="Altamira, Caracas"/>
+        <div class="text-primary flex items-center justify-center px-4">
+          <span class="material-symbols-outlined">my_location</span>
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <!-- Intermediate Stops Container -->
+  <div id="stops-container" class="space-y-4">
+    <!-- Escalas will be injected here -->
+  </div>
+
+  <!-- Add Stopover Button -->
+  <div class="flex justify-center py-2">
+    <button onclick="addStop()" class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl neumorphic-button text-primary hover:text-primary/80 transition-all font-bold text-sm">
+      <span class="material-symbols-outlined text-lg">add_circle</span>
+      <span>Agregar Escala</span>
+    </button>
+  </div>
+
+  <!-- Destination -->
+  <div class="flex flex-col gap-2">
+    <label class="flex flex-col flex-1">
+      <p class="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal pb-2 ml-1">Punto de Destino</p>
+      <div class="flex w-full items-stretch rounded-xl neumorphic-inset border-2 border-primary/20">
+        <input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent h-14 placeholder:text-slate-400 dark:placeholder:text-slate-600 px-5 text-base font-normal focus:ring-0 text-slate-900 dark:text-white" placeholder="¿A dónde vas?" value="La Guaira, Vargas"/>
+        <div class="text-primary flex items-center justify-center px-4">
+          <span class="material-symbols-outlined">map</span>
+        </div>
+      </div>
+    </label>
+  </div>
 </div>
 <!-- Map Preview Container -->
 <div class="relative w-full aspect-video rounded-3xl overflow-hidden neumorphic-card border-4 border-space-border/50 group">
@@ -332,5 +342,38 @@
     document.addEventListener('DOMContentLoaded',wire);
   } else { wire(); }
 })();
+// Stop Management Logic
+let stopCount = 0;
+function addStop() {
+  if(stopCount >= 3) { alert('Máximo 3 escalas permitidas'); return; }
+  stopCount++;
+  const container = document.getElementById('stops-container');
+  const div = document.createElement('div');
+  div.id = 'stop-' + stopCount;
+  div.className = "flex flex-col gap-2 animate-in fade-in slide-in-from-top-4 duration-300";
+  div.innerHTML = `
+    <label class="flex flex-col flex-1">
+      <div class="flex items-center justify-between pb-2 ml-1">
+        <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Escala ${stopCount}</p>
+        <button onclick="removeStop(${stopCount})" class="text-red-400 text-[10px] font-bold uppercase">Quitar</button>
+      </div>
+      <div class="flex w-full items-stretch rounded-xl neumorphic-inset">
+        <input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent h-14 placeholder:text-slate-400 dark:placeholder:text-slate-600 px-5 text-base font-normal focus:ring-0 text-slate-900 dark:text-white" placeholder="Ciudad o parada intermedía"/>
+        <div class="text-primary flex items-center justify-center px-4">
+          <span class="material-symbols-outlined">more_vert</span>
+        </div>
+      </div>
+    </label>
+  `;
+  container.appendChild(div);
+}
+
+function removeStop(id) {
+  const el = document.getElementById('stop-' + id);
+  if(el) {
+    el.remove();
+    stopCount--;
+  }
+}
 </script>
 <!-- /VAMOS-V2 --></body></html>

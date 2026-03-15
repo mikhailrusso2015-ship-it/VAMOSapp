@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<title>VAMOS – Premium Carpooling App</title>
-<meta name="description" content="VAMOS – La app de carpooling premium para profesionales modernos. Viajes seguros, cómodos y asequibles."/>
+<title>VAMOS – Selección de Modo</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -14,12 +13,10 @@
     theme: {
       extend: {
         colors: {
-          "primary":          "#F59A2F",
-          "space-blue":       "#040521",
-          "deep-blue":        "#081D56",
-          "cerulean":         "#62AAE5",
-          "bg-light":         "#f8f6f6",
-          "bg-dark":          "#040521",
+          "primary": "#F59A2F",
+          "space-blue": "#040521",
+          "deep-blue": "#081D56",
+          "cerulean": "#62AAE5"
         },
         fontFamily: { display: ["Public Sans","sans-serif"] }
       }
@@ -27,524 +24,99 @@
   }
 </script>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: #040521; font-family: 'Public Sans', sans-serif; }
-
-  /* ── Phone Shell ── */
-  #phone-shell {
-    position: fixed; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(ellipse at 30% 20%, #0d1650 0%, #040521 70%);
-  }
-  #phone-wrapper {
-    position: relative;
-    width: min(420px, 100vw);
-    height: min(900px, 100dvh);
-    border-radius: min(44px, 5vw);
+  body { 
+    margin: 0; padding: 0; box-sizing: border-box; 
+    background: #040521; font-family: 'Public Sans', sans-serif;
+    min-height: 100dvh; display: flex; align-items: center; justify-content: center;
     overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.08);
-    background: #040521;
   }
-  @media (max-width: 480px) {
-    #phone-shell { background: #040521; }
-    #phone-wrapper { width: 100vw; height: 100dvh; border-radius: 0; box-shadow: none; }
-  }
-
-  /* ── Frame container ── */
-  #screen-frame {
-    width: 100%; height: 100%;
-    border: none; display: block;
-    transition: opacity .18s ease;
-  }
-  #screen-frame.fading { opacity: 0; }
-
-  /* ── Loading spinner ── */
-  #loader {
-    position: absolute; inset: 0; z-index: 99;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: #040521; gap: 16px;
-    transition: opacity .2s; pointer-events: none;
-  }
-  #loader.hidden { opacity: 0; pointer-events: none; }
-  .spinner {
-    width: 48px; height: 48px;
-    border: 3px solid rgba(245,154,47,.2);
-    border-top-color: #F59A2F;
-    border-radius: 50%;
-    animation: spin .7s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ── Back button overlay ── */
-  #back-btn {
-    position: absolute; top: 14px; left: 14px; z-index: 50;
-    width: 38px; height: 38px;
-    background: rgba(4,5,33,.6); backdrop-filter: blur(10px);
-    border: 1px solid rgba(245,154,47,.25);
-    border-radius: 50%;
-    display: none; align-items: center; justify-content: center;
-    color: #F59A2F; cursor: pointer;
-    font-family: 'Material Symbols Outlined';
-    font-size: 20px; line-height: 1;
-    transition: background .2s;
-  }
-  #back-btn.visible { display: flex; }
-  #back-btn:hover { background: rgba(245,154,47,.15); }
-
-  /* ── Desktop side panel showing screens list ── */
-  #side-nav {
-    display: none;
-    position: fixed; left: 0; top: 0; bottom: 0;
-    width: 240px; background: #060833;
-    border-right: 1px solid rgba(255,255,255,.05);
-    overflow-y: auto; z-index: 200;
-    flex-direction: column; gap: 2px; padding: 20px 12px;
-  }
-  @media (min-width: 900px) {
-    #side-nav { display: flex; }
-    #phone-shell { margin-left: 240px; }
-  }
-  .side-item {
-    padding: 8px 12px; border-radius: 8px;
-    font-size: 12px; color: #62AAE5; cursor: pointer;
-    transition: background .15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .side-item:hover { background: rgba(245,154,47,.1); color: #F59A2F; }
-  .side-item.active { background: rgba(245,154,47,.18); color: #F59A2F; font-weight: 700; }
-  .side-section { font-size: 10px; color: rgba(255,255,255,.3); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 12px 12px 4px; }
+  .nm-card { background:#040521; box-shadow:8px 8px 20px #020211,-8px -8px 20px #060831; }
+  .nm-inset { background:#040521; box-shadow:inset 4px 4px 8px #020211,inset -4px -4px 8px #060831; }
+  .nm-btn { background:#F59A2F; box-shadow:4px 4px 10px #9e631e,-2px -2px 6px #ffcc8d; }
+  
+  .role-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 2px solid transparent; }
+  .role-card:hover { border-color: #F59A2F; transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+  .role-card:active { transform: scale(0.98); }
 </style>
 </head>
-<body>
+<body class="p-6">
 
-<!-- DESKTOP SIDE NAV (so client demos easily on larger screens too) -->
-<nav id="side-nav">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;padding:0 4px">
-    <div style="width:32px;height:32px;background:#F59A2F;border-radius:8px;display:flex;align-items:center;justify-content:center">
-      <span style="font-family:'Material Symbols Outlined';color:#fff;font-size:18px">directions_car</span>
+<div class="w-full max-w-[420px] flex flex-col items-center gap-12">
+  
+  <!-- Logo Section -->
+  <div class="flex flex-col items-center gap-4">
+    <div class="size-32 nm-card rounded-[2.5rem] flex items-center justify-center p-3 border-2 border-white/5 animate-pulse">
+      <img src="logo_vamos.png" alt="VAMOS Logo" class="w-full h-full object-contain">
     </div>
-    <span style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em">VAMOS</span>
+    <div class="text-center">
+      <h1 class="text-5xl font-black text-white tracking-tighter">VAMOS</h1>
+      <p class="text-cerulean text-[10px] font-black uppercase tracking-[0.5em] mt-1 opacity-80">Venezuela</p>
+    </div>
   </div>
 
-  <div class="side-section">Entrada</div>
-  <div class="side-item" data-screen="login___sign_up.html">🔑 Login / Registro</div>
+  <!-- Instruction -->
+  <div class="text-center space-y-2">
+    <h2 class="text-2xl font-black text-white tracking-tight">¿Cómo deseas usar la app?</h2>
+    <p class="text-slate-500 font-medium">Selecciona tu modo de uso para comenzar</p>
+  </div>
 
-  <div class="side-section">Inicio</div>
-  <div class="side-item" data-screen="chofer_home.html">🚗 Modo Chofer</div>
-  <div class="side-item" data-screen="home__biling_e_venezuela.html">🏠 Modo Pasajero - Inicio</div>
-  <div class="side-item" data-screen="main_dashboard.html">📍 Dashboard Principal</div>
-  <div class="side-item" data-screen="dashboard__biling_e_venezuela.html">🗺️ Dashboard Venezuela</div>
-
-  <div class="side-section">Viajes</div>
-  <div class="side-item" data-screen="create_ride_-_route__biling_e.html">📍 Crear Viaje – Ruta</div>
-  <div class="side-item" data-screen="create_ride_-_schedule__biling_e.html">📅 Crear Viaje – Horario</div>
-  <div class="side-item" data-screen="create_ride_-_pricing__biling_e.html">💰 Crear Viaje – Precio</div>
-  <div class="side-item" data-screen="create_ride_-_review__biling_e.html">✅ Crear Viaje – Resumen</div>
-  <div class="side-item" data-screen="ride_matching__biling_e.html">🔎 Matching de Viaje</div>
-  <div class="side-item" data-screen="live_tracking__biling_e.html">📡 Tracking en Vivo</div>
-  <div class="side-item" data-screen="ride_review__biling_e.html">⭐ Reseña del Viaje</div>
-  <div class="side-item" data-screen="ride_history__biling_e.html">📜 Historial de Viajes</div>
-
-  <div class="side-section">Perfil &amp; Cuenta</div>
-  <div class="side-item" data-screen="user_profile___settings__biling_e.html">👤 Perfil y Configuración</div>
-  <div class="side-item" data-screen="kyc_verification__biling_e_venezuela.html">🪪 KYC Verificación</div>
-  <div class="side-item" data-screen="vehicle_management__biling_e.html">🚗 Gestión de Vehículos</div>
-
-  <div class="side-section">Pagos</div>
-  <div class="side-item" data-screen="wallet__biling_e.html">💳 Billetera</div>
-  <div class="side-item" data-screen="payment_methods__biling_e_venezuela.html">💵 Métodos de Pago</div>
-
-  <div class="side-section">Social</div>
-  <div class="side-item" data-screen="chat_interface__biling_e.html">💬 Chat</div>
-  <div class="side-item" data-screen="notifications__biling_e.html">🔔 Notificaciones</div>
-  <div class="side-item" data-screen="refer_a_friend__biling_e.html">🎁 Referir Amigo</div>
-
-  <div class="side-section">Seguridad &amp; Info</div>
-  <div class="side-item" data-screen="sos_alert__biling_e_venezuela.html">🆘 Alerta SOS</div>
-  <div class="side-item" data-screen="how_it_works__biling_e.html">ℹ️ Cómo Funciona</div>
-  <div class="side-item" data-screen="faq___preguntas_frecuentes__biling_e.html">❓ FAQ</div>
-</nav>
-
-<!-- PHONE SHELL -->
-<div id="phone-shell">
-  <div id="phone-wrapper">
-    <div id="loader">
-      <div class="w-24 h-24 rounded-3xl overflow-hidden shadow-2xl mb-4 animate-pulse border-2 border-primary/20">
-        <img src="logo_vamos.png" alt="VAMOS Logo" class="w-full h-full object-cover">
+  <!-- Selection Grid -->
+  <div class="grid grid-cols-2 gap-6 w-full">
+    <!-- MODO PASAJERO -->
+    <div onclick="selectMode('pasajero')" class="role-card nm-card rounded-[2rem] p-8 flex flex-col items-center gap-6 border border-white/5">
+      <div class="size-20 nm-inset rounded-2xl flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined text-4xl">person</span>
       </div>
-      <div class="spinner"></div>
-      <span style="color:#F59A2F;font-size:11px;font-weight:700;letter-spacing:.1em;margin-top:8px;text-transform:uppercase">Iniciando VAMOS...</span>
+      <div class="text-center">
+        <span class="block text-xl font-black text-white">Pasajero</span>
+        <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-1">Busco viajes</span>
+      </div>
     </div>
-    <div id="back-btn" title="Atrás">arrow_back</div>
 
-<!-- Global SOS Floating Button (One-Tap) -->
-<div id="global-sos-btn" onclick="triggerGlobalSOS()" 
-  style="position:absolute;bottom:100px;right:16px;z-index:50;width:56px;height:56px;border-radius:50%;background:#dc2626;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 20px rgba(220,38,38,0.6);border:3px solid rgba(255,255,255,0.3);animation:sosPulse 1.5s infinite;"
-  title="Emergencia - One Tap SOS">
-  <span style="font-family:'Material Symbols Outlined';font-size:24px;color:#fff;">sos</span>
-</div>
-<style>
-@keyframes sosPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.7),0 0 0 0 rgba(220,38,38,0.3);}50%{box-shadow:0 0 0 12px rgba(220,38,38,0),0 0 0 24px rgba(220,38,38,0);}}
-</style>
-
-<iframe id="screen-frame" src="login___sign_up.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"></iframe>
-
+    <!-- MODO CHOFER -->
+    <div onclick="selectMode('chofer')" class="role-card nm-card rounded-[2rem] p-8 flex flex-col items-center gap-6 border border-white/5">
+      <div class="size-20 nm-inset rounded-2xl flex items-center justify-center text-cerulean">
+        <span class="material-symbols-outlined text-4xl">airline_seat_recline_normal</span>
+      </div>
+      <div class="text-center">
+        <span class="block text-xl font-black text-white">Chofer</span>
+        <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-1">Ofrezco viajes</span>
+      </div>
+    </div>
   </div>
+
+  <!-- Footer Info -->
+  <p class="text-slate-600 text-[10px] font-black uppercase tracking-widest mt-4">
+    VAMOS v2.0 • Premium Carpooling
+  </p>
+
 </div>
 
 <script>
-// ─────────────────────────────────────────────
-//  VAMOS – SPA Router + i18n
-// ─────────────────────────────────────────────
-
-// Internationalization (i18n) translations
-const TRANSLATIONS = {
-  es: {
-    subtitle: "Viajes compartidos premium en Venezuela",
-    searchRide: "Buscar un Viaje",
-    offerRide: "Ofrecer un Viaje",
-    passengers: "Pasajero",
-    driver: "Chofer",
-    searchPlaceholder: "¿A dónde vas?",
-    originPlaceholder: "Tu ubicación actual",
-    today: "Hoy",
-    tomorrow: "Mañana",
-    thisWeek: "Esta Semana",
-    availableNow: "Disponible Ahora",
-    bookNow: "Reservar Ahora",
-    confirm: "Confirmar",
-    cancel: "Cancelar",
-    seeAll: "Ver todos",
-    sosAlert: "Alerta SOS",
-    sosSent: "Alerta enviada a tus contactos de emergencia",
-    emergencyContacts: "Contactos de Emergencia",
-    locationSent: "Ubicación compartida con los servicios de emergencia."
-  },
-  en: {
-    subtitle: "Premium shared rides in Venezuela",
-    searchRide: "Search for a Ride",
-    offerRide: "Offer a Ride",
-    passengers: "Passenger",
-    driver: "Driver",
-    searchPlaceholder: "Where are you going?",
-    originPlaceholder: "Your current location",
-    today: "Today",
-    tomorrow: "Tomorrow",
-    thisWeek: "This Week",
-    availableNow: "Available Now",
-    bookNow: "Book Now",
-    confirm: "Confirm",
-    cancel: "Cancel",
-    seeAll: "See all",
-    sosAlert: "SOS Alert",
-    sosSent: "Alert sent to your emergency contacts",
-    emergencyContacts: "Emergency Contacts",
-    locationSent: "Location shared with emergency services."
-  }
-};
-
-// Get current language from localStorage or default to Spanish
-let currentLang = localStorage.getItem('vamos_lang') || 'es';
-
-function t(key) {
-  return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS['es'][key] || key;
-}
-
-function setLanguage(lang) {
-  currentLang = lang;
-  localStorage.setItem('vamos_lang', lang);
-  
-  // Update all language toggle buttons in the parent
-  document.querySelectorAll('.lang-toggle').forEach(el => {
-    el.innerHTML = lang === 'es' 
-      ? '<span class="text-primary">ES</span><span class="opacity-30">|</span><span class="opacity-50">EN</span>'
-      : '<span class="opacity-50">ES</span><span class="opacity-30">|</span><span class="text-primary">EN</span>';
-  });
-
-  // Notify the active frame
-  const frame = document.getElementById('screen-frame');
-  if(frame && frame.contentWindow) {
-    frame.contentWindow.postMessage({ type: 'LANGUAGE_CHANGE', lang: lang }, '*');
-  }
-}
-
-function toggleLanguage() {
-  setLanguage(currentLang === 'es' ? 'en' : 'es');
-}
-
-// ── SOS LOGIC ────────────────────────────────
-function oneTapSOS() {
-  const loc = JSON.parse(localStorage.getItem('vamos_current_location') || '{"lat":10.48,"lng":-66.90}');
-  const msg = encodeURIComponent(`🚨 VAMOS SOS: Necesito ayuda. Mi ubicación: https://www.google.com/maps?q=${loc.lat},${loc.lng}`);
-  
-  // 1. Call 171
-  window.location.href = 'tel:171';
-  
-  // 2. WhatsApp Alert (Simulated contacts)
-  setTimeout(() => {
-    window.open(`https://wa.me/?text=${msg}`, '_blank');
-  }, 1500);
-}
-
-const SCREENS = {
-  // Login
-  login:           'login___sign_up.html',
-
-  choferHome:      'chofer_home.html',
-
-  // Home / Dashboard
-  home:            'home__biling_e_venezuela.html',
-  dashboard:       'main_dashboard.html',
-  dashboardVE:     'dashboard__biling_e_venezuela.html',
-
-  // Create Ride flow
-  createRoute:     'create_ride_-_route__biling_e.html',
-  createSchedule:  'create_ride_-_schedule__biling_e.html',
-  createPricing:   'create_ride_-_pricing__biling_e.html',
-  createReview:    'create_ride_-_review__biling_e.html',
-
-  // Active ride
-  matching:        'ride_matching__biling_e.html',
-  tracking:        'live_tracking__biling_e.html',
-  rideReview:      'ride_review__biling_e.html',
-  history:         'ride_history__biling_e.html',
-
-  // Profile
-  profile:         'user_profile___settings__biling_e.html',
-  kyc:             'kyc_verification__biling_e_venezuela.html',
-  kycOfficial:     'kyc_verification__official_palette.html',
-  vehicles:        'vehicle_management__biling_e.html',
-
-  // Payments
-  wallet:          'wallet__biling_e.html',
-  payments:        'payment_methods__biling_e_venezuela.html',
-
-  // Social / support
-  chat:            'chat_interface__biling_e.html',
-  notifications:   'notifications__biling_e.html',
-  refer:           'refer_a_friend__biling_e.html',
-
-  // Safety / info
-  sos:             'sos_alert__biling_e_venezuela.html',
-  howItWorks:      'how_it_works__biling_e.html',
-  faq:             'faq___preguntas_frecuentes__biling_e.html',
-};
-
-// Navigation history stack
-const history = [];
-let currentScreen = 'login___sign_up.html';
-
-const frame     = document.getElementById('screen-frame');
-const loader    = document.getElementById('loader');
-const backBtn   = document.getElementById('back-btn');
-const sideItems = document.querySelectorAll('.side-item[data-screen]');
-
-// ── Navigate to a screen ────────────────────
-function navigateTo(screenFile, pushHistory = true) {
-  if (screenFile === currentScreen) return;
-  if (pushHistory) history.push(currentScreen);
-  currentScreen = screenFile;
-
-  loader.classList.remove('hidden');
-  frame.classList.add('fading');
-
-  setTimeout(() => {
-    frame.src = screenFile;
-  }, 120);
-
-  backBtn.classList.toggle('visible', history.length > 0);
-  updateSideNav(screenFile);
-}
-
-function goBack() {
-  if (history.length === 0) return;
-  const prev = history.pop();
-  currentScreen = prev;
-  loader.classList.remove('hidden');
-  frame.classList.add('fading');
-  setTimeout(() => { frame.src = prev; }, 120);
-  backBtn.classList.toggle('visible', history.length > 0);
-  updateSideNav(prev);
-}
-
-// ── Global SOS One-Tap Action ───────────────────
-function triggerGlobalSOS() {
-  // Get current location
-  let lat = 10.4806, lng = -66.9036; // Default Caracas
-  
-  // Try to get real location
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(pos) {
-      lat = pos.coords.latitude;
-      lng = pos.coords.longitude;
-      executeSOS(lat, lng);
-    }, function() {
-      executeSOS(lat, lng);
-    }, {enableHighAccuracy: true, timeout: 5000});
-  } else {
-    executeSOS(lat, lng);
-  }
-}
-
-function executeSOS(lat, lng) {
-  // Get emergency contacts
-  const contacts = JSON.parse(localStorage.getItem('vamos_sos_contacts') || '[]');
-  
-  if (contacts.length === 0) {
-    // No contacts - navigate to SOS page
-    navigateTo('sos_alert__biling_e_venezuela.html');
-    return;
-  }
-  
-  // Show confirmation toast
-  showSOSToast();
-  
-  // Send to all emergency contacts
-  contacts.forEach((c, i) => {
+  function selectMode(role) {
+    // Persistent Role Storage
+    localStorage.setItem('vamos_role', role);
+    localStorage.setItem('vamos_initialized', 'true');
+    
+    // Smooth Transition to Auth
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.4s ease';
+    
     setTimeout(() => {
-      const phone = '58' + c.phone.replace(/\D/g, '').replace(/^0/, '');
-      const mapLink = 'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng;
-      const msg = encodeURIComponent('🚨 ALERTA SOS URGENTE - VAMOS App\n\nHola ' + c.name + ', NECESITO AYUDA ahora mismo.\n\n📍 Mi ubicación en tiempo real:\n' + mapLink + '\n\n⚠️ Enviado automáticamente.');
-      window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
-    }, i * 1500);
-  });
-  
-  // Call 171 after a short delay
-  setTimeout(() => {
-    window.location.href = 'tel:171';
-  }, 2000);
-}
-
-function showSOSToast() {
-  const toast = document.createElement('div');
-  toast.id = 'sos-toast';
-  toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;background:#dc2626;color:#fff;padding:12px 24px;border-radius:12px;font-weight:bold;box-shadow:0 4px 20px rgba(220,38,38,0.5);display:flex;align-items:center;gap:8px;';
-  toast.innerHTML = '<span class="material-symbols-outlined">sos</span> Enviando alerta SOS...';
-  document.body.appendChild(toast);
-  
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transition = 'opacity 0.3s';
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
-}
-
-function updateSideNav(screenFile) {
-  sideItems.forEach(el => {
-    el.classList.toggle('active', el.dataset.screen === screenFile);
-  });
-}
-
-// ── Frame load ───────────────────────────────
-frame.addEventListener('load', () => {
-  frame.classList.remove('fading');
-  setTimeout(() => loader.classList.add('hidden'), 150);
-
-  // Wire up links inside the iframe
-  try {
-    const doc = frame.contentDocument || frame.contentWindow.document;
-    wireDocument(doc);
-    // Sync language on load
-    frame.contentWindow.postMessage({ type: 'LANGUAGE_CHANGE', lang: currentLang }, '*');
-  } catch(e) {
-    // cross-origin – shouldn't happen for same-origin files
+      window.location.href = 'login___sign_up.html';
+    }, 400);
   }
-});
 
-// ── Wire all links/buttons inside a screen doc ──
-function wireDocument(doc) {
-  if (!doc) return;
+  // Clear session on entry to index (Force fresh start as per Pilar 1)
+  window.onload = () => {
+    // If coming from logout, we ensure state is clean
+    console.log("VAMOS Entry Facade Initialized");
+  };
+</script>
 
-  const currentRole = localStorage.getItem('vamos_role') || 'pasajero';
-
-  // Bottom nav wiring (by icon text/label)
-  const navLinks = doc.querySelectorAll('nav a, footer a, [class*="bottom"] a');
-  navLinks.forEach(a => {
-    const text = (a.textContent || '').trim().toLowerCase();
-    const icon = (a.querySelector('[class*="material"]')?.textContent || '').trim().toLowerCase();
-    const combined = text + ' ' + icon;
-
-    let target = null;
-    if (/home|inicio|explore|explor/.test(combined))       target = (currentRole === 'chofer' ? SCREENS.choferHome : SCREENS.home);
-    if (/search|buscar/.test(combined))                     target = (currentRole === 'chofer' ? SCREENS.dashboard : SCREENS.dashboard); // Both use dashboard currently
-    if (/rides?|viajes?|my.trip|mis.viajes/.test(combined)) target = SCREENS.history;
-    if (/wallet|billetera|payments?/.test(combined))        target = SCREENS.wallet;
-    if (/profile|perfil|person/.test(combined))             target = SCREENS.profile;
-    if (/notification|notificac/.test(combined))            target = SCREENS.notifications;
-    if (/settings?|configur/.test(combined))                target = SCREENS.profile;
-    if (/chat|mensaj/.test(combined))                       target = SCREENS.chat;
-
-    if (target) {
-      a.href = 'javascript:void(0)';
-      a.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); navigateTo(target); });
-    }
-  });
-
-  // CTA / action buttons
-  const allButtons = doc.querySelectorAll('button, a[href], .nm-btn, .neumorphic-button');
-  allButtons.forEach(el => {
-    const txt = (el.textContent || '').trim().toLowerCase();
-    const cls = (el.className || '').toLowerCase();
-    const icon = (el.querySelector?.('[class*="material"]')?.textContent || '').trim().toLowerCase();
-    const combined = txt + ' ' + icon + ' ' + cls;
-
-    let target = null;
-
-    // Login screen fixes
-    if (/iniciar|entrar|login/.test(combined) && currentScreen.includes('login')) {
-       // Logic is handled inside login.html, but let's ensure the SPA doesn't override it poorly
-       return; 
-    }
-
-    // Sign up
-    if (/sign.up|registr|crear.cuenta/.test(combined)) target = SCREENS.kyc;
-
-    // Offer Ride / Create ride
-    if (/offer.a.ride|ofrecer|create.ride|crear.viaje/.test(combined)) target = SCREENS.createRoute;
-
-    // Next / Siguiente in create ride flow
-    if (/next|siguiente/.test(combined) || /continuar/.test(combined)) {
-      const src = currentScreen;
-      if (src.includes('route'))    target = SCREENS.createSchedule;
-      else if (src.includes('schedule')) target = SCREENS.createPricing;
-      else if (src.includes('pric'))     target = SCREENS.createReview;
-      else if (src.includes('review'))   target = SCREENS.matching;
-    }
-
-    // Confirm ride → matching
-    if (/confirm|confirmar/.test(combined)) target = SCREENS.matching;
-
-    if (target) {
-      el.style.cursor = 'pointer';
-      el.addEventListener('click', e => {
-        e.preventDefault();
-        e.stopPropagation();
-        navigateTo(target);
-      });
-    }
-  });
-
-  // SOS button explicitly
-  const sosBtns = doc.querySelectorAll('[class*="bg-red-6"], [class*="red-600"], .sos-btn, [class*="sos"]');
-  sosBtns.forEach(btn => {
-     btn.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      oneTapSOS();
-    });
-  });
-
-  // Language toggle inside frame
-  const langBtns = doc.querySelectorAll('.lang-toggle, button:contains("ES"), button:contains("EN")');
-  langBtns.forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleLanguage();
-    });
-  });
-}
-
-// ── Listen for postMessage from iframe ───────
+</body>
+</html>
+frame ───────
 window.addEventListener('message', e => {
   if (e.data?.nav)      navigateTo(e.data.nav);
   if (e.data?.back)     goBack();

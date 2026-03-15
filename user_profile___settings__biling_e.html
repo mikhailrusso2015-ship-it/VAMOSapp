@@ -1,404 +1,234 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
+<html lang="es" class="dark">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>VAMOS – Perfil</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#ec5b13",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#221610",
-                        "brand-deep": "#040521",
-                        "brand-mid": "#081D56",
-                        "brand-cerulean": "#62AAE5",
-                        "brand-orange": "#F59A2F",
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                    boxShadow: {
-                        'neo-out': '8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff',
-                        'neo-in': 'inset 8px 8px 16px #d1d1d1, inset -8px -8px 16px #ffffff',
-                        'neo-out-dark': '8px 8px 16px #1a110c, -8px -8px 16px #2a1b14',
-                    }
-                },
-            },
-        }
-    </script>
-<style>
-        .neo-card {
-            background: #f8f6f6;
-            box-shadow: 6px 6px 12px #e3e1e1, -6px -6px 12px #ffffff;
-        }
-        .dark .neo-card {
-            background: #221610;
-            box-shadow: 6px 6px 12px #180f0b, -6px -6px 12px #2c1d15;
-        }
-        .neo-btn-primary {
-            background: #ec5b13;
-            box-shadow: 4px 4px 8px #c94d10, -4px -4px 8px #ff6916;
-        }
-        .neo-inset {
-            box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #ffffff;
-        }
-        .dark .neo-inset {
-            box-shadow: inset 4px 4px 8px #180f0b, inset -4px -4px 8px #2c1d15;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#F59A2F",
+          "space-blue": "#040521",
+          "deep-blue": "#081D56",
+          "cerulean": "#62AAE5"
+        },
+        fontFamily: { display: ["Public Sans","sans-serif"] }
+      }
     }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
-<div class="max-w-md mx-auto min-h-screen flex flex-col pb-24">
-<header class="flex items-center justify-between p-6">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-brand-orange text-3xl">directions_car</span>
-<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Vamos</h1>
+  }
+</script>
+<style>
+  body { font-family:'Public Sans',sans-serif; background:#040521; color:#fff; min-height:100dvh; }
+  .nm-card { background:#040521; box-shadow:8px 8px 20px #020211,-4px -4px 12px #060831; border: 1px solid rgba(255,255,255,0.05); }
+  .nm-inset { background:#040521; box-shadow:inset 4px 4px 8px #020211,inset -4px -4px 8px #060831; border: 1px solid rgba(255,255,255,0.05); }
+  .menu-item { transition: all 0.2s; cursor: pointer; }
+  .menu-item:active { transform: scale(0.97); opacity: 0.8; }
+</style>
+</head>
+<body class="pb-24">
+
+<div class="max-w-[420px] mx-auto">
+  
+  <!-- Header -->
+  <header class="p-6 flex items-center justify-between sticky top-0 bg-[#040521]/80 backdrop-blur-md z-50">
+    <div class="flex items-center gap-3">
+      <div class="size-10 nm-card rounded-xl flex items-center justify-center p-2">
+        <img src="logo_vamos.png" alt="Logo" class="w-full h-full object-contain">
+      </div>
+      <h1 class="text-xl font-black tracking-tight text-white uppercase">Perfil</h1>
+    </div>
+    <div onclick="toggleLang()" class="nm-card px-4 py-2 rounded-full flex items-center gap-2 border border-white/5 cursor-pointer">
+      <span id="lang-es" class="text-[10px] font-black text-primary">ES</span>
+      <span class="opacity-20">|</span>
+      <span id="lang-en" class="text-[10px] font-bold text-slate-500">EN</span>
+    </div>
+  </header>
+
+  <!-- User Info -->
+  <section class="px-6 flex flex-col items-center mb-10 mt-4">
+    <div class="relative mb-6">
+      <div class="size-32 rounded-full nm-card p-1 border-4 border-primary/20">
+        <div id="user-photo" class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/a/default-user')"></div>
+      </div>
+      <div class="absolute bottom-1 right-1 bg-green-500 text-white rounded-full p-2 border-4 border-[#040521] shadow-lg">
+        <span class="material-symbols-outlined text-xs font-black">verified</span>
+      </div>
+    </div>
+    <h2 id="user-name" class="text-2xl font-black text-white">Cargando...</h2>
+    <p id="user-role-badge" class="text-cerulean text-[10px] font-bold uppercase tracking-[0.3em] mt-1 opacity-80">Pasajero</p>
+  </section>
+
+  <!-- PILLAR 4: Exact Profile Menu Structure -->
+  <section class="px-6 space-y-4">
+    
+    <div class="pb-2">
+      <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2">Tu Cuenta</h3>
+    </div>
+
+    <!-- 1. Información Personal -->
+    <div onclick="nav('profile')" class="menu-item nm-card rounded-2xl p-5 flex items-center gap-4">
+      <div class="size-12 nm-inset rounded-xl flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+      <span class="flex-1 font-bold text-slate-200">Información Personal</span>
+      <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+    </div>
+
+    <!-- 2. Verificación (KYC Opcional) -->
+    <div onclick="nav('kyc')" class="menu-item nm-card rounded-2xl p-5 flex items-center gap-4 border-primary/30 bg-primary/5">
+      <div class="size-12 nm-inset rounded-xl flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined">verified_user</span>
+      </div>
+      <span class="flex-1 font-bold text-white">Verificación de Perfil</span>
+      <span class="material-symbols-outlined text-primary">verified</span>
+    </div>
+
+    <!-- 3. Vehículos (Driver Only) -->
+    <div id="menu-vehicles" onclick="nav('vehicles')" class="hidden menu-item nm-card rounded-2xl p-5 flex items-center gap-4">
+      <div class="size-12 nm-inset rounded-xl flex items-center justify-center text-cerulean">
+        <span class="material-symbols-outlined">directions_car</span>
+      </div>
+      <span class="flex-1 font-bold text-slate-200">Vehículos</span>
+      <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+    </div>
+
+    <div class="pt-6 pb-2">
+      <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2">Actividad</h3>
+    </div>
+
+    <!-- 4. Reseñas -->
+    <div onclick="nav('reviews')" class="menu-item nm-card rounded-2xl p-5 flex items-center gap-4">
+      <div class="size-12 nm-inset rounded-xl flex items-center justify-center text-yellow-500">
+        <span class="material-symbols-outlined">star</span>
+      </div>
+      <span class="flex-1 font-bold text-slate-200">Reseñas</span>
+      <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+    </div>
+
+    <!-- 5. Pasajeros Guardados -->
+    <div onclick="nav('saved_passengers')" class="menu-item nm-card rounded-2xl p-5 flex items-center gap-4">
+      <div class="size-12 nm-inset rounded-xl flex items-center justify-center text-purple-400">
+        <span class="material-symbols-outlined">group</span>
+      </div>
+      <span class="flex-1 font-bold text-slate-200">Pasajeros Guardados</span>
+      <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+    </div>
+
+    <div class="pt-6 pb-2">
+      <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2">Configuración</h3>
+    </div>
+
+    <!-- 6. Preferencias de Comunicación -->
+    <div onclick="nav('communications')" class="menu-item nm-card rounded-2xl p-5 flex items-center gap-4">
+      <div class="size-12 nm-inset rounded-xl flex items-center justify-center text-slate-400">
+        <span class="material-symbols-outlined">mail</span>
+      </div>
+      <span class="flex-1 font-bold text-slate-200">Preferencias de Comunicación</span>
+      <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+    </div>
+
+    <!-- 7. Pagos / Cobros -->
+    <div onclick="nav('wallet')" class="menu-item nm-card rounded-2xl p-5 flex items-center gap-4">
+      <div class="size-12 nm-inset rounded-xl flex items-center justify-center text-green-500">
+        <span class="material-symbols-outlined">account_balance_wallet</span>
+      </div>
+      <span class="flex-1 font-bold text-slate-200">Métodos de Pago / Cobros</span>
+      <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+    </div>
+
+    <!-- 8. Ayuda y Soporte -->
+    <div onclick="nav('faq')" class="menu-item nm-card rounded-2xl p-5 flex items-center gap-4">
+      <div class="size-12 nm-inset rounded-xl flex items-center justify-center text-slate-500">
+        <span class="material-symbols-outlined">help</span>
+      </div>
+      <span class="flex-1 font-bold text-slate-200">Ayuda y Soporte</span>
+      <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+    </div>
+
+    <!-- 9. Cerrar Sesión (Pillar 3: Absolute Restoration) -->
+    <div onclick="logout()" class="menu-item nm-card rounded-2xl p-6 flex items-center justify-center gap-4 mt-12 bg-red-500/10 border-red-500/20 active:nm-inset transition-all">
+      <span class="material-symbols-outlined text-red-500 font-bold">logout</span>
+      <span class="font-black text-red-500 uppercase tracking-widest">Cerrar Sesión</span>
+    </div>
+
+    <div class="text-center pb-10">
+      <button class="text-red-500/30 text-[10px] font-bold uppercase tracking-widest hover:text-red-500 transition-colors">Eliminar mi cuenta</button>
+    </div>
+
+  </section>
+
 </div>
-<div class="flex items-center gap-3 neo-card rounded-full px-4 py-1.5">
-<span class="text-xs font-bold text-brand-orange">ES</span>
-<div class="w-10 h-5 bg-slate-200 dark:bg-slate-800 rounded-full relative neo-inset">
-<div class="absolute right-0.5 top-0.5 w-4 h-4 bg-brand-orange rounded-full shadow-sm"></div>
-</div>
-<span class="text-xs font-bold text-slate-400">EN</span>
-</div>
-</header>
-<section class="px-6 flex flex-col items-center mb-8">
-<div class="relative mb-4">
-<div class="w-32 h-32 rounded-full neo-card p-1.5">
-<div class="w-full h-full rounded-full bg-cover bg-center border-4 border-white dark:border-slate-800" data-alt="Professional headshot of a smiling woman profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzitX7sOUeAGdkIVgD0EgyoSC0GnlggoId_YfPn6bHKX15cLdm5xaRto9dGG5_K0i4K50WQXN445chIO_Uw8E7d59bMKKPs4WD1o-H776rchKN95ZTx6efuQtDydRDA5tN_7fkhgRonmv0KAzaLwAt0e8B1pzsgt7Lyzcuo3hQ37gRatKa57LFdxknZsp2AMbOyQdvELJgoUQXTjJUz18o9VV8artymhb9X657bv3R1hHEqDDCiU5Rg1QRHuPQsgWCAu4e9aIp3YU')">
-</div>
-</div>
-<div class="absolute bottom-1 right-1 bg-green-500 text-white rounded-full p-1 border-2 border-background-light dark:border-background-dark flex items-center justify-center">
-<span class="material-symbols-outlined text-sm font-bold">verified</span>
-</div>
-</div>
-<h2 class="text-2xl font-bold">María Alejandra G.</h2>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Miembro Verificado / Miembro Verificado</p>
-<div class="flex gap-4 mt-6 w-full">
-<div class="flex-1 neo-card rounded-2xl p-4 text-center">
-<p class="text-xl font-bold text-brand-orange">4.9 ⭐</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Rating</p>
-</div>
-<div class="flex-1 neo-card rounded-2xl p-4 text-center">
-<p class="text-xl font-bold text-brand-orange">124</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Viajes</p>
-</div>
-</div>
-</section>
-<section class="px-6 space-y-4 flex-grow">
-<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
-<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">person</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold text-sm">Información Personal</p>
-<p class="text-xs text-slate-500">Información Personal</p>
-</div>
-<span class="material-symbols-outlined text-slate-400">chevron_right</span>
-</div>
-<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
-<div class="w-10 h-10 rounded-xl bg-brand-cerulean/10 flex items-center justify-center text-brand-cerulean">
-<span class="material-symbols-outlined">directions_car</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold text-sm">Mis Vehículos</p>
-<p class="text-xs text-slate-500">Toyota Corolla (AB123CD)</p>
-</div>
-<span class="material-symbols-outlined text-slate-400">chevron_right</span>
-</div>
-<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
-<div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500">
-<span class="material-symbols-outlined">verified_user</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold text-sm">Estado de Verificación</p>
-<div class="flex items-center gap-1">
-<span class="text-xs text-green-500 font-bold uppercase">Verified / Verificado</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-slate-400">check_circle</span>
-</div>
-<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
-<div class="w-10 h-10 rounded-xl bg-brand-orange/10 flex items-center justify-center text-brand-orange">
-<span class="material-symbols-outlined">payments</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold text-sm">Métodos de Pago</p>
-<p class="text-xs text-slate-500">Métodos de Pago</p>
-</div>
-<span class="material-symbols-outlined text-slate-400">chevron_right</span>
-</div>
-<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
-<div class="w-10 h-10 rounded-xl bg-slate-500/10 flex items-center justify-center text-slate-500">
-<span class="material-symbols-outlined">settings</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold text-sm">App Configuración / Configuración</p>
-<p class="text-xs text-slate-500">Language, Notificaciones, Dark Mode</p>
-</div>
-<span class="material-symbols-outlined text-slate-400">chevron_right</span>
-</div>
-<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform text-red-500">
-<div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
-<span class="material-symbols-outlined">emergency</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold text-sm">Security / Seguridad</p>
-<p class="text-xs text-red-400">SOS Contacts / Contactos SOS</p>
-</div>
-<span class="material-symbols-outlined text-red-300">chevron_right</span>
-</div>
-<div class="neo-card rounded-2xl p-4 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
-<div class="w-10 h-10 rounded-xl bg-brand-mid/10 flex items-center justify-center text-brand-mid dark:text-brand-cerulean">
-<span class="material-symbols-outlined">help</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold text-sm">Help &amp; Support</p>
-<p class="text-xs text-slate-500">Ayuda y Soporte</p>
-</div>
-<span class="material-symbols-outlined text-slate-400">chevron_right</span>
-</div>
-</section>
-<div class="px-6 py-8">
-<button class="w-full neo-card py-4 rounded-2xl text-slate-500 dark:text-slate-400 font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-2 active:neo-inset transition-all">
-<span class="material-symbols-outlined">logout</span>
-                Cerrar Sesión / Cerrar Sesión
-            </button>
-</div>
-<nav class="fixed bottom-0 left-0 right-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50">
-<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="text-[10px] font-bold uppercase">Inicio</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">commute</span>
-<span class="text-[10px] font-bold uppercase">Viajes</span>
-</a>
-<a class="flex flex-col items-center gap-1 -mt-8" href="#">
-<div class="w-14 h-14 neo-btn-primary rounded-full flex items-center justify-center text-white border-4 border-background-light dark:border-background-dark">
-<span class="material-symbols-outlined text-3xl">add</span>
-</div>
-<span class="text-[10px] font-bold uppercase mt-1 text-primary">Create</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">chat_bubble</span>
-<span class="text-[10px] font-bold uppercase">Mensajes</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-primary" href="#">
-<span class="material-symbols-outlined font-fill">person</span>
-<span class="text-[10px] font-bold uppercase">Perfil</span>
-</a>
+
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-[#040521]/90 backdrop-blur-xl border-t border-white/5 px-6 py-4 flex justify-between items-center z-50">
+  <button onclick="nav('home')" class="flex flex-col items-center gap-1 text-slate-500">
+    <span class="material-symbols-outlined">search</span>
+    <span class="text-[9px] font-bold uppercase">Buscar</span>
+  </button>
+  <button onclick="nav('create_route')" class="flex flex-col items-center gap-1 text-slate-500">
+    <span class="material-symbols-outlined">add_circle</span>
+    <span class="text-[9px] font-bold uppercase">Publicar</span>
+  </button>
+  <button onclick="nav('history')" class="flex flex-col items-center gap-1 text-slate-500">
+    <span class="material-symbols-outlined">route</span>
+    <span class="text-[9px] font-bold uppercase">Viajes</span>
+  </button>
+  <button onclick="nav('profile')" class="flex flex-col items-center gap-1 text-primary">
+    <span class="material-symbols-outlined font-fill" style="font-variation-settings:'FILL' 1">account_circle</span>
+    <span class="text-[9px] font-bold uppercase">Perfil</span>
+  </button>
 </nav>
-</div>
-<!-- VAMOS-V2 -->
-<script id="vamos-nav-v2">
-(function(){
-  var PAGE = "user_profile___settings__biling_e.html";
-  var S = {"login": "login___sign_up.html", "home": "home__biling_e_venezuela.html", "dashboard": "main_dashboard.html", "dashboard_ve": "dashboard__biling_e_venezuela.html", "create_route": "create_ride_-_route__biling_e.html", "create_schedule": "create_ride_-_schedule__biling_e.html", "create_pricing": "create_ride_-_pricing__biling_e.html", "create_review": "create_ride_-_review__biling_e.html", "matching": "ride_matching__biling_e.html", "tracking": "live_tracking__biling_e.html", "ride_review": "ride_review__biling_e.html", "history": "ride_history__biling_e.html", "profile": "user_profile___settings__biling_e.html", "kyc": "kyc_verification__biling_e_venezuela.html", "vehicles": "vehicle_management__biling_e.html", "wallet": "wallet__biling_e.html", "payments": "payment_methods__biling_e_venezuela.html", "chat": "chat_interface__biling_e.html", "notifications": "notifications__biling_e.html", "refer": "refer_a_friend__biling_e.html", "sos": "sos_alert__biling_e_venezuela.html", "how": "how_it_works__biling_e.html", "faq": "faq___preguntas_frecuentes__biling_e.html"};
 
-  function go(key){ var t = S[key]||key; if(window.parent!==window){ window.parent.postMessage({nav:t},'*'); } else { window.location.href=t; } }
-  function back(){ if(window.parent!==window){ window.parent.postMessage({back:true},'*'); } else { window.history.back(); } }
+<script>
+  // Initial Data
+  const user = JSON.parse(localStorage.getItem('vamos_user') || '{}');
+  const role = localStorage.getItem('vamos_role') || 'pasajero';
 
-  function wire(){
-    // ─── 1. Back buttons ───────────────────────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && /arrow_back|chevron_left|arrow_back_ios/.test(ic.textContent.trim())){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();back();};
-      }
-    });
-
-    // ─── 2. SOS floating red button ────────────────────────────
-    document.querySelectorAll('[class*="bg-red-"], [class*="red-600"]').forEach(function(el){
-      el.style.cursor='pointer';
-      el.onclick=function(e){e.stopPropagation();go('sos');};
-    });
-
-    // ─── 3. Notification bell in header ────────────────────────
-    document.querySelectorAll('header button, header [role="button"]').forEach(function(b){
-      var ic = b.querySelector('[class*="material"]');
-      if(ic && ic.textContent.trim()==='notifications'){
-        b.style.cursor='pointer';
-        b.onclick=function(e){e.stopPropagation();go('notifications');};
-      }
-    });
-
-    // ─── 4. Profile avatar in header ──────────────────────────
-    document.querySelectorAll('header img[alt*="rofile"], header img[alt*="User"]').forEach(function(img){
-      var wrap = img.parentElement;
-      if(wrap){ wrap.style.cursor='pointer'; wrap.onclick=function(e){e.stopPropagation();go('profile');}; }
-    });
-
-    // ─── 5. Bottom navigation by icon ─────────────────────────
-    var navMap = {
-      'home':'home','explore':'home','inicio':'home',
-      'search':'dashboard','buscar':'dashboard','near_me':'dashboard',
-      'directions_car':'history','route':'history','viajes':'history',
-      'payments':'wallet','billetera':'wallet','account_balance_wallet':'wallet',
-      'person':'profile','perfil':'profile','account_circle':'profile',
-      'notifications':'notifications',
-      'chat':'chat','message':'chat','forum':'chat',
-      'settings':'profile','tune':'profile',
-      'add_circle':'create_route','add':'create_route',
-    };
-    document.querySelectorAll('nav a, nav button, [class*="bottom"] a').forEach(function(el){
-      var ico = el.querySelector('[class*="material"]');
-      var txt = (el.textContent||'').trim().toLowerCase().replace(/\s+/g,' ');
-      var icon = ico ? ico.textContent.trim() : '';
-      var key = navMap[icon] || navMap[txt];
-      if(!key){
-        // fuzzy match on label text
-        if(/inicio|home/.test(txt)) key='home';
-        else if(/buscar|search/.test(txt)) key='dashboard';
-        else if(/viajes|rides|trips/.test(txt)) key='history';
-        else if(/billetera|wallet/.test(txt)) key='wallet';
-        else if(/perfil|profile/.test(txt)) key='profile';
-        else if(/notif/.test(txt)) key='notifications';
-        else if(/mensajes|chat/.test(txt)) key='chat';
-        else if(/configur|settings/.test(txt)) key='profile';
-        else if(/crear|create|add/.test(txt)) key='create_route';
-        else if(/explorar|explore/.test(txt)) key='home';
-        else if(/historial|history/.test(txt)) key='history';
-      }
-      if(key){
-        el.setAttribute('href','javascript:void(0)');
-        el.style.cursor='pointer';
-        (function(k){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(k);}; })(key);
-      }
-    });
-
-    // ─── 6. Per-page specific button rules ─────────────────────
-    var rules = [["a[href=\"#\"]:nth-of-type(1)", "kyc"], ["a[href=\"#\"]:nth-of-type(2)", "vehicles"], ["a[href=\"#\"]:nth-of-type(3)", "payments"], ["a[href=\"#\"]:nth-of-type(4)", "refer"], ["a[href=\"#\"]:nth-of-type(5)", "how"], ["button[class*=\"red\"], .text-red", "login"]];
-    rules.forEach(function(r){
-      try {
-        document.querySelectorAll(r[0]).forEach(function(el){
-          if(r[1]===null) return; // input fields etc., skip
-          el.style.cursor='pointer';
-          (function(k){ el.onclick=function(e){e.stopPropagation();go(k);}; })(r[1]);
-        });
-      } catch(x){}
-    });
-
-    // ─── 7. Generic CTA button wiring by text ─────────────────
-    var textMap = [
-      [/^(buscar un viaje|buscar viaje|find a ride)$/i, 'dashboard'],
-      [/^(ofrecer un viaje|ofrecer viaje|offer a ride|crear viaje)$/i, 'create_route'],
-      [/^(iniciar sesi[oó]n|login|sign in|entrar)$/i, 'home'],
-      [/^(registrarse|sign up|crear cuenta)$/i, 'kyc'],
-      [/^(siguiente|next)$/i, (function(){ 
-        if(PAGE.indexOf('route')>-1)    return 'create_schedule';
-        if(PAGE.indexOf('schedule')>-1) return 'create_pricing';
-        if(PAGE.indexOf('pric')>-1)     return 'create_review';
-        if(PAGE.indexOf('review')>-1 && PAGE.indexOf('ride_review')===-1) return 'matching';
-        return 'home';
-      })()],
-      [/^(confirmar|confirmar viaje|confirm ride|confirm)$/i, 'matching'],
-      [/^(seguir viaje|track ride|track|seguir)$/i, 'tracking'],
-      [/^(calificar|rate|calificar conductor|rate driver)$/i, 'ride_review'],
-      [/^(finalizar|done|finish|enviar rese[nñ]a|submit review)$/i, 'home'],
-      [/^(ver todos|see all|ver todo)$/i, 'dashboard'],
-      [/^(activar ahora|activate now)$/i, 'payments'],
-      [/^(agregar saldo|add money)$/i, 'payments'],
-      [/^(retirar|withdraw)$/i, 'payments'],
-      [/^(enviar dinero|send money)$/i, 'payments'],
-      [/^(agregar m[eé]todo de pago|add payment method|add card)$/i, 'payments'],
-      [/^(billetera|wallet)$/i, 'wallet'],
-      [/^(verificar|verify|completar kyc)$/i, 'kyc'],
-      [/^(historial|ride history|ver historial)$/i, 'history'],
-      [/^(mis veh[ií]culos|my vehicles|agregar veh[ií]culo|add vehicle)$/i, 'vehicles'],
-      [/^(cerrar sesi[oó]n|log out|logout)$/i, 'login'],
-      [/^(editar perfil|edit profile)$/i, 'profile'],
-      [/^(alerta sos|send sos|enviar sos)$/i, 'sos'],
-      [/^(compartir ubicaci[oó]n|share location)$/i, 'sos'],
-      [/^(compartir|share)$/i, 'refer'],
-      [/^(copiar c[oó]digo|copy code)$/i, 'refer'],
-      [/^(referir un amigo|refer a friend|invitar amigos|invite friends)$/i, 'refer'],
-      [/^(mensajes|chat)$/i, 'chat'],
-      [/^(notificaciones|notifications)$/i, 'notifications'],
-      [/^(c[oó]mo funciona|how it works|comenzar|get started)$/i, 'how'],
-      [/^(preguntas frecuentes|faq)$/i, 'faq'],
-      [/^(contactar soporte|contact support)$/i, 'chat'],
-      [/^(volver al inicio|back to home)$/i, 'home'],
-      [/^(cancelar|cancel)$/i, 'home'],
-      [/^(guardar|save)$/i, 'profile'],
-      [/^(publicar viaje|offer ride)$/i, 'matching'],
-      [/^(viajar de nuevo|book again)$/i, 'dashboard'],
-      [/información personal/i, 'profile'],
-      [/mis vehículos/i, 'vehicles'],
-      [/estado de verificaci/i, 'kyc'],
-      [/métodos de pago/i, 'payments'],
-      [/configuración de la app/i, 'profile'],
-      [/ayuda y soporte/i, 'how'],
-      [/referir un amigo/i, 'refer'],
-      [/marcar todo como le[ií]do/i, 'notifications'],
-      [/mensaje a conductor/i, 'chat'],
-    ];
-
-    document.querySelectorAll('button, a').forEach(function(el){
-      // Skip nav elements already handled
-      if(el.closest('nav')) return;
-      var txt = (el.textContent||'').trim().replace(/\s+/g,' ');
-      for(var i=0;i<textMap.length;i++){
-        if(textMap[i][0].test(txt)){
-          var k = textMap[i][1];
-          el.setAttribute('href','javascript:void(0)');
-          el.style.cursor='pointer';
-          (function(key){ el.onclick=function(e){e.preventDefault();e.stopPropagation();go(key);}; })(k);
-          break;
-        }
-      }
-    });
-
-    // ─── 8. Language toggle: ES|EN button ─────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var t = (b.textContent||'').trim();
-      if(t==='ES | EN' || (t.indexOf('ES')>-1 && t.indexOf('EN')>-1)){
-        b.onclick=function(e){
-          e.stopPropagation();
-          alert('Opciones de idioma: actualmente Español');
-        };
-      }
-    });
-
-    // ─── 9. "Viajes Cercanos" card → dashboard ──────────────────
-    document.querySelectorAll('[class*="neumorph-card"], [class*="neu-flat"]').forEach(function(card){
-      var isNav = card.closest('nav') || card.closest('header');
-      if(isNav) return;
-      var txt = (card.textContent||'').toLowerCase();
-      if(txt.indexOf('altamira')>-1 || txt.indexOf('min away')>-1 || txt.indexOf('disponible ahora')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-      if(txt.indexOf('alejandro medina')>-1 || txt.indexOf('sofía rodríguez')>-1){
-        card.style.cursor='pointer';
-        card.onclick=function(e){
-          if(e.target.tagName==='BUTTON' || e.target.tagName==='A') return;
-          go('matching');
-        };
-      }
-    });
+  document.getElementById('user-name').textContent = user.name || 'Usuario';
+  document.getElementById('user-role-badge').textContent = (role === 'chofer' ? 'Chofer Verificado' : 'Pasajero Verificado');
+  if(user.photo) {
+    document.getElementById('user-photo').style.backgroundImage = `url('${user.photo}')`;
   }
 
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',wire);
-  } else { wire(); }
-})();
+  // Pillar 4: Show Vehicles only for Drivers
+  if(role === 'chofer') {
+    document.getElementById('menu-vehicles').classList.remove('hidden');
+  }
+
+  function nav(key) {
+    const screens = {
+      'home': 'home__biling_e_venezuela.html',
+      'profile': 'user_profile___settings__biling_e.html',
+      'kyc': 'kyc_verification__biling_e_venezuela.html',
+      'vehicles': 'vehicle_management__biling_e.html',
+      'wallet': 'wallet__biling_e.html',
+      'history': 'ride_history__biling_e.html',
+      'create_route': 'create_ride_-_route__biling_e.html',
+      'faq': 'faq___preguntas_frecuentes__biling_e.html'
+    };
+    const target = screens[key] || key;
+    if(window.parent !== window) window.parent.postMessage({nav: target}, '*');
+    else window.location.href = target;
+  }
+
+  function logout() {
+    // Pillar 3: Destroy session and return to entry
+    localStorage.clear();
+    sessionStorage.clear();
+    if(window.parent !== window) window.parent.location.href = 'index.html';
+    else window.location.href = 'index.html';
+  }
+
+  function toggleLang() {
+    // Simulation
+    alert('Cambio de idioma solicitado');
+  }
 </script>
-<!-- /VAMOS-V2 --></body></html>
+</body>
+</html>
