@@ -1,181 +1,429 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html lang="es" class="dark">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Vamos - Premium Carpooling</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>VAMOS – Premium Carpooling App</title>
+<meta name="description" content="VAMOS – La app de carpooling premium para profesionales modernos. Viajes seguros, cómodos y asequibles."/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#F59A2F",
-                        "space-blue": "#040521",
-                        "deep-blue": "#081D56",
-                        "cerulean": "#62AAE5",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#040521",
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                    boxShadow: {
-                        'nm-flat': '6px 6px 12px #bebebe, -6px -6px 12px #ffffff',
-                        'nm-inset': 'inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff',
-                        'nm-dark-flat': '6px 6px 12px #02020d, -2px -2px 8px #0a0c4d',
-                    }
-                },
-            },
-        }
-    </script>
-<style>
-        body { font-family: 'Public Sans', sans-serif; }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .neumorph-card {
-            background: #f8f6f6;
-            box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff;
-        }
-        .dark .neumorph-card {
-            background: #081D56;
-            box-shadow: 8px 8px 16px #030412, -4px -4px 12px #0d2e87;
-            border: none;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary":          "#F59A2F",
+          "space-blue":       "#040521",
+          "deep-blue":        "#081D56",
+          "cerulean":         "#62AAE5",
+          "bg-light":         "#f8f6f6",
+          "bg-dark":          "#040521",
+        },
+        fontFamily: { display: ["Public Sans","sans-serif"] }
+      }
     }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
-<!-- Header -->
-<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-space-blue/80 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
-<div class="flex items-center gap-3">
-<div class="size-10 flex items-center justify-center rounded-xl bg-deep-blue">
-<img alt="Vamos Premium Logo" class="size-8 object-contain" data-alt="Abstract geometric orange and blue logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxOnDieptZLv83TL-DZ1oBB5X-I1X2CAz_RtF2fDTC_mNotxZnyuuK7FiRxrk4g9ffV4m5tR4J2kURzR7ZEQrW4_M7lB0D_EUXNdJFHgGwbXcjGzd6GmaVF0Xi0NKVo8YkN3yyUJYFtqh9bqetigK3uKAMzYJVDmBhu0hjoLzKUuxTdBqmGutkUa6sN5unSIFf3isjgxFo9iXh3nqwQ1rX02DpJ0qQBOVdzBQGQDaXwiKBp1hZvuIIo1VmftSbUjERAejnoXbdvDI"/>
-</div>
-<span class="text-2xl font-extrabold tracking-tight text-deep-blue dark:text-white">VAMOS</span>
-</div>
-<div class="flex items-center gap-4">
-<button class="p-2 rounded-full neumorph-card flex items-center justify-center text-deep-blue dark:text-cerulean">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<div class="size-10 rounded-full border-2 border-primary overflow-hidden">
-<img alt="User Profile" class="w-full h-full object-cover" data-alt="Professional headshot of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA43ldSlTcjnUvDBHHkl_ps3u1oc0xXKzxoIRfVlr6r3x4G_9rbl1b88atvJGmeJkLlQky_p-d2cDF9rGrTSZTetWAqnVyPY2W0ep1UCdIOzr9dcWcKFSNNVWvLoExmR4Njk3fCWZ-FaNO1Hz0rRYzGCtaQh9lsAS0vCRsv2igofgM3KbhXNS0ZxNQ1aVj3iT3g4MA3xwbi7hvqQ2rJNPISltd6-tfhDwC7glt-I-mbOWgaxj48GZG_Q6KLtKXc9z0zkpW45rURmYY"/>
-</div>
-</div>
-</header>
-<main class="flex-1 px-6 py-8 max-w-md mx-auto w-full">
-<!-- Hero Section -->
-<section class="mb-10 text-center">
-<h1 class="text-4xl font-extrabold text-space-blue dark:text-white leading-tight mb-3">
-                Elevate Your <span class="text-primary">Commute</span>
-</h1>
-<p class="text-slate-600 dark:text-slate-400 text-lg">Premium carpooling for the modern professional.</p>
-</section>
-<!-- Main CTAs -->
-<div class="grid grid-cols-1 gap-6 mb-12">
-<!-- Find a Ride -->
-<button class="neumorph-card group p-6 rounded-3xl flex flex-col items-center gap-4 transition-all active:scale-95 border border-white/20">
-<div class="size-16 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30">
-<span class="material-symbols-outlined text-4xl">search</span>
-</div>
-<div class="text-center">
-<h3 class="text-xl font-bold text-deep-blue dark:text-white">Find a Ride</h3>
-<p class="text-sm text-slate-500 dark:text-cerulean/80">Search for premium routes</p>
-</div>
-</button>
-<!-- Offer a Ride -->
-<button class="neumorph-card group p-6 rounded-3xl flex flex-col items-center gap-4 transition-all active:scale-95 border border-white/20">
-<div class="size-16 rounded-2xl bg-deep-blue dark:bg-cerulean flex items-center justify-center text-white shadow-lg shadow-deep-blue/30">
-<span class="material-symbols-outlined text-4xl">directions_car</span>
-</div>
-<div class="text-center">
-<h3 class="text-xl font-bold text-deep-blue dark:text-white">Offer a Ride</h3>
-<p class="text-sm text-slate-500 dark:text-cerulean/80">Share your journey and save</p>
-</div>
-</button>
-</div>
-<!-- Featured Trip/Map Placeholder -->
-<section class="mb-12">
-<div class="flex items-center justify-between mb-4">
-<h2 class="text-xl font-bold text-space-blue dark:text-white">Nearby Rides</h2>
-<a class="text-primary font-semibold text-sm" href="#">See all</a>
-</div>
-<div class="neumorph-card rounded-3xl overflow-hidden p-2">
-<div class="relative h-48 rounded-2xl bg-slate-200 overflow-hidden mb-4">
-<div class="absolute inset-0 bg-cover bg-center" data-alt="A stylized map showing driving routes" data-location="San Francisco" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0oObpbXrbZBCBfoD2BEpvCN1wwNo7iavEcWpX-dgXqb5oMcwhbGpU1k9qhcm0jNtb1qmININGXQMaJV_ezpEyD7eJ82oMuwQreeXeOyEegpCSaSOiVkn_v5d92_ZCk6luIrCJt0Z_Oelj6YvzeRxk0iO3qgC_COqWD-y2MlfPE6_kMUGUo1b9vmCJ7rDQWoCmfJf6Ijzx994FCDG8Ei3lTKtFRLcUo7QJRU2Fgy0yc2ivJnIIuCsgakW3K_Wtu8BoIvRmLzf_zwQ')"></div>
-<div class="absolute top-4 right-4 glass-panel px-3 py-1 rounded-full flex items-center gap-1">
-<span class="material-symbols-outlined text-primary text-sm">security</span>
-<span class="text-xs font-bold text-white uppercase tracking-wider">Verified</span>
-</div>
-</div>
-<div class="px-4 pb-4">
-<div class="flex justify-between items-start mb-2">
-<div>
-<p class="text-xs font-bold text-primary uppercase tracking-widest">Available Now</p>
-<h4 class="text-lg font-bold dark:text-white">Downtown to Tech Hub</h4>
-</div>
-<p class="text-xl font-black text-deep-blue dark:text-cerulean">$12.00</p>
-</div>
-<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-<span class="material-symbols-outlined text-sm">schedule</span>
-<span class="text-sm">Departs in 15 mins</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Trust Badges -->
-<section class="grid grid-cols-3 gap-4 mb-12">
-<div class="flex flex-col items-center text-center gap-2">
-<div class="size-12 rounded-full neumorph-card flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">verified_user</span>
-</div>
-<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Verified Users</span>
-</div>
-<div class="flex flex-col items-center text-center gap-2">
-<div class="size-12 rounded-full neumorph-card flex items-center justify-center text-cerulean">
-<span class="material-symbols-outlined">encrypted</span>
-</div>
-<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Secure Pay</span>
-</div>
-<div class="flex flex-col items-center text-center gap-2">
-<div class="size-12 rounded-full neumorph-card flex items-center justify-center text-deep-blue dark:text-white">
-<span class="material-symbols-outlined">eco</span>
-</div>
-<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Carbon Low</span>
-</div>
-</section>
-</main>
-<!-- Bottom Navigation Bar -->
-<nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-deep-blue border-t border-slate-200 dark:border-slate-800 px-6 pb-6 pt-3 flex justify-between items-center z-50">
-<a class="flex flex-col items-center gap-1 text-primary" href="#">
-<span class="material-symbols-outlined fill-1">home</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Home</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
-<span class="material-symbols-outlined">search</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Search</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
-<span class="material-symbols-outlined">directions_car</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Rides</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Profile</span>
-</a>
+  }
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #040521; font-family: 'Public Sans', sans-serif; }
+
+  /* ── Phone Shell ── */
+  #phone-shell {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 30% 20%, #0d1650 0%, #040521 70%);
+  }
+  #phone-wrapper {
+    position: relative;
+    width: min(420px, 100vw);
+    height: min(900px, 100dvh);
+    border-radius: min(44px, 5vw);
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.08);
+    background: #040521;
+  }
+  @media (max-width: 480px) {
+    #phone-shell { background: #040521; }
+    #phone-wrapper { width: 100vw; height: 100dvh; border-radius: 0; box-shadow: none; }
+  }
+
+  /* ── Frame container ── */
+  #screen-frame {
+    width: 100%; height: 100%;
+    border: none; display: block;
+    transition: opacity .18s ease;
+  }
+  #screen-frame.fading { opacity: 0; }
+
+  /* ── Loading spinner ── */
+  #loader {
+    position: absolute; inset: 0; z-index: 99;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: #040521; gap: 16px;
+    transition: opacity .2s; pointer-events: none;
+  }
+  #loader.hidden { opacity: 0; pointer-events: none; }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 3px solid rgba(245,154,47,.2);
+    border-top-color: #F59A2F;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Back button overlay ── */
+  #back-btn {
+    position: absolute; top: 14px; left: 14px; z-index: 50;
+    width: 38px; height: 38px;
+    background: rgba(4,5,33,.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(245,154,47,.25);
+    border-radius: 50%;
+    display: none; align-items: center; justify-content: center;
+    color: #F59A2F; cursor: pointer;
+    font-family: 'Material Symbols Outlined';
+    font-size: 20px; line-height: 1;
+    transition: background .2s;
+  }
+  #back-btn.visible { display: flex; }
+  #back-btn:hover { background: rgba(245,154,47,.15); }
+
+  /* ── Desktop side panel showing screens list ── */
+  #side-nav {
+    display: none;
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 240px; background: #060833;
+    border-right: 1px solid rgba(255,255,255,.05);
+    overflow-y: auto; z-index: 200;
+    flex-direction: column; gap: 2px; padding: 20px 12px;
+  }
+  @media (min-width: 900px) {
+    #side-nav { display: flex; }
+    #phone-shell { margin-left: 240px; }
+  }
+  .side-item {
+    padding: 8px 12px; border-radius: 8px;
+    font-size: 12px; color: #62AAE5; cursor: pointer;
+    transition: background .15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .side-item:hover { background: rgba(245,154,47,.1); color: #F59A2F; }
+  .side-item.active { background: rgba(245,154,47,.18); color: #F59A2F; font-weight: 700; }
+  .side-section { font-size: 10px; color: rgba(255,255,255,.3); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 12px 12px 4px; }
+</style>
+</head>
+<body>
+
+<!-- DESKTOP SIDE NAV (so client demos easily on larger screens too) -->
+<nav id="side-nav">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;padding:0 4px">
+    <div style="width:32px;height:32px;background:#F59A2F;border-radius:8px;display:flex;align-items:center;justify-content:center">
+      <span style="font-family:'Material Symbols Outlined';color:#fff;font-size:18px">directions_car</span>
+    </div>
+    <span style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em">VAMOS</span>
+  </div>
+
+  <div class="side-section">Entrada</div>
+  <div class="side-item" data-screen="login___sign_up.html">🔑 Login / Registro</div>
+
+  <div class="side-section">Inicio</div>
+  <div class="side-item active" data-screen="home__biling_e_venezuela.html">🏠 Home Venezuela</div>
+  <div class="side-item" data-screen="main_dashboard.html">📍 Dashboard Principal</div>
+  <div class="side-item" data-screen="dashboard__biling_e_venezuela.html">🗺️ Dashboard Venezuela</div>
+
+  <div class="side-section">Viajes</div>
+  <div class="side-item" data-screen="create_ride_-_route__biling_e.html">📍 Crear Viaje – Ruta</div>
+  <div class="side-item" data-screen="create_ride_-_schedule__biling_e.html">📅 Crear Viaje – Horario</div>
+  <div class="side-item" data-screen="create_ride_-_pricing__biling_e.html">💰 Crear Viaje – Precio</div>
+  <div class="side-item" data-screen="create_ride_-_review__biling_e.html">✅ Crear Viaje – Resumen</div>
+  <div class="side-item" data-screen="ride_matching__biling_e.html">🔎 Matching de Viaje</div>
+  <div class="side-item" data-screen="live_tracking__biling_e.html">📡 Tracking en Vivo</div>
+  <div class="side-item" data-screen="ride_review__biling_e.html">⭐ Reseña del Viaje</div>
+  <div class="side-item" data-screen="ride_history__biling_e.html">📜 Historial de Viajes</div>
+
+  <div class="side-section">Perfil &amp; Cuenta</div>
+  <div class="side-item" data-screen="user_profile___settings__biling_e.html">👤 Perfil y Configuración</div>
+  <div class="side-item" data-screen="kyc_verification__biling_e_venezuela.html">🪪 KYC Verificación</div>
+  <div class="side-item" data-screen="vehicle_management__biling_e.html">🚗 Gestión de Vehículos</div>
+
+  <div class="side-section">Pagos</div>
+  <div class="side-item" data-screen="wallet__biling_e.html">💳 Billetera</div>
+  <div class="side-item" data-screen="payment_methods__biling_e_venezuela.html">💵 Métodos de Pago</div>
+
+  <div class="side-section">Social</div>
+  <div class="side-item" data-screen="chat_interface__biling_e.html">💬 Chat</div>
+  <div class="side-item" data-screen="notifications__biling_e.html">🔔 Notificaciones</div>
+  <div class="side-item" data-screen="refer_a_friend__biling_e.html">🎁 Referir Amigo</div>
+
+  <div class="side-section">Seguridad &amp; Info</div>
+  <div class="side-item" data-screen="sos_alert__biling_e_venezuela.html">🆘 Alerta SOS</div>
+  <div class="side-item" data-screen="how_it_works__biling_e.html">ℹ️ Cómo Funciona</div>
+  <div class="side-item" data-screen="faq___preguntas_frecuentes__biling_e.html">❓ FAQ</div>
 </nav>
-<!-- Space for fixed nav -->
-<div class="h-24"></div>
-</body></html>
+
+<!-- PHONE SHELL -->
+<div id="phone-shell">
+  <div id="phone-wrapper">
+    <div id="loader">
+      <div class="spinner"></div>
+      <span style="color:#F59A2F;font-size:13px;font-weight:600;letter-spacing:.05em">CARGANDO…</span>
+    </div>
+    <div id="back-btn" title="Atrás">arrow_back</div>
+    <iframe id="screen-frame" src="home__biling_e_venezuela.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  VAMOS – SPA Router
+// ─────────────────────────────────────────────
+
+const SCREENS = {
+  // Login
+  login:           'login___sign_up.html',
+
+  // Home / Dashboard
+  home:            'home__biling_e_venezuela.html',
+  dashboard:       'main_dashboard.html',
+  dashboardVE:     'dashboard__biling_e_venezuela.html',
+
+  // Create Ride flow
+  createRoute:     'create_ride_-_route__biling_e.html',
+  createSchedule:  'create_ride_-_schedule__biling_e.html',
+  createPricing:   'create_ride_-_pricing__biling_e.html',
+  createReview:    'create_ride_-_review__biling_e.html',
+
+  // Active ride
+  matching:        'ride_matching__biling_e.html',
+  tracking:        'live_tracking__biling_e.html',
+  rideReview:      'ride_review__biling_e.html',
+  history:         'ride_history__biling_e.html',
+
+  // Profile
+  profile:         'user_profile___settings__biling_e.html',
+  kyc:             'kyc_verification__biling_e_venezuela.html',
+  kycOfficial:     'kyc_verification__official_palette.html',
+  vehicles:        'vehicle_management__biling_e.html',
+
+  // Payments
+  wallet:          'wallet__biling_e.html',
+  payments:        'payment_methods__biling_e_venezuela.html',
+
+  // Social / support
+  chat:            'chat_interface__biling_e.html',
+  notifications:   'notifications__biling_e.html',
+  refer:           'refer_a_friend__biling_e.html',
+
+  // Safety / info
+  sos:             'sos_alert__biling_e_venezuela.html',
+  howItWorks:      'how_it_works__biling_e.html',
+  faq:             'faq___preguntas_frecuentes__biling_e.html',
+};
+
+// Navigation history stack
+const history = [];
+let currentScreen = 'home__biling_e_venezuela.html';
+
+const frame     = document.getElementById('screen-frame');
+const loader    = document.getElementById('loader');
+const backBtn   = document.getElementById('back-btn');
+const sideItems = document.querySelectorAll('.side-item[data-screen]');
+
+// ── Navigate to a screen ────────────────────
+function navigateTo(screenFile, pushHistory = true) {
+  if (screenFile === currentScreen) return;
+  if (pushHistory) history.push(currentScreen);
+  currentScreen = screenFile;
+
+  loader.classList.remove('hidden');
+  frame.classList.add('fading');
+
+  setTimeout(() => {
+    frame.src = screenFile;
+  }, 120);
+
+  backBtn.classList.toggle('visible', history.length > 0);
+  updateSideNav(screenFile);
+}
+
+function goBack() {
+  if (history.length === 0) return;
+  const prev = history.pop();
+  currentScreen = prev;
+  loader.classList.remove('hidden');
+  frame.classList.add('fading');
+  setTimeout(() => { frame.src = prev; }, 120);
+  backBtn.classList.toggle('visible', history.length > 0);
+  updateSideNav(prev);
+}
+
+function updateSideNav(screenFile) {
+  sideItems.forEach(el => {
+    el.classList.toggle('active', el.dataset.screen === screenFile);
+  });
+}
+
+// ── Frame load ───────────────────────────────
+frame.addEventListener('load', () => {
+  frame.classList.remove('fading');
+  setTimeout(() => loader.classList.add('hidden'), 150);
+
+  // Wire up links inside the iframe
+  try {
+    const doc = frame.contentDocument || frame.contentWindow.document;
+    wireDocument(doc);
+  } catch(e) {
+    // cross-origin – shouldn't happen for same-origin files
+  }
+});
+
+// ── Wire all links/buttons inside a screen doc ──
+function wireDocument(doc) {
+  if (!doc) return;
+
+  // Bottom nav wiring (by icon text/label)
+  const navLinks = doc.querySelectorAll('nav a, footer a, [class*="bottom"] a');
+  navLinks.forEach(a => {
+    const text = (a.textContent || '').trim().toLowerCase();
+    const icon = (a.querySelector('[class*="material"]')?.textContent || '').trim().toLowerCase();
+    const combined = text + ' ' + icon;
+
+    let target = null;
+    if (/home|inicio|explore|explor/.test(combined))       target = SCREENS.home;
+    if (/search|buscar/.test(combined))                     target = SCREENS.dashboard;
+    if (/rides?|viajes?|my.trip|mis.viajes/.test(combined)) target = SCREENS.history;
+    if (/wallet|billetera|payments?/.test(combined))        target = SCREENS.wallet;
+    if (/profile|perfil|person/.test(combined))             target = SCREENS.profile;
+    if (/notification|notificac/.test(combined))            target = SCREENS.notifications;
+    if (/settings?|configur/.test(combined))                target = SCREENS.profile;
+    if (/chat|mensaj/.test(combined))                       target = SCREENS.chat;
+
+    if (target) {
+      a.href = 'javascript:void(0)';
+      a.addEventListener('click', e => { e.preventDefault(); window.parent.postMessage({ nav: target }, '*'); });
+    }
+  });
+
+  // CTA / action buttons
+  const allButtons = doc.querySelectorAll('button, a[href]');
+  allButtons.forEach(el => {
+    const txt = (el.textContent || '').trim().toLowerCase();
+    const cls = (el.className || '').toLowerCase();
+    const icon = (el.querySelector?.('[class*="material"]')?.textContent || '').trim().toLowerCase();
+    const combined = txt + ' ' + icon + ' ' + cls;
+
+    let target = null;
+
+    // Login screen → dashboard
+    if (/login|sign.in|entrar|iniciar/.test(combined) && /bg-primary|login/.test(combined)) target = SCREENS.home;
+
+    // Sign up
+    if (/sign.up|registr|crear.cuenta/.test(combined)) target = SCREENS.kyc;
+
+    // Find a Ride / Search button
+    if (/find.a.ride|buscar.viaje/.test(combined)) target = SCREENS.dashboard;
+
+    // Offer Ride / Create ride
+    if (/offer.a.ride|ofrecer|create.ride|crear.viaje/.test(combined)) target = SCREENS.createRoute;
+
+    // Next / Siguiente in create ride flow
+    if (/next|siguiente/.test(combined)) {
+      const src = currentScreen;
+      if (src.includes('route'))    target = SCREENS.createSchedule;
+      else if (src.includes('schedule')) target = SCREENS.createPricing;
+      else if (src.includes('pric'))     target = SCREENS.createReview;
+      else if (src.includes('review'))   target = SCREENS.matching;
+    }
+
+    // Confirm ride → matching
+    if (/confirm|confirmar/.test(combined)) target = SCREENS.matching;
+
+    // Track / Track ride → live tracking
+    if (/track|seguir|live/.test(combined)) target = SCREENS.tracking;
+
+    // Review ride / Rate
+    if (/rate|review|califica|reseña/.test(combined)) target = SCREENS.rideReview;
+
+    // Done / Finish
+    if (/done|finish|finaliz/.test(combined) && currentScreen.includes('review')) target = SCREENS.home;
+
+    // Wallet / Pay
+    if (/pay.now|pagar.ahora|wallet|proceed/.test(combined)) target = SCREENS.wallet;
+
+    // Add payment / payment methods
+    if (/add.payment|método.pago|payment.method/.test(combined)) target = SCREENS.payments;
+
+    // KYC / Verify
+    if (/verify|verificar|kyc/.test(combined)) target = SCREENS.kyc;
+
+    // Vehicles
+    if (/vehicle|vehículo|car.info/.test(combined)) target = SCREENS.vehicles;
+
+    // Refer
+    if (/refer|invite|invitar/.test(combined)) target = SCREENS.refer;
+
+    // SOS button
+    if (/sos/.test(combined) || el.querySelector?.('[class*="material"]')?.textContent?.trim() === 'sos') target = SCREENS.sos;
+
+    // How it works
+    if (/how.it.works|cómo.funciona/.test(combined)) target = SCREENS.howItWorks;
+
+    // FAQ
+    if (/faq|preguntas.frecuentes/.test(combined)) target = SCREENS.faq;
+
+    // Chat
+    if (/chat|mensaje|message/.test(combined)) target = SCREENS.chat;
+
+    // Notifications bell
+    if (/notification|notificac/.test(combined)) target = SCREENS.notifications;
+
+    // Back arrow buttons
+    if (/arrow_back/.test(combined) || el.querySelector?.('[class*="material"]')?.textContent?.trim() === 'arrow_back') {
+      el.addEventListener('click', e => { e.preventDefault(); window.parent.postMessage({ back: true }, '*'); });
+      return;
+    }
+
+    if (target) {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        window.parent.postMessage({ nav: target }, '*');
+      });
+    }
+  });
+
+  // Wire the SOS floating button explicitly
+  const sosBtn = doc.querySelector('[class*="bg-red"], [class*="red-6"]');
+  if (sosBtn) {
+    sosBtn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.parent.postMessage({ nav: SCREENS.sos }, '*');
+    });
+  }
+}
+
+// ── Listen for postMessage from iframe ───────
+window.addEventListener('message', e => {
+  if (e.data?.nav)  navigateTo(e.data.nav);
+  if (e.data?.back) goBack();
+});
+
+// ── Side nav clicks ──────────────────────────
+sideItems.forEach(el => {
+  el.addEventListener('click', () => navigateTo(el.dataset.screen));
+});
+
+// ── Back button ──────────────────────────────
+backBtn.addEventListener('click', goBack);
+
+// ── Start: show login screen ──────────────────
+// Already loaded via src="home__biling_e_venezuela.html", that's fine.
+// Update side nav initial state
+updateSideNav(currentScreen);
+</script>
+</body>
+</html>

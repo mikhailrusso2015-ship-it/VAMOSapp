@@ -1,53 +1,49 @@
-# Guía de Integración: De Stitch a Producción (Antigravity/Next.js)
+"""
+Patch all Vamos HTML screens:
+1. Replace every href="#" inside nav/footer with proper file links
+2. Add a <script> block at the end of each page that:
+   - Wires bottom-nav links → window.parent.postMessage
+   - Wires back buttons → window.parent.postMessage
+   - Wires CTA buttons → window.parent.postMessage
+   - Also makes the page standalone-navigatable (window.location) when loaded directly
+"""
 
-Para implementar estos diseños en tu stack tecnológico (Next.js + Tailwind), sigue estos pasos:
+import os, re
 
-## 1. Exportación de Código HTML/CSS
-Para cada pantalla en el Canvas:
-1. Haz clic en el botón **</> View Code** en la barra de herramientas superior.
-2. Copia el código HTML generado. Este código ya utiliza clases de Tailwind CSS y está estructurado de forma semántica.
-3. En tu proyecto de Next.js, crea un nuevo componente o página (ej. `src/app/dashboard/page.tsx`) y pega el contenido dentro de un fragmento de React.
+BASE = r"e:\MIS DOCUMENTOS\1. A PAGINAS WEB\VAMOSapp"
 
-## 2. Configuración de Tailwind CSS (Neumorfismo)
-Asegúrate de que tu archivo `tailwind.config.js` tenga las extensiones necesarias para la paleta de colores y las sombras 3D que hemos definido. Utiliza la configuración que guardamos en la Fase 1:
-
-```javascript
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        'vamos-deep-space': '#040521',
-        'vamos-mid-blue': '#081D56',
-        'vamos-cerulean': '#62AAE5',
-        'vamos-orange': '#F59A2F',
-      },
-      boxShadow: {
-        'neumorph-flat': '6px 6px 12px #020211, -6px -6px 12px #060831',
-        'neumorph-pressed': 'inset 6px 6px 12px #020211, inset -6px -6px 12px #060831',
-      },
-    },
-  },
+SCREENS = {
+    'login':          'login___sign_up.html',
+    'home':           'home__biling_e_venezuela.html',
+    'home_ve':        'home__biling_e_venezuela.html',
+    'dashboard':      'main_dashboard.html',
+    'dashboard_ve':   'dashboard__biling_e_venezuela.html',
+    'create_route':   'create_ride_-_route__biling_e.html',
+    'create_schedule':'create_ride_-_schedule__biling_e.html',
+    'create_pricing': 'create_ride_-_pricing__biling_e.html',
+    'create_review':  'create_ride_-_review__biling_e.html',
+    'matching':       'ride_matching__biling_e.html',
+    'tracking':       'live_tracking__biling_e.html',
+    'ride_review':    'ride_review__biling_e.html',
+    'history':        'ride_history__biling_e.html',
+    'profile':        'user_profile___settings__biling_e.html',
+    'kyc':            'kyc_verification__biling_e_venezuela.html',
+    'vehicles':       'vehicle_management__biling_e.html',
+    'wallet':         'wallet__biling_e.html',
+    'payments':       'payment_methods__biling_e_venezuela.html',
+    'chat':           'chat_interface__biling_e.html',
+    'notifications':  'notifications__biling_e.html',
+    'refer':          'refer_a_friend__biling_e.html',
+    'sos':            'sos_alert__biling_e_venezuela.html',
+    'how':            'how_it_works__biling_e.html',
+    'faq':            'faq___preguntas_frecuentes__biling_e.html',
 }
-```
 
-## 3. Exportación a Figma
-Si prefieres trabajar primero en el diseño visual antes de programar:
-1. Selecciona las pantallas que deseas exportar.
-2. Haz clic en el botón **Export to Figma** en la barra de herramientas.
-3. Sigue las instrucciones para importar el archivo `.fig` en tu cuenta de Figma.
-
-## 4. Implementación de Lógica (Fase 2)
-Una vez tengas la UI montada:
-- **Bilingüismo:** Implementa una librería como `next-intl` o maneja el estado global del idioma con `Zustand`.
-- **Firebase:** Conecta los botones de acción (ej. "Pedir Viaje") con tus funciones de Firestore.
-- **Google Maps:** Reemplaza los placeholders de mapas con el componente `@react-google-maps/api`.
-
-¿Te gustaría que profundice en la lógica de algún componente específico de Next.js ahora?<!-- VAMOS NAV PATCH -->
+NAV_SCRIPT = """
 <script>
 // ── Vamos In-Screen Navigation Patcher ──
 (function(){
-  var S = {"login": "login___sign_up.html", "home": "home__biling_e_venezuela.html", "home_ve": "home__biling_e_venezuela.html", "dashboard": "main_dashboard.html", "dashboard_ve": "dashboard__biling_e_venezuela.html", "create_route": "create_ride_-_route__biling_e.html", "create_schedule": "create_ride_-_schedule__biling_e.html", "create_pricing": "create_ride_-_pricing__biling_e.html", "create_review": "create_ride_-_review__biling_e.html", "matching": "ride_matching__biling_e.html", "tracking": "live_tracking__biling_e.html", "ride_review": "ride_review__biling_e.html", "history": "ride_history__biling_e.html", "profile": "user_profile___settings__biling_e.html", "kyc": "kyc_verification__biling_e_venezuela.html", "vehicles": "vehicle_management__biling_e.html", "wallet": "wallet__biling_e.html", "payments": "payment_methods__biling_e_venezuela.html", "chat": "chat_interface__biling_e.html", "notifications": "notifications__biling_e.html", "refer": "refer_a_friend__biling_e.html", "sos": "sos_alert__biling_e_venezuela.html", "how": "how_it_works__biling_e.html", "faq": "faq___preguntas_frecuentes__biling_e.html"};
+  var S = """ + str(SCREENS).replace("'", '"') + """;
 
   function navigate(target){
     // If inside SPA shell, tell parent
@@ -221,4 +217,28 @@ Una vez tengas la UI montada:
   }
 })();
 </script>
-<!-- /VAMOS NAV PATCH -->
+"""
+
+html_files = [f for f in os.listdir(BASE) if f.endswith('.html') and f != 'index.html']
+patched = 0
+for fname in html_files:
+    fpath = os.path.join(BASE, fname)
+    with open(fpath, 'r', encoding='utf-8', errors='replace') as f:
+        content = f.read()
+
+    # If already patched, remove old script first
+    content = re.sub(r'<!-- VAMOS NAV PATCH -->.*?<!-- /VAMOS NAV PATCH -->', '', content, flags=re.DOTALL)
+
+    # Inject nav script before </body>
+    marked = '<!-- VAMOS NAV PATCH -->' + NAV_SCRIPT + '<!-- /VAMOS NAV PATCH -->'
+    if '</body>' in content:
+        content = content.replace('</body>', marked + '</body>')
+    else:
+        content += marked
+
+    with open(fpath, 'w', encoding='utf-8') as f:
+        f.write(content)
+    patched += 1
+    print(f"Patched: {fname}")
+
+print(f"\nDone. Patched {patched} files.")
