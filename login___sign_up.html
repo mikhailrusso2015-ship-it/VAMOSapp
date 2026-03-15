@@ -167,7 +167,9 @@
   }
 
   function finalizeNav() {
+    // Determine target based on the role selected in the entry facade
     const target = role === 'chofer' ? 'chofer_home.html' : 'home__biling_e_venezuela.html';
+    console.log("Navigating to:", target);
     window.location.href = target;
   }
 </script>
