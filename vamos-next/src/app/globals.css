@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --background: #040521;
+  --foreground: #ffffff;
+  --primary: #F59A2F;
+  --deep-blue: #081D56;
+  --cerulean: #62AAE5;
+  --success: #10B981;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-public-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Neumorphic Utilities */
+.neu-flat {
+  background: var(--deep-blue);
+  box-shadow: 6px 6px 12px #020211, -6px -6px 12px #0e3391;
+}
+
+.neu-pressed {
+  background: var(--deep-blue);
+  box-shadow: inset 4px 4px 8px #020211, inset -4px -4px 8px #0e3391;
+}
+
+.neu-card {
+  background: var(--deep-blue);
+  box-shadow: 8px 8px 16px #020211, -8px -8px 16px #0e3391;
+}
+
+/* Navigation Blur */
+.nav-blur {
+  backdrop-filter: blur(12px);
+  background: rgba(8, 29, 86, 0.8);
+}
