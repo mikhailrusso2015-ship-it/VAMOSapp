@@ -287,6 +287,8 @@ frame.addEventListener('load', () => {
 function wireDocument(doc) {
   if (!doc) return;
 
+  const currentRole = localStorage.getItem('vamos_role') || 'pasajero';
+
   // Bottom nav wiring (by icon text/label)
   const navLinks = doc.querySelectorAll('nav a, footer a, [class*="bottom"] a');
   navLinks.forEach(a => {
@@ -295,8 +297,8 @@ function wireDocument(doc) {
     const combined = text + ' ' + icon;
 
     let target = null;
-    if (/home|inicio|explore|explor/.test(combined))       target = SCREENS.home;
-    if (/search|buscar/.test(combined))                     target = SCREENS.dashboard;
+    if (/home|inicio|explore|explor/.test(combined))       target = (currentRole === 'chofer' ? SCREENS.choferHome : SCREENS.home);
+    if (/search|buscar/.test(combined))                     target = (currentRole === 'chofer' ? SCREENS.dashboard : SCREENS.dashboard); // Both use dashboard currently
     if (/rides?|viajes?|my.trip|mis.viajes/.test(combined)) target = SCREENS.history;
     if (/wallet|billetera|payments?/.test(combined))        target = SCREENS.wallet;
     if (/profile|perfil|person/.test(combined))             target = SCREENS.profile;
@@ -306,12 +308,12 @@ function wireDocument(doc) {
 
     if (target) {
       a.href = 'javascript:void(0)';
-      a.addEventListener('click', e => { e.preventDefault(); window.parent.postMessage({ nav: target }, '*'); });
+      a.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); navigateTo(target); });
     }
   });
 
   // CTA / action buttons
-  const allButtons = doc.querySelectorAll('button, a[href]');
+  const allButtons = doc.querySelectorAll('button, a[href], .nm-btn, .neumorphic-button');
   allButtons.forEach(el => {
     const txt = (el.textContent || '').trim().toLowerCase();
     const cls = (el.className || '').toLowerCase();
@@ -320,20 +322,20 @@ function wireDocument(doc) {
 
     let target = null;
 
-    // Login screen → dashboard
-    if (/login|sign.in|entrar|iniciar/.test(combined) && /bg-primary|login/.test(combined)) target = SCREENS.home;
+    // Login screen fixes
+    if (/iniciar|entrar|login/.test(combined) && currentScreen.includes('login')) {
+       // Logic is handled inside login.html, but let's ensure the SPA doesn't override it poorly
+       return; 
+    }
 
     // Sign up
     if (/sign.up|registr|crear.cuenta/.test(combined)) target = SCREENS.kyc;
-
-    // Find a Ride / Search button
-    if (/find.a.ride|buscar.viaje/.test(combined)) target = SCREENS.dashboard;
 
     // Offer Ride / Create ride
     if (/offer.a.ride|ofrecer|create.ride|crear.viaje/.test(combined)) target = SCREENS.createRoute;
 
     // Next / Siguiente in create ride flow
-    if (/next|siguiente/.test(combined)) {
+    if (/next|siguiente/.test(combined) || /continuar/.test(combined)) {
       const src = currentScreen;
       if (src.includes('route'))    target = SCREENS.createSchedule;
       else if (src.includes('schedule')) target = SCREENS.createPricing;
@@ -344,70 +346,25 @@ function wireDocument(doc) {
     // Confirm ride → matching
     if (/confirm|confirmar/.test(combined)) target = SCREENS.matching;
 
-    // Track / Track ride → live tracking
-    if (/track|seguir|live/.test(combined)) target = SCREENS.tracking;
-
-    // Review ride / Rate
-    if (/rate|review|califica|reseña/.test(combined)) target = SCREENS.rideReview;
-
-    // Done / Finish
-    if (/done|finish|finaliz/.test(combined) && currentScreen.includes('review')) target = SCREENS.home;
-
-    // Wallet / Pay
-    if (/pay.now|pagar.ahora|wallet|proceed/.test(combined)) target = SCREENS.wallet;
-
-    // Add payment / payment methods
-    if (/add.payment|método.pago|payment.method/.test(combined)) target = SCREENS.payments;
-
-    // KYC / Verify
-    if (/verify|verificar|kyc/.test(combined)) target = SCREENS.kyc;
-
-    // Vehicles
-    if (/vehicle|vehículo|car.info/.test(combined)) target = SCREENS.vehicles;
-
-    // Refer
-    if (/refer|invite|invitar/.test(combined)) target = SCREENS.refer;
-
-    // SOS button
-    if (/sos/.test(combined) || el.querySelector?.('[class*="material"]')?.textContent?.trim() === 'sos') target = SCREENS.sos;
-
-    // How it works
-    if (/how.it.works|cómo.funciona/.test(combined)) target = SCREENS.howItWorks;
-
-    // FAQ
-    if (/faq|preguntas.frecuentes/.test(combined)) target = SCREENS.faq;
-
-    // Chat
-    if (/chat|mensaje|message/.test(combined)) target = SCREENS.chat;
-
-    // Notifications bell
-    if (/notification|notificac/.test(combined)) target = SCREENS.notifications;
-
-    // Back arrow buttons
-    if (/arrow_back/.test(combined) || el.querySelector?.('[class*="material"]')?.textContent?.trim() === 'arrow_back') {
-      el.addEventListener('click', e => { e.preventDefault(); window.parent.postMessage({ back: true }, '*'); });
-      return;
-    }
-
     if (target) {
       el.style.cursor = 'pointer';
       el.addEventListener('click', e => {
         e.preventDefault();
         e.stopPropagation();
-        window.parent.postMessage({ nav: target }, '*');
+        navigateTo(target);
       });
     }
   });
 
-  // Wire the SOS floating button explicitly
-  const sosBtn = doc.querySelector('[class*="bg-red"], [class*="red-6"]');
-  if (sosBtn) {
-    sosBtn.addEventListener('click', e => {
+  // SOS button explicitly
+  const sosBtns = doc.querySelectorAll('[class*="bg-red-6"], [class*="red-600"], .sos-btn');
+  sosBtns.forEach(btn => {
+     btn.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
-      window.parent.postMessage({ nav: SCREENS.sos }, '*');
+      navigateTo(SCREENS.sos);
     });
-  }
+  });
 }
 
 // ── Listen for postMessage from iframe ───────

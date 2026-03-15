@@ -248,8 +248,13 @@ function doLogin() {
     rating: 4.9,
     photo: ''
   }));
-  // Navigate based on role
-  navigate(selectedRole === 'chofer' ? 'chofer_home.html' : 'home__biling_e_venezuela.html');
+
+  // Force strict navigation
+  if(selectedRole === 'chofer') {
+    navigate('chofer_home.html');
+  } else {
+    navigate('home__biling_e_venezuela.html');
+  }
 }
 
 function doRegister() {
