@@ -274,21 +274,23 @@ function updateSliderStyle(val){
 }
 
 function updateSummary(){
-  var bs = (priceUSD * bcvRate).toFixed(0);
+  var bs = (priceUSD * bcvRate).toFixed(2);
   var total = (priceUSD * seats).toFixed(2);
-  var totalBs = (priceUSD * seats * bcvRate).toFixed(0);
+  var totalBs = (priceUSD * seats * bcvRate).toFixed(2);
   var commission = (priceUSD * seats * 0.05).toFixed(2);
   var net = (priceUSD * seats * 0.95).toFixed(2);
   
-  document.getElementById('price-bs').textContent = 'Bs. '+bs;
-  document.getElementById('sum-per-seat').textContent = '$'+priceUSD.toFixed(2);
+  document.getElementById('price-bs').textContent = 'Bs. ' + parseFloat(bs).toLocaleString('es-VE');
+  document.getElementById('sum-per-seat').textContent = '$' + priceUSD.toFixed(2);
   document.getElementById('sum-seats').textContent = seats;
-  document.getElementById('sum-total').textContent = '$'+total;
-  document.getElementById('sum-total-bs').textContent = 'Bs. '+totalBs;
-  document.getElementById('sum-commission').textContent = '-$'+commission;
-  document.getElementById('sum-net').textContent = '$'+net;
-  document.getElementById('footer-price').textContent = '$'+priceUSD.toFixed(2);
-  document.getElementById('footer-bs').textContent = 'Bs. '+bs;
+  document.getElementById('sum-total').textContent = '$' + total;
+  document.getElementById('sum-total-bs').textContent = 'Bs. ' + parseFloat(totalBs).toLocaleString('es-VE');
+  document.getElementById('sum-commission').textContent = '-$' + commission;
+  document.getElementById('sum-net').textContent = '$' + net;
+  
+  // Footer updates
+  document.getElementById('footer-price').textContent = '$' + priceUSD.toFixed(2);
+  document.getElementById('footer-bs').textContent = 'Bs. ' + parseFloat(bs).toLocaleString('es-VE');
 }
 
 function confirmAndContinue(){

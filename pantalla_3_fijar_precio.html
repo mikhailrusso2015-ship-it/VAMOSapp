@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fijar Precio - VAMOS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'space-blue': '#040521',
+                        'mid-blue': '#081D56',
+                        'deep-blue': '#0A0C3D',
+                        'vibrant-orange': '#F59A2F',
+                        'cerulean': '#62AAE5',
+                        'surface': '#121442',
+                    },
+                    fontFamily: { sans: ['Public Sans', 'sans-serif'] },
+                    boxShadow: {
+                        'neu-flat': '4px 4px 12px #020211, -4px -4px 12px #0a0f3d',
+                        'neu-pressed': 'inset 2px 2px 6px #020211, inset -2px -2px 6px #0a0f3d',
+                        'glow-orange': '0 0 25px rgba(245, 154, 47, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Public Sans', sans-serif; background: #040521; }
+        .price-input::-webkit-inner-spin-button, .price-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .payment-pill { transition: all 0.2s ease; }
+        .payment-pill.selected { background: rgba(98, 174, 229, 0.2); border-color: #62AAE5; }
+        .payment-pill.selected .check-icon { opacity: 1; }
+        .payment-pill:active { transform: scale(0.95); }
+        .quick-price-btn { transition: all 0.2s ease; }
+        .quick-price-btn:hover { background: rgba(98, 174, 229, 0.2); color: #62AAE5; }
+        .toast { animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        .pulse-submit { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 25px rgba(245, 154, 47, 0.4); } 50% { box-shadow: 0 0 40px rgba(245, 154, 47, 0.6); } }
+        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background: rgba(255,255,255,0.3); }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+    </style>
+</head>
+<body class="bg-space-blue min-h-screen flex justify-center">
+    
+    <div class="w-full max-w-[400px] bg-space-blue min-h-screen flex flex-col">
+        
+        <!-- Header -->
+        <header class="px-6 pt-8 pb-2 flex items-center justify-between">
+            <button onclick="goBack()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-mid-blue shadow-neu-flat active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-white">arrow_back</span>
+            </button>
+            <!-- Progress Steps -->
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-1 rounded-full bg-vibrant-orange"></div>
+                <div class="w-8 h-1 rounded-full bg-vibrant-orange"></div>
+                <div class="w-8 h-1 rounded-full bg-vibrant-orange"></div>
+                <div class="w-8 h-1 rounded-full bg-vibrant-orange"></div>
+            </div>
+            <div class="w-10"></div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 px-6 pt-4 overflow-y-auto">
+            
+            <!-- Trip Summary Card -->
+            <div class="bg-mid-blue rounded-2xl p-4 mb-6 flex items-center gap-4 shadow-neu-flat">
+                <div class="w-12 h-12 rounded-xl bg-surface flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-vibrant-orange">route</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-white font-medium truncate" id="trip-route">Cargando...</p>
+                    <p class="text-gray-400 text-sm">Hoy, 8:00 AM</p>
+                </div>
+                <button onclick="editTrip()" class="text-cerulean text-sm">Editar</button>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-white text-xl font-bold mb-2 text-center">Fija el aporte sugerido por plaza</h1>
+            <p class="text-gray-400 text-sm text-center mb-6">Los pasajeros pagan por asiento reservado</p>
+
+            <!-- Price Control Card -->
+            <div class="glass-card rounded-3xl p-6 mb-6 shadow-neu-flat relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-vibrant-orange/10 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-cerulean/10 rounded-full blur-2xl"></div>
+                
+                <!-- Currency Selector -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-surface rounded-full p-1 flex">
+                        <button id="btn-usd" onclick="setCurrency('USD')" class="currency-btn px-5 py-2 rounded-full bg-vibrant-orange text-white font-semibold text-sm transition-all">
+                            USD
+                        </button>
+                        <button id="btn-ves" onclick="setCurrency('VES')" class="currency-btn px-5 py-2 rounded-full text-gray-400 font-medium text-sm transition-all">
+                            VES
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Price Display -->
+                <div class="text-center">
+                    <div class="flex items-center justify-center gap-1 mb-2">
+                        <span class="text-4xl font-light text-gray-400" id="currency-symbol">$</span>
+                        <input type="number" 
+                               id="price-input"
+                               value="15" 
+                               class="price-input text-7xl font-bold text-white text-center bg-transparent border-none outline-none w-40"
+                               min="1"
+                               max="999"
+                               oninput="updatePrice()">
+                    </div>
+                    <p class="text-gray-400 text-sm">por asiento</p>
+                </div>
+
+                <!-- Total Preview -->
+                <div class="mt-6 pt-4 border-t border-white/10">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm">Ingreso total (4 asientos)</span>
+                        <span class="text-white font-bold text-lg" id="total-preview">$60 USD</span>
+                    </div>
+                </div>
+
+                <!-- Quick Price Buttons -->
+                <div class="flex justify-center gap-3 mt-6 flex-wrap">
+                    <button onclick="setPrice(10)" class="quick-price-btn px-4 py-2 bg-surface rounded-full text-gray-400 text-sm">$10</button>
+                    <button onclick="setPrice(15)" class="quick-price-btn px-4 py-2 bg-surface rounded-full text-gray-400 text-sm">$15</button>
+                    <button onclick="setPrice(20)" class="quick-price-btn px-4 py-2 bg-surface rounded-full text-gray-400 text-sm">$20</button>
+                    <button onclick="setPrice(25)" class="quick-price-btn px-4 py-2 bg-surface rounded-full text-gray-400 text-sm">$25</button>
+                    <button onclick="setPrice(30)" class="quick-price-btn px-4 py-2 bg-surface rounded-full text-gray-400 text-sm">$30</button>
+                </div>
+            </div>
+
+            <!-- Payment Methods Section -->
+            <div class="mb-6">
+                <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-cerulean">payments</span>
+                    Métodos de cobro aceptados
+                </h3>
+                <p class="text-gray-400 text-xs mb-4">Selecciona cómo recibirás el pago</p>
+
+                <!-- Payment Pills Grid -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="selectPayment(this, 'pago_movil')" class="payment-pill selected flex items-center gap-3 p-4 bg-mid-blue rounded-xl border border-transparent cursor-pointer">
+                        <span class="material-symbols-outlined text-xl text-cerulean">smartphone</span>
+                        <span class="text-white text-sm">Pago Móvil</span>
+                        <span class="check-icon material-symbols-outlined text-cerulean ml-auto">check_circle</span>
+                    </button>
+                    
+                    <button onclick="selectPayment(this, 'zelle')" class="payment-pill flex items-center gap-3 p-4 bg-mid-blue rounded-xl border border-transparent cursor-pointer">
+                        <span class="material-symbols-outlined text-xl text-blue-400">email</span>
+                        <span class="text-white text-sm">Zelle</span>
+                        <span class="check-icon material-symbols-outlined text-cerulean ml-auto opacity-0">check_circle</span>
+                    </button>
+                    
+                    <button onclick="selectPayment(this, 'efectivo')" class="payment-pill flex items-center gap-3 p-4 bg-mid-blue rounded-xl border border-transparent cursor-pointer">
+                        <span class="material-symbols-outlined text-xl text-green-400">payments</span>
+                        <span class="text-white text-sm">Efectivo</span>
+                        <span class="check-icon material-symbols-outlined text-cerulean ml-auto opacity-0">check_circle</span>
+                    </button>
+                    
+                    <button onclick="selectPayment(this, 'binance')" class="payment-pill flex items-center gap-3 p-4 bg-mid-blue rounded-xl border border-transparent cursor-pointer">
+                        <span class="material-symbols-outlined text-xl text-yellow-400">currency_bitcoin</span>
+                        <span class="text-white text-sm">Binance</span>
+                        <span class="check-icon material-symbols-outlined text-cerulean ml-auto opacity-0">check_circle</span>
+                    </button>
+                </div>
+                
+                <!-- Add Custom Method -->
+                <button onclick="addCustomMethod()" class="mt-3 w-full flex items-center justify-center gap-2 p-3 border border-dashed border-gray-600 rounded-xl text-gray-400 text-sm hover:border-cerulean hover:text-cerulean transition-colors">
+                    <span class="material-symbols-outlined">add</span>
+                    Agregar otro método
+                </button>
+            </div>
+
+            <!-- Payment Details (shown when method selected) -->
+            <div id="payment-details" class="mb-6">
+                <h4 class="text-white text-sm font-medium mb-3">Datos de cobro</h4>
+                <div class="bg-mid-blue rounded-xl p-4 space-y-3">
+                    <div id="detail-pago_movil" class="payment-detail">
+                        <p class="text-gray-400 text-xs mb-2">Banco:</p>
+                        <input type="text" placeholder="Ej: Banesco" class="w-full p-3 bg-surface rounded-lg text-white text-sm border border-transparent focus:border-cerulean outline-none">
+                        <p class="text-gray-400 text-xs mb-2 mt-3">Teléfono:</p>
+                        <input type="tel" placeholder="Ej: 04121234567" class="w-full p-3 bg-surface rounded-lg text-white text-sm border border-transparent focus:border-cerulean outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Card -->
+            <div class="bg-surface/50 rounded-2xl p-4 flex items-start gap-3 mb-6">
+                <span class="material-symbols-outlined text-cerulean flex-shrink-0">info</span>
+                <div>
+                    <p class="text-white text-sm font-medium">Pago manual</p>
+                    <p class="text-gray-400 text-xs">El pasajero te enviará el comprobante y tú lo validarás. No hay cargos automáticos.</p>
+                </div>
+            </div>
+
+            <!-- Tips Card -->
+            <div class="bg-vibrant-orange/10 rounded-2xl p-4 border border-vibrant-orange/20 mb-6">
+                <h4 class="text-vibrant-orange text-sm font-medium mb-2 flex items-center gap-2">
+                    <span class="material-symbols-outlined">lightbulb</span>
+                    Tips para定价
+                </h4>
+                <ul class="text-gray-400 text-xs space-y-1">
+                    <li>• El precio promedio en esta ruta es $12-18 USD</li>
+                    <li>• Viajes más cortos pueden cobrar menos</li>
+                    <li>• Incluye gastos de combustible</li>
+                </ul>
+            </div>
+
+        </main>
+
+        <!-- Bottom CTA -->
+        <footer class="p-6 pb-8">
+            <button id="publish-btn" onclick="publishTrip()" class="w-full py-5 bg-gradient-to-r from-vibrant-orange to-[#e88a1f] text-white font-bold rounded-2xl shadow-glow-orange flex items-center justify-center gap-2 hover:opacity-90 transition-opacity text-lg pulse-submit">
+                Publicar Viaje
+                <span class="material-symbols-outlined">rocket_launch</span>
+            </button>
+        </footer>
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2"></div>
+
+        <!-- Modal Container -->
+        <div id="modal-container"></div>
+
+    </div>
+
+    <script>
+        // ============================================
+        // STATE
+        // ============================================
+        const state = {
+            currency: 'USD',
+            price: 15,
+            seats: 4,
+            paymentMethods: ['pago_movil'],
+            origin: null
+        };
+
+        const exchangeRate = 35; // 1 USD = 35 VES (example rate)
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved origin
+            const savedOrigin = localStorage.getItem('vamos_origin');
+            if (savedOrigin) {
+                state.origin = JSON.parse(savedOrigin);
+                document.getElementById('trip-route').textContent = state.origin.title + ' → Destino';
+            }
+            
+            updateTotal();
+        });
+
+        // ============================================
+        // PRICE FUNCTIONS
+        // ============================================
+        function setPrice(value) {
+            document.getElementById('price-input').value = value;
+            updatePrice();
+        }
+
+        function updatePrice() {
+            const input = document.getElementById('price-input');
+            state.price = parseInt(input.value) || 0;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const total = state.price * state.seats;
+            const symbol = state.currency === 'USD' ? '$' : 'Bs ';
+            document.getElementById('total-preview').textContent = `${symbol}${total.toLocaleString()} ${state.currency}`;
+        }
+
+        // ============================================
+        // CURRENCY
+        // ============================================
+        function setCurrency(currency) {
+            const oldCurrency = state.currency;
+            state.currency = currency;
+            
+            // Convert price
+            if (currency === 'VES' && oldCurrency === 'USD') {
+                state.price = state.price * exchangeRate;
+            } else if (currency === 'USD' && oldCurrency === 'VES') {
+                state.price = Math.round(state.price / exchangeRate);
+            }
+            
+            // Update UI
+            document.getElementById('price-input').value = state.price;
+            document.getElementById('currency-symbol').textContent = currency === 'USD' ? '$' : 'Bs ';
+            
+            // Update buttons
+            document.getElementById('btn-usd').classList.toggle('bg-vibrant-orange', currency === 'USD');
+            document.getElementById('btn-usd').classList.toggle('text-white', currency === 'USD');
+            document.getElementById('btn-usd').classList.toggle('text-gray-400', currency !== 'USD');
+            
+            document.getElementById('btn-ves').classList.toggle('bg-vibrant-orange', currency === 'VES');
+            document.getElementById('btn-ves').classList.toggle('text-white', currency === 'VES');
+            document.getElementById('btn-ves').classList.toggle('text-gray-400', currency !== 'VES');
+            
+            updateTotal();
+            showToast(`Precio mostrado en ${currency}`, 'info');
+        }
+
+        // ============================================
+        // PAYMENT METHODS
+        // ============================================
+        function selectPayment(btn, method) {
+            const isSelected = btn.classList.contains('selected');
+            
+            if (isSelected && state.paymentMethods.length === 1) {
+                showToast('Debes seleccionar al menos un método', 'warning');
+                return;
+            }
+            
+            // Toggle selection
+            btn.classList.toggle('selected');
+            
+            // Update state
+            if (isSelected) {
+                state.paymentMethods = state.paymentMethods.filter(m => m !== method);
+            } else {
+                state.paymentMethods.push(method);
+            }
+            
+            // Update check icons
+            const checks = btn.querySelectorAll('.check-icon');
+            checks.forEach(check => {
+                check.classList.toggle('opacity-0', !btn.classList.contains('selected'));
+            });
+            
+            showToast(`${method === 'pago_movil' ? 'Pago Móvil' : method === 'zelle' ? 'Zelle' : method === 'efectivo' ? 'Efectivo' : 'Binance'} ${btn.classList.contains('selected') ? 'activado' : 'desactivado'}`, 'success');
+        }
+
+        function addCustomMethod() {
+            showModal('Agregar Método de Pago', `
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-gray-400 text-xs">Nombre del método</label>
+                        <input type="text" placeholder="Ej: PayPal" class="w-full p-3 mt-1 bg-surface rounded-lg text-white text-sm border border-gray-600 focus:border-cerulean outline-none">
+                    </div>
+                    <div>
+                        <label class="text-gray-400 text-xs">Datos de la cuenta</label>
+                        <input type="text" placeholder="Email o número" class="w-full p-3 mt-1 bg-surface rounded-lg text-white text-sm border border-gray-600 focus:border-cerulean outline-none">
+                    </div>
+                    <button onclick="showToast('Método agregado', 'success'); closeModal();" class="w-full py-3 bg-cerulean text-white font-semibold rounded-xl mt-4">
+                        Agregar
+                    </button>
+                </div>
+            `);
+        }
+
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        function goBack() {
+            if (confirm('¿Salir? Los cambios no se guardarán.')) {
+                window.location.href = 'pantalla_2_wizard_origen.html';
+            }
+        }
+
+        function editTrip() {
+            window.location.href = 'pantalla_2_wizard_origen.html';
+        }
+
+        // ============================================
+        // PUBLISH
+        // ============================================
+        function publishTrip() {
+            // Validate
+            if (state.price < 1) {
+                showToast('Ingresa un precio válido', 'error');
+                return;
+            }
+            
+            if (state.paymentMethods.length === 0) {
+                showToast('Selecciona al menos un método de pago', 'error');
+                return;
+            }
+            
+            // Save trip data
+            const tripData = {
+                origin: state.origin,
+                price: state.price,
+                currency: state.currency,
+                seats: state.seats,
+                paymentMethods: state.paymentMethods,
+                createdAt: new Date().toISOString()
+            };
+            
+            localStorage.setItem('vamos_trip', JSON.stringify(tripData));
+            
+            // Show success
+            showToast('¡Viaje publicado exitosamente! 🎉', 'success');
+            
+            // Navigate after delay
+            setTimeout(() => {
+                window.location.href = 'home__biling_e_venezuela.html';
+            }, 1500);
+        }
+
+        // ============================================
+        // MODAL
+        // ============================================
+        function showModal(title, content) {
+            const container = document.getElementById('modal-container');
+            container.innerHTML = `
+                <div class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onclick="closeModal(event)">
+                    <div class="bg-mid-blue rounded-2xl w-full max-w-[320px] max-h-[80vh] overflow-y-auto" onclick="event.stopPropagation()">
+                        <div class="p-4 border-b border-white/10 flex items-center justify-between sticky top-0 bg-mid-blue">
+                            <h3 class="text-white font-semibold">${title}</h3>
+                            <button onclick="closeModal()" class="text-gray-400 hover:text-white">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            ${content}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeModal(event) {
+            if (!event || event.target === event.currentTarget) {
+                document.getElementById('modal-container').innerHTML = '';
+            }
+        }
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const icons = { success: 'check_circle', error: 'error', warning: 'warning', info: 'info' };
+            const colors = { success: 'text-green-400', error: 'text-red-400', warning: 'text-yellow-400', info: 'text-cerulean' };
+            
+            const toast = document.createElement('div');
+            toast.className = `toast flex items-center gap-3 p-4 bg-deep-blue rounded-xl shadow-lg max-w-[280px]`;
+            toast.innerHTML = `
+                <span class="material-symbols-outlined ${colors[type]}">${icons[type]}</span>
+                <span class="text-white text-sm">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ============================================
+        // RIPPLE EFFECT
+        // ============================================
+        document.querySelectorAll('button').forEach(el => {
+            el.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = e.clientX - rect.left - size/2 + 'px';
+                ripple.style.top = e.clientY - rect.top - size/2 + 'px';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -111,6 +111,13 @@
 
 <!-- DRIVERS BOTTOM PANEL -->
 <div class="bottom-panel px-4 pb-2">
+  <!-- Filters -->
+  <div class="flex gap-2 mb-3 overflow-x-auto no-scrollbar">
+    <button onclick="filterTrips('hoy')" class="filter-btn active nm-flat px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/30">Hoy</button>
+    <button onclick="filterTrips('mañana')" class="filter-btn nm-flat px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-slate-400">Mañana</button>
+    <button onclick="filterTrips('semana')" class="filter-btn nm-flat px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-slate-400">Esta Semana</button>
+  </div>
+
   <!-- Section header -->
   <div class="flex items-center justify-between mb-2 px-1">
     <h2 class="font-bold text-white flex items-center gap-2">
@@ -124,7 +131,7 @@
   <div class="space-y-2" id="drivers-list">
     <!-- DRIVER 1 -->
     <div class="driver-card nm-flat rounded-2xl p-3 flex items-center justify-between border border-slate-800 cursor-pointer active:scale-99"
-      onclick="nav('ride_matching__biling_e.html')">
+      onclick="showBookingConfirm('Alejandro Medina', '$8.50')">
       <div class="flex items-center gap-3">
         <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-lg text-primary">A</div>
         <div>
@@ -133,7 +140,7 @@
             <span class="material-symbols-outlined text-yellow-400" style="font-size:11px">star</span>
             4.9 · Toyota Corolla (Blanco)
           </div>
-          <p class="text-[10px] text-green-400 font-bold mt-0.5">2 MIN · Altamira</p>
+          <p class="text-[10px] text-green-400 font-bold mt-0.5" data-time="hoy">HOY · 2 MIN · Altamira</p>
         </div>
       </div>
       <div class="text-right">
@@ -145,7 +152,7 @@
 
     <!-- DRIVER 2 -->
     <div class="driver-card nm-flat rounded-2xl p-3 flex items-center justify-between border border-slate-800 cursor-pointer"
-      onclick="nav('ride_matching__biling_e.html')">
+      onclick="showBookingConfirm('Carlos Bermúdez', '$6.00')">
       <div class="flex items-center gap-3">
         <div class="w-12 h-12 rounded-xl bg-cerulean/10 border border-cerulean/20 flex items-center justify-center font-bold text-lg text-cerulean">C</div>
         <div>
@@ -154,7 +161,7 @@
             <span class="material-symbols-outlined text-yellow-400" style="font-size:11px">star</span>
             4.7 · Chevrolet Aveo (Gris)
           </div>
-          <p class="text-[10px] text-green-400 font-bold mt-0.5">5 MIN · Chacaíto</p>
+          <p class="text-[10px] text-green-400 font-bold mt-0.5" data-time="mañana">MAÑANA · 10:00 AM</p>
         </div>
       </div>
       <div class="text-right">
@@ -162,6 +169,37 @@
         <p class="text-[10px] text-slate-400">Bs. 218</p>
         <p class="text-[10px] text-primary font-bold">VERIFICADO</p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div id="booking-modal" class="fixed inset-0 z-[100] hidden flex items-end justify-center px-4 pb-10 bg-black/60 backdrop-blur-sm transition-all">
+  <div class="nm-flat w-full max-w-sm rounded-[32px] p-6 animate-slideUp">
+    <div class="flex justify-between items-start mb-6">
+      <h3 class="text-xl font-extrabold text-white">Confirmar Reserva</h3>
+      <button onclick="closeBookingModal()" class="text-slate-500"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    
+    <div class="nm-inset rounded-2xl p-4 mb-6">
+      <div class="flex items-center gap-4 mb-4">
+        <div id="modal-driver-icon" class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">A</div>
+        <div>
+          <p id="modal-driver-name" class="font-bold text-lg">Alejandro Medina</p>
+          <p class="text-xs text-slate-400">Tu conductor seleccionado</p>
+        </div>
+      </div>
+      <div class="flex justify-between items-center border-t border-slate-800 pt-4">
+        <span class="text-slate-400">Monto a pagar</span>
+        <span id="modal-price" class="text-2xl font-black text-primary">$8.50</span>
+      </div>
+    </div>
+
+    <div class="space-y-3">
+      <button onclick="nav('ride_matching__biling_e.html')" class="w-full py-4 rounded-2xl bg-primary text-white font-bold text-lg shadow-lg shadow-primary/30 active:scale-95 transition-transform">
+        Confirmar y Reservar
+      </button>
+      <button onclick="closeBookingModal()" class="w-full py-3 text-slate-400 font-bold text-sm">Cancelar</button>
     </div>
   </div>
 </div>
@@ -204,7 +242,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).a
 // User location marker
 var userIcon = L.divIcon({
   className:'',
-  html:'<div style="width:36px;height:36px;background:#62AAE5;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(98,170,229,.7)"><span style="font-size:18px">📍</span></div>',
+  html:'<div style="width:36px;height:36px;background:#F59A2F;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(245,154,47,.7)"><span style="font-size:18px">📍</span></div>',
   iconSize:[36,36],iconAnchor:[18,18]
 });
 var userMarker = L.marker([10.4806,-66.9036],{icon:userIcon}).addTo(map).bindPopup('Tu ubicación');
@@ -220,14 +258,37 @@ var drivers = [
 ];
 drivers.forEach(function(pos){ L.marker(pos,{icon:carIcon}).addTo(map); });
 
-// Try geolocation
+// Try geolocation - Enhanced with better UX
 if(navigator.geolocation){
   navigator.geolocation.getCurrentPosition(function(pos){
     var lt=pos.coords.latitude, ln=pos.coords.longitude;
     userMarker.setLatLng([lt,ln]);
-    map.setView([lt,ln],14);
-    document.getElementById('input-origin').value='Mi ubicación actual';
+    map.flyTo([lt,ln], 15, {duration: 2});
+    
+    // Reverse geocode to fill input
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lt}&lon=${ln}`)
+      .then(res => res.json())
+      .then(data => {
+        const addr = data.display_name.split(',').slice(0,2).join(', ');
+        document.getElementById('input-origin').value = addr || 'Mi ubicación actual';
+      });
+
+    // Save location for SOS
+    localStorage.setItem('vamos_current_location', JSON.stringify({lat: lt, lng: ln, name: 'Mi ubicación', timestamp: Date.now()}));
+  }, function(error) {
+    console.log('Geolocation error:', error.message);
+  }, {
+    enableHighAccuracy: true,
+    timeout: 10000,
+    maximumAge: 0
   });
+  
+  // Watch position for real-time updates
+  navigator.geolocation.watchPosition(function(pos) {
+    var lt = pos.coords.latitude, ln = pos.coords.longitude;
+    userMarker.setLatLng([lt, ln]);
+    localStorage.setItem('vamos_current_location', JSON.stringify({lat: lt, lng: ln, timestamp: Date.now()}));
+  }, null, {enableHighAccuracy: true});
 }
 
 // Search with Nominatim (OpenStreetMap geocoder)
@@ -260,14 +321,14 @@ function selectPlace(lat, lon, name, type){
   if(type==='origin'){
     userMarker.setLatLng(latlng);
   }
-  map.flyTo(latlng, 14, {duration:1.5});
+  map.flyTo(latlng, 15, {duration:1.5});
 }
 
 function searchRides(){
   var dest = document.getElementById('input-dest').value;
   if(!dest){ alert('Indica tu destino'); return; }
-  // Give visual feedback and navigate to matching
-  nav('ride_matching__biling_e.html');
+  // Simulated search results interaction
+  filterTrips('hoy');
 }
 
 function selectVehicle(btn){
@@ -277,6 +338,43 @@ function selectVehicle(btn){
   });
   btn.classList.add('text-primary','border-primary/30');
   btn.classList.remove('text-slate-400');
+}
+
+// Filter Logic
+function filterTrips(type) {
+  const btns = document.querySelectorAll('.filter-btn');
+  btns.forEach(b => {
+    b.classList.remove('text-primary', 'border-primary/30', 'active');
+    b.classList.add('text-slate-400');
+  });
+  event.target.classList.add('text-primary', 'border-primary/30', 'active');
+  event.target.classList.remove('text-slate-400');
+
+  const cards = document.querySelectorAll('.driver-card');
+  let count = 0;
+  cards.forEach(card => {
+    const timeEl = card.querySelector('[data-time]');
+    const cardTime = timeEl ? timeEl.getAttribute('data-time') : 'hoy';
+    if (type === 'semana' || cardTime === type) {
+      card.style.display = 'flex';
+      count++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  document.getElementById('drivers-count').textContent = count;
+}
+
+// Modal Logic
+function showBookingConfirm(name, price) {
+  document.getElementById('modal-driver-name').textContent = name;
+  document.getElementById('modal-driver-icon').textContent = name[0];
+  document.getElementById('modal-price').textContent = price;
+  document.getElementById('booking-modal').classList.remove('hidden');
+}
+
+function closeBookingModal() {
+  document.getElementById('booking-modal').classList.add('hidden');
 }
 </script>
 </body>

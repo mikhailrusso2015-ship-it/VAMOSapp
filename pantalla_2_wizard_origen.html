@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Crear Viaje - VAMOS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'space-blue': '#040521',
+                        'mid-blue': '#081D56',
+                        'deep-blue': '#0A0C3D',
+                        'vibrant-orange': '#F59A2F',
+                        'cerulean': '#62AAE5',
+                        'surface': '#121442',
+                    },
+                    fontFamily: { sans: ['Public Sans', 'sans-serif'] },
+                    boxShadow: {
+                        'neu-flat': '4px 4px 12px #020211, -4px -4px 12px #0a0f3d',
+                        'neu-pressed': 'inset 2px 2px 6px #020211, inset -2px -2px 6px #0a0f3d',
+                        'glow-cerulean': '0 0 15px rgba(98, 174, 229, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Public Sans', sans-serif; background: #040521; }
+        .search-item { transition: all 0.2s ease; }
+        .search-item:active { transform: scale(0.98); background: #121442; }
+        .toast { animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background: rgba(255,255,255,0.3); }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+    </style>
+</head>
+<body class="bg-space-blue min-h-screen flex justify-center">
+    
+    <div class="w-full max-w-[400px] bg-space-blue min-h-screen flex flex-col">
+        
+        <!-- Header -->
+        <header class="px-6 pt-8 pb-2 flex items-center justify-between">
+            <button onclick="closeWizard()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-mid-blue shadow-neu-flat active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-white">close</span>
+            </button>
+            <!-- Progress Steps -->
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-1 rounded-full bg-cerulean"></div>
+                <div class="w-8 h-1 rounded-full bg-surface"></div>
+                <div class="w-8 h-1 rounded-full bg-surface"></div>
+                <div class="w-8 h-1 rounded-full bg-surface"></div>
+            </div>
+            <div class="w-10"></div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 px-6 pt-4 overflow-y-auto">
+            
+            <!-- Title -->
+            <h1 class="text-white text-2xl font-bold mb-2">¿Desde dónde sales?</h1>
+            <p class="text-gray-400 text-sm mb-8">Ingresa la ciudad o dirección exacta de recogida</p>
+
+            <!-- Search Input -->
+            <div class="relative mb-6">
+                <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-cerulean text-xl">search</span>
+                </div>
+                <input type="text" 
+                       id="origin-input"
+                       placeholder="Escribe la dirección exacta" 
+                       class="w-full py-4 pl-12 pr-4 bg-mid-blue text-white placeholder-gray-500 rounded-2xl border-2 border-cerulean/30 focus:border-cerulean focus:outline-none shadow-neu-pressed transition-all"
+                       oninput="handleSearch(this.value)"
+                       onfocus="showSuggestions()"
+                       onblur="hideSuggestions()"
+                       autofocus>
+                <!-- Search Suggestions Dropdown -->
+                <div id="suggestions-dropdown" class="absolute top-full left-0 right-0 mt-2 bg-mid-blue rounded-xl shadow-lg z-10 hidden overflow-hidden">
+                    <div id="suggestions-list" class="max-h-60 overflow-y-auto">
+                        <!-- Suggestions populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- GPS Button -->
+            <button onclick="useGPS()" class="w-full flex items-center justify-center gap-3 py-3 mb-8 bg-mid-blue rounded-xl border-2 border-dashed border-cerulean/30 hover:border-cerulean transition-all group active:scale-[0.98]">
+                <span class="material-symbols-outlined text-cerulean group-hover:scale-110 transition-transform animate-pulse">my_location</span>
+                <span class="text-cerulean font-medium">Utilizar ubicación actual</span>
+            </button>
+
+            <!-- Recent Searches -->
+            <div id="recent-searches">
+                <h3 class="text-gray-400 text-sm font-medium mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-gray-500">history</span>
+                    Búsquedas recientes
+                </h3>
+
+                <div class="space-y-2" id="recent-list">
+                    <button onclick="selectRecent('Plaza Venezuela, Caracas', 'Avenida Libertador')" class="search-item w-full flex items-center gap-4 p-4 bg-mid-blue rounded-xl hover:bg-surface transition-colors text-left group">
+                        <div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-vibrant-orange">trip_origin</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">Plaza Venezuela, Caracas</p>
+                            <p class="text-gray-500 text-sm">Avenida Libertador</p>
+                        </div>
+                        <span class="material-symbols-outlined text-gray-500 group-hover:text-white transition-colors">north_east</span>
+                    </button>
+
+                    <button onclick="selectRecent('Centro Comercial Sambil', 'Caracas, Chacao')" class="search-item w-full flex items-center gap-4 p-4 bg-mid-blue rounded-xl hover:bg-surface transition-colors text-left group">
+                        <div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-vibrant-orange">trip_origin</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">Centro Comercial Sambil</p>
+                            <p class="text-gray-500 text-sm">Caracas, Chacao</p>
+                        </div>
+                        <span class="material-symbols-outlined text-gray-500 group-hover:text-white transition-colors">north_east</span>
+                    </button>
+
+                    <button onclick="selectRecent('Terminal de Pasajeros', 'Barquisimeto, Lara')" class="search-item w-full flex items-center gap-4 p-4 bg-mid-blue rounded-xl hover:bg-surface transition-colors text-left group">
+                        <div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-vibrant-orange">trip_origin</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">Terminal de Pasajeros</p>
+                            <p class="text-gray-500 text-sm">Barquisimeto, Lara</p>
+                        </div>
+                        <span class="material-symbols-outlined text-gray-500 group-hover:text-white transition-colors">north_east</span>
+                    </button>
+                </div>
+                
+                <!-- Clear History -->
+                <button onclick="clearHistory()" class="mt-4 text-cerulean text-sm flex items-center gap-2 mx-auto">
+                    <span class="material-symbols-outlined text-sm">delete_sweep</span>
+                    Limpiar historial
+                </button>
+            </div>
+
+            <!-- Popular Destinations (shown after search) -->
+            <div id="popular-destinations" class="hidden">
+                <h3 class="text-gray-400 text-sm font-medium mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-gray-500">local_fire_department</span>
+                    Destinos populares
+                </h3>
+                <div class="space-y-2">
+                    <button onclick="selectDestination('Valencia, Carabobo')" class="search-item w-full flex items-center gap-4 p-4 bg-mid-blue rounded-xl hover:bg-surface transition-colors text-left">
+                        <div class="w-10 h-10 rounded-full bg-vibrant-orange/20 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-vibrant-orange">place</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">Valencia</p>
+                            <p class="text-gray-500 text-sm">Carabobo • desde $12</p>
+                        </div>
+                    </button>
+                    <button onclick="selectDestination('Maracay, Aragua')" class="search-item w-full flex items-center gap-4 p-4 bg-mid-blue rounded-xl hover:bg-surface transition-colors text-left">
+                        <div class="w-10 h-10 rounded-full bg-vibrant-orange/20 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-vibrant-orange">place</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">Maracay</p>
+                            <p class="text-gray-500 text-sm">Aragua • desde $10</p>
+                        </div>
+                    </button>
+                    <button onclick="selectDestination('Barquisimeto, Lara')" class="search-item w-full flex items-center gap-4 p-4 bg-mid-blue rounded-xl hover:bg-surface transition-colors text-left">
+                        <div class="w-10 h-10 rounded-full bg-vibrant-orange/20 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-vibrant-orange">place</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">Barquisimeto</p>
+                            <p class="text-gray-500 text-sm">Lara • desde $15</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Bottom CTA -->
+        <footer class="p-6 pb-8">
+            <button id="continue-btn" onclick="continueToNext()" class="w-full py-4 bg-cerulean text-white font-semibold rounded-2xl shadow-glow-cerulean flex items-center justify-center gap-2 hover:bg-cerulean/90 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                Continuar
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </footer>
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2"></div>
+
+    </div>
+
+    <script>
+        // ============================================
+        // STATE
+        // ============================================
+        const state = {
+            selectedOrigin: null,
+            recentSearches: [
+                { title: 'Plaza Venezuela, Caracas', subtitle: 'Avenida Libertador' },
+                { title: 'Centro Comercial Sambil', subtitle: 'Caracas, Chacao' },
+                { title: 'Terminal de Pasajeros', subtitle: 'Barquisimeto, Lara' }
+            ],
+            step: 1
+        };
+
+        // ============================================
+        // SEARCH & SUGGESTIONS
+        // ============================================
+        const mockSuggestions = [
+            { title: 'Plaza Venezuela', subtitle: 'Caracas, Miranda' },
+            { title: 'Plaza Bolívar', subtitle: 'Caracas, Distrito Capital' },
+            { title: 'Plaza Altamira', subtitle: 'Caracas, Chacao' },
+            { title: 'Centro Comercial Sambil', subtitle: 'Caracas, Chacao' },
+            { title: 'Terminal de Pasajeros', subtitle: 'Barquisimeto, Lara' },
+            { title: 'Aeropuerto de Maiquetía', subtitle: 'Maiquetía, Vargas' }
+        ];
+
+        function handleSearch(query) {
+            const dropdown = document.getElementById('suggestions-dropdown');
+            const list = document.getElementById('suggestions-list');
+            
+            if (query.length < 2) {
+                dropdown.classList.add('hidden');
+                document.getElementById('recent-searches').classList.remove('hidden');
+                document.getElementById('popular-destinations').classList.add('hidden');
+                return;
+            }
+            
+            // Filter suggestions
+            const filtered = mockSuggestions.filter(s => 
+                s.title.toLowerCase().includes(query.toLowerCase()) ||
+                s.subtitle.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            if (filtered.length > 0) {
+                list.innerHTML = filtered.map(s => `
+                    <button onclick="selectSuggestion('${s.title}', '${s.subtitle}')" class="w-full flex items-center gap-4 p-3 hover:bg-surface transition-colors text-left">
+                        <span class="material-symbols-outlined text-cerulean">search</span>
+                        <div>
+                            <p class="text-white text-sm">${s.title}</p>
+                            <p class="text-gray-500 text-xs">${s.subtitle}</p>
+                        </div>
+                    </button>
+                `).join('');
+                dropdown.classList.remove('hidden');
+                document.getElementById('recent-searches').classList.add('hidden');
+                document.getElementById('popular-destinations').classList.add('hidden');
+            } else {
+                list.innerHTML = `
+                    <div class="p-4 text-center text-gray-500">
+                        <span class="material-symbols-outlined text-3xl">search_off</span>
+                        <p class="text-sm mt-2">Sin resultados</p>
+                    </div>
+                `;
+                dropdown.classList.remove('hidden');
+            }
+            
+            updateContinueButton();
+        }
+
+        function showSuggestions() {
+            if (document.getElementById('origin-input').value.length < 2) {
+                document.getElementById('popular-destinations').classList.remove('hidden');
+                document.getElementById('recent-searches').classList.add('hidden');
+            }
+        }
+
+        function hideSuggestions() {
+            setTimeout(() => {
+                document.getElementById('suggestions-dropdown').classList.add('hidden');
+            }, 200);
+        }
+
+        function selectSuggestion(title, subtitle) {
+            document.getElementById('origin-input').value = title;
+            state.selectedOrigin = { title, subtitle };
+            document.getElementById('suggestions-dropdown').classList.add('hidden');
+            updateContinueButton();
+            showToast(`Origen seleccionado: ${title}`, 'success');
+        }
+
+        // ============================================
+        // RECENT SEARCHES
+        // ============================================
+        function selectRecent(title, subtitle) {
+            document.getElementById('origin-input').value = title;
+            state.selectedOrigin = { title, subtitle };
+            updateContinueButton();
+            showToast(`Origen seleccionado: ${title}`, 'success');
+        }
+
+        function clearHistory() {
+            state.recentSearches = [];
+            document.getElementById('recent-list').innerHTML = `
+                <div class="p-4 text-center text-gray-500">
+                    <span class="material-symbols-outlined text-3xl">history</span>
+                    <p class="text-sm mt-2">Sin búsquedas recientes</p>
+                </div>
+            `;
+            showToast('Historial limpiado', 'info');
+        }
+
+        // ============================================
+        // GPS
+        // ============================================
+        function useGPS() {
+            showToast('Obteniendo ubicación...', 'info');
+            
+            // Simulate GPS
+            setTimeout(() => {
+                const locations = [
+                    { title: 'Tu ubicación actual', subtitle: 'Caracas, Miranda' },
+                    { title: 'Ubicación GPS', subtitle: 'Avenida Principal, Colinas de Los Ruices' }
+                ];
+                const randomLoc = locations[Math.floor(Math.random() * locations.length)];
+                
+                document.getElementById('origin-input').value = randomLoc.title;
+                state.selectedOrigin = randomLoc;
+                updateContinueButton();
+                
+                showToast(`Ubicación detectada: ${randomLoc.title}`, 'success');
+            }, 1500);
+        }
+
+        // ============================================
+        // POPULAR DESTINATIONS
+        // ============================================
+        function selectDestination(city) {
+            // Save as origin for demo
+            state.selectedOrigin = { title: city, subtitle: 'Ciudad seleccionada' };
+            document.getElementById('origin-input').value = city;
+            updateContinueButton();
+            showToast(`Origen seleccionado: ${city}`, 'success');
+        }
+
+        // ============================================
+        // CONTINUE BUTTON
+        // ============================================
+        function updateContinueButton() {
+            const btn = document.getElementById('continue-btn');
+            btn.disabled = !state.selectedOrigin;
+            btn.classList.toggle('opacity-50', !state.selectedOrigin);
+        }
+
+        function continueToNext() {
+            if (!state.selectedOrigin) return;
+            
+            // Save to localStorage for next step
+            localStorage.setItem('vamos_origin', JSON.stringify(state.selectedOrigin));
+            
+            showToast('Navegando al siguiente paso...', 'info');
+            
+            // Simulate navigation
+            setTimeout(() => {
+                window.location.href = 'pantalla_3_fijar_precio.html';
+            }, 800);
+        }
+
+        function closeWizard() {
+            if (confirm('¿Salir del wizard? Los cambios no se guardarán.')) {
+                window.location.href = 'home__biling_e_venezuela.html';
+            }
+        }
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const icons = { success: 'check_circle', error: 'error', warning: 'warning', info: 'info' };
+            const colors = { success: 'text-green-400', error: 'text-red-400', warning: 'text-yellow-400', info: 'text-cerulean' };
+            
+            const toast = document.createElement('div');
+            toast.className = `toast flex items-center gap-3 p-4 bg-deep-blue rounded-xl shadow-lg max-w-[280px]`;
+            toast.innerHTML = `
+                <span class="material-symbols-outlined ${colors[type]}">${icons[type]}</span>
+                <span class="text-white text-sm">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ============================================
+        // RIPPLE EFFECT
+        // ============================================
+        document.querySelectorAll('button').forEach(el => {
+            el.addEventListener('click', function(e) {
+                if (this.disabled) return;
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = e.clientX - rect.left - size/2 + 'px';
+                ripple.style.top = e.clientY - rect.top - size/2 + 'px';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Check for saved origin
+        const savedOrigin = localStorage.getItem('vamos_origin');
+        if (savedOrigin) {
+            const origin = JSON.parse(savedOrigin);
+            document.getElementById('origin-input').value = origin.title;
+            state.selectedOrigin = origin;
+            updateContinueButton();
+        }
+    </script>
+</body>
+</html>

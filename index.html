@@ -172,15 +172,115 @@
       <span style="color:#F59A2F;font-size:13px;font-weight:600;letter-spacing:.05em">CARGANDO…</span>
     </div>
     <div id="back-btn" title="Atrás">arrow_back</div>
-    <iframe id="screen-frame" src="login___sign_up.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"></iframe>
+
+<!-- Global SOS Floating Button (One-Tap) -->
+<div id="global-sos-btn" onclick="triggerGlobalSOS()" 
+  style="position:absolute;bottom:100px;right:16px;z-index:50;width:56px;height:56px;border-radius:50%;background:#dc2626;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 20px rgba(220,38,38,0.6);border:3px solid rgba(255,255,255,0.3);animation:sosPulse 1.5s infinite;"
+  title="Emergencia - One Tap SOS">
+  <span style="font-family:'Material Symbols Outlined';font-size:24px;color:#fff;">sos</span>
+</div>
+<style>
+@keyframes sosPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.7),0 0 0 0 rgba(220,38,38,0.3);}50%{box-shadow:0 0 0 12px rgba(220,38,38,0),0 0 0 24px rgba(220,38,38,0);}}
+</style>
+
+<iframe id="screen-frame" src="login___sign_up.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"></iframe>
 
   </div>
 </div>
 
 <script>
 // ─────────────────────────────────────────────
-//  VAMOS – SPA Router
+//  VAMOS – SPA Router + i18n
 // ─────────────────────────────────────────────
+
+// Internationalization (i18n) translations
+const TRANSLATIONS = {
+  es: {
+    subtitle: "Viajes compartidos premium en Venezuela",
+    searchRide: "Buscar un Viaje",
+    offerRide: "Ofrecer un Viaje",
+    passengers: "Pasajero",
+    driver: "Chofer",
+    searchPlaceholder: "¿A dónde vas?",
+    originPlaceholder: "Tu ubicación actual",
+    today: "Hoy",
+    tomorrow: "Mañana",
+    thisWeek: "Esta Semana",
+    availableNow: "Disponible Ahora",
+    bookNow: "Reservar Ahora",
+    confirm: "Confirmar",
+    cancel: "Cancelar",
+    seeAll: "Ver todos",
+    sosAlert: "Alerta SOS",
+    sosSent: "Alerta enviada a tus contactos de emergencia",
+    emergencyContacts: "Contactos de Emergencia",
+    locationSent: "Ubicación compartida con los servicios de emergencia."
+  },
+  en: {
+    subtitle: "Premium shared rides in Venezuela",
+    searchRide: "Search for a Ride",
+    offerRide: "Offer a Ride",
+    passengers: "Passenger",
+    driver: "Driver",
+    searchPlaceholder: "Where are you going?",
+    originPlaceholder: "Your current location",
+    today: "Today",
+    tomorrow: "Tomorrow",
+    thisWeek: "This Week",
+    availableNow: "Available Now",
+    bookNow: "Book Now",
+    confirm: "Confirm",
+    cancel: "Cancel",
+    seeAll: "See all",
+    sosAlert: "SOS Alert",
+    sosSent: "Alert sent to your emergency contacts",
+    emergencyContacts: "Emergency Contacts",
+    locationSent: "Location shared with emergency services."
+  }
+};
+
+// Get current language from localStorage or default to Spanish
+let currentLang = localStorage.getItem('vamos_lang') || 'es';
+
+function t(key) {
+  return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS['es'][key] || key;
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('vamos_lang', lang);
+  
+  // Update all language toggle buttons in the parent
+  document.querySelectorAll('.lang-toggle').forEach(el => {
+    el.innerHTML = lang === 'es' 
+      ? '<span class="text-primary">ES</span><span class="opacity-30">|</span><span class="opacity-50">EN</span>'
+      : '<span class="opacity-50">ES</span><span class="opacity-30">|</span><span class="text-primary">EN</span>';
+  });
+
+  // Notify the active frame
+  const frame = document.getElementById('screen-frame');
+  if(frame && frame.contentWindow) {
+    frame.contentWindow.postMessage({ type: 'LANGUAGE_CHANGE', lang: lang }, '*');
+  }
+}
+
+function toggleLanguage() {
+  setLanguage(currentLang === 'es' ? 'en' : 'es');
+}
+
+// ── SOS LOGIC ────────────────────────────────
+function oneTapSOS() {
+  const loc = JSON.parse(localStorage.getItem('vamos_current_location') || '{"lat":10.48,"lng":-66.90}');
+  const msg = encodeURIComponent(`🚨 VAMOS SOS: Necesito ayuda. Mi ubicación: https://www.google.com/maps?q=${loc.lat},${loc.lng}`);
+  
+  // 1. Call 171
+  window.location.href = 'tel:171';
+  
+  // 2. WhatsApp Alert (Simulated contacts)
+  setTimeout(() => {
+    window.open(`https://wa.me/?text=${msg}`, '_blank');
+  }, 1500);
+}
 
 const SCREENS = {
   // Login
@@ -263,6 +363,68 @@ function goBack() {
   updateSideNav(prev);
 }
 
+// ── Global SOS One-Tap Action ───────────────────
+function triggerGlobalSOS() {
+  // Get current location
+  let lat = 10.4806, lng = -66.9036; // Default Caracas
+  
+  // Try to get real location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      lat = pos.coords.latitude;
+      lng = pos.coords.longitude;
+      executeSOS(lat, lng);
+    }, function() {
+      executeSOS(lat, lng);
+    }, {enableHighAccuracy: true, timeout: 5000});
+  } else {
+    executeSOS(lat, lng);
+  }
+}
+
+function executeSOS(lat, lng) {
+  // Get emergency contacts
+  const contacts = JSON.parse(localStorage.getItem('vamos_sos_contacts') || '[]');
+  
+  if (contacts.length === 0) {
+    // No contacts - navigate to SOS page
+    navigateTo('sos_alert__biling_e_venezuela.html');
+    return;
+  }
+  
+  // Show confirmation toast
+  showSOSToast();
+  
+  // Send to all emergency contacts
+  contacts.forEach((c, i) => {
+    setTimeout(() => {
+      const phone = '58' + c.phone.replace(/\D/g, '').replace(/^0/, '');
+      const mapLink = 'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng;
+      const msg = encodeURIComponent('🚨 ALERTA SOS URGENTE - VAMOS App\n\nHola ' + c.name + ', NECESITO AYUDA ahora mismo.\n\n📍 Mi ubicación en tiempo real:\n' + mapLink + '\n\n⚠️ Enviado automáticamente.');
+      window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
+    }, i * 1500);
+  });
+  
+  // Call 171 after a short delay
+  setTimeout(() => {
+    window.location.href = 'tel:171';
+  }, 2000);
+}
+
+function showSOSToast() {
+  const toast = document.createElement('div');
+  toast.id = 'sos-toast';
+  toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;background:#dc2626;color:#fff;padding:12px 24px;border-radius:12px;font-weight:bold;box-shadow:0 4px 20px rgba(220,38,38,0.5);display:flex;align-items:center;gap:8px;';
+  toast.innerHTML = '<span class="material-symbols-outlined">sos</span> Enviando alerta SOS...';
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
 function updateSideNav(screenFile) {
   sideItems.forEach(el => {
     el.classList.toggle('active', el.dataset.screen === screenFile);
@@ -278,6 +440,8 @@ frame.addEventListener('load', () => {
   try {
     const doc = frame.contentDocument || frame.contentWindow.document;
     wireDocument(doc);
+    // Sync language on load
+    frame.contentWindow.postMessage({ type: 'LANGUAGE_CHANGE', lang: currentLang }, '*');
   } catch(e) {
     // cross-origin – shouldn't happen for same-origin files
   }
@@ -357,20 +521,32 @@ function wireDocument(doc) {
   });
 
   // SOS button explicitly
-  const sosBtns = doc.querySelectorAll('[class*="bg-red-6"], [class*="red-600"], .sos-btn');
+  const sosBtns = doc.querySelectorAll('[class*="bg-red-6"], [class*="red-600"], .sos-btn, [class*="sos"]');
   sosBtns.forEach(btn => {
      btn.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
-      navigateTo(SCREENS.sos);
+      oneTapSOS();
+    });
+  });
+
+  // Language toggle inside frame
+  const langBtns = doc.querySelectorAll('.lang-toggle, button:contains("ES"), button:contains("EN")');
+  langBtns.forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleLanguage();
     });
   });
 }
 
 // ── Listen for postMessage from iframe ───────
 window.addEventListener('message', e => {
-  if (e.data?.nav)  navigateTo(e.data.nav);
-  if (e.data?.back) goBack();
+  if (e.data?.nav)      navigateTo(e.data.nav);
+  if (e.data?.back)     goBack();
+  if (e.data?.sos)      oneTapSOS();
+  if (e.data?.toggleLang) toggleLanguage();
 });
 
 // ── Side nav clicks ──────────────────────────
@@ -382,9 +558,8 @@ sideItems.forEach(el => {
 backBtn.addEventListener('click', goBack);
 
 // ── Start: show login screen ──────────────────
-// Already loaded via src="home__biling_e_venezuela.html", that's fine.
-// Update side nav initial state
 updateSideNav(currentScreen);
+
 </script>
 </body>
 </html>

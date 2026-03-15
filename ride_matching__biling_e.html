@@ -77,9 +77,9 @@
 <main class="flex-1 max-w-2xl mx-auto w-full px-4 py-6 space-y-6">
 <!-- Filter Tabs -->
 <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-<button class="neu-card px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold text-primary active-tab">Hoy</button>
-<button class="neu-card px-6 py-2 rounded-full whitespace-nowrap text-sm font-semibold text-slate-600 dark:text-slate-400">Mañana</button>
-<button class="neu-card px-6 py-2 rounded-full whitespace-nowrap text-sm font-semibold text-slate-600 dark:text-slate-400">Esta Semana</button>
+<button class="neu-card px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold text-primary active-tab filter-tab" data-filter="today" onclick="filterRides('today')">Hoy</button>
+<button class="neu-card px-6 py-2 rounded-full whitespace-nowrap text-sm font-semibold text-slate-600 dark:text-slate-400 filter-tab" data-filter="tomorrow" onclick="filterRides('tomorrow')">Mañana</button>
+<button class="neu-card px-6 py-2 rounded-full whitespace-nowrap text-sm font-semibold text-slate-600 dark:text-slate-400 filter-tab" data-filter="week" onclick="filterRides('week')">Esta Semana</button>
 </div>
 <div class="flex items-center justify-between">
 <h2 class="text-xl font-bold text-deep-space dark:text-white">Viajes Disponibles</h2>
@@ -89,7 +89,7 @@
             </span>
 </div>
 <!-- Ride Card 1 -->
-<div class="neu-card p-5 rounded-2xl border border-white/20 dark:border-white/5 space-y-4">
+<div class="neu-card p-5 rounded-2xl border border-white/20 dark:border-white/5 space-y-4 ride-card">
 <div class="flex justify-between items-start">
 <div class="flex gap-3">
 <div class="relative">
@@ -482,4 +482,121 @@
   } else { wire(); }
 })();
 </script>
-<!-- /VAMOS-V2 --></body></html>
+<!-- /VAMOS-V2 -->
+
+<!-- Ride Matching Logic -->
+<script>
+// ── Filter Rides Functionality ──
+function filterRides(filter) {
+  // Update tab styles
+  document.querySelectorAll('.filter-tab').forEach(function(tab) {
+    if (tab.dataset.filter === filter) {
+      tab.classList.add('text-primary', 'active-tab');
+      tab.classList.remove('text-slate-600', 'text-slate-400');
+    } else {
+      tab.classList.remove('text-primary', 'active-tab');
+      tab.classList.add('text-slate-600', 'dark:text-slate-400');
+    }
+  });
+  
+  // Filter rides (in real app, this would filter from API)
+  var rides = document.querySelectorAll('.ride-card');
+  rides.forEach(function(card) {
+    var dateText = card.querySelector('.uppercase.font-bold.tracking-wider');
+    if (!dateText) return;
+    
+    var isVisible = true;
+    if (filter === 'today') {
+      isVisible = dateText.textContent.toLowerCase().includes('hoy') || 
+                  dateText.textContent.toLowerCase().includes('today');
+    } else if (filter === 'tomorrow') {
+      isVisible = dateText.textContent.toLowerCase().includes('mañana') || 
+                  dateText.textContent.toLowerCase().includes('tomorrow');
+    } else if (filter === 'week') {
+      isVisible = true; // Show all
+    }
+    
+    card.style.display = isVisible ? 'block' : 'none';
+  });
+}
+
+// ── Reservation Confirmation Modal ──
+function showReservationModal(rideCard) {
+  var driverName = rideCard.querySelector('.font-bold').textContent;
+  var price = rideCard.querySelector('.text-lg.font-bold.text-primary').textContent;
+  var origin = rideCard.querySelectorAll('.font-semibold')[0].textContent;
+  var destination = rideCard.querySelectorAll('.font-semibold')[1].textContent;
+  
+  var modal = document.createElement('div');
+  modal.id = 'reservation-modal';
+  modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm';
+  modal.innerHTML = '
+    <div class="neu-card p-6 rounded-3xl max-w-sm mx-4 w-full">
+      <div class="text-center mb-4">
+        <div class="w-16 h-16 mx-auto mb-3 bg-primary/20 rounded-full flex items-center justify-center">
+          <span class="material-symbols-outlined text-3xl text-primary">check_circle</span>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white">Confirmar Reserva</h3>
+      </div>
+      
+      <div class="space-y-3 mb-6">
+        <div class="flex justify-between">
+          <span class="text-slate-500 text-sm">Conductor</span>
+          <span class="font-bold">' + driverName + '</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 text-sm">Desde</span>
+          <span class="font-semibold text-right">' + origin + '</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 text-sm">Hacia</span>
+          <span class="font-semibold text-right">' + destination + '</span>
+        </div>
+        <div class="border-t border-slate-200 dark:border-slate-700 pt-3 flex justify-between">
+          <span class="font-bold">Total a Pagar</span>
+          <span class="text-xl font-black text-primary">' + price + '</span>
+        </div>
+      </div>
+      
+      <div class="flex gap-3">
+        <button onclick="closeReservationModal()" class="flex-1 py-3 rounded-xl border border-slate-300 font-bold text-slate-600">Cancelar</button>
+        <button onclick="confirmReservation()" class="flex-[2] py-3 rounded-xl bg-primary text-white font-bold shadow-lg">Confirmar</button>
+      </div>
+    </div>
+  ';
+  
+  document.body.appendChild(modal);
+  modal.onclick = function(e) {
+    if (e.target === modal) closeReservationModal();
+  };
+}
+
+function closeReservationModal() {
+  var modal = document.getElementById('reservation-modal');
+  if (modal) modal.remove();
+}
+
+function confirmReservation() {
+  closeReservationModal();
+  // Save reservation
+  localStorage.setItem('vamos_current_reservation', JSON.stringify({
+    status: 'confirmed',
+    timestamp: Date.now()
+  }));
+  // Navigate to tracking
+  nav('live_tracking__biling_e.html');
+}
+
+// ── Wire up Reserve buttons ──
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.bg-primary.text-white.font-bold').forEach(function(btn) {
+    if (btn.textContent.toLowerCase().includes('reservar') || btn.textContent.toLowerCase().includes('book')) {
+      btn.onclick = function(e) {
+        e.preventDefault();
+        var card = btn.closest('.neu-card') || btn.closest('.ride-card');
+        if (card) showReservationModal(card);
+      };
+    }
+  });
+});
+</script></body></html>

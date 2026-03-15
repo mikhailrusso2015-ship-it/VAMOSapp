@@ -81,10 +81,10 @@
 <main class="flex-1 px-6 py-8 max-w-md mx-auto w-full">
 <!-- Hero Section -->
 <section class="mb-10 text-center">
-<h1 class="text-4xl font-extrabold text-space-blue dark:text-white leading-tight mb-3">
-                Eleva tu <span class="text-primary">Trayecto</span>
+<h1 class="text-4xl font-extrabold text-space-blue dark:text-white leading-tight mb-3" data-i18n="hero-title">
+                Tu Viaje <span class="text-primary">Premium</span> en Vzla
 </h1>
-<p class="text-slate-600 dark:text-slate-400 text-lg">Compartidoing Premium para el profesional moderno.</p>
+<p class="text-slate-600 dark:text-slate-400 text-lg" data-i18n="hero-subtitle">La mejor forma de moverte con comodidad y estilo.</p>
 </section>
 <!-- Main CTAs -->
 <div class="grid grid-cols-1 gap-6 mb-12">
@@ -94,39 +94,39 @@
 <span class="material-symbols-outlined text-4xl">search</span>
 </div>
 <div class="text-center">
-<h3 class="text-xl font-bold text-deep-blue dark:text-white">Buscar un Viaje</h3>
-<p class="text-sm text-slate-500 dark:text-cerulean/80">Rutas premium disponibles</p>
+<h3 class="text-xl font-bold text-deep-blue dark:text-white" data-i18n="search-ride">Buscar un Viaje</h3>
+<p class="text-sm text-slate-500 dark:text-cerulean/80" data-i18n="search-desc">Rutas premium disponibles</p>
 </div>
 </button>
 <!-- Ofrecer un Viaje -->
-<button class="neumorph-card group p-6 rounded-3xl flex flex-col items-center gap-4 transition-all active:scale-95 border border-white/20">
+<button id="offer-ride-btn" class="neumorph-card group p-6 rounded-3xl flex flex-col items-center gap-4 transition-all active:scale-95 border border-white/20">
 <div class="size-16 rounded-2xl bg-deep-blue dark:bg-cerulean flex items-center justify-center text-white shadow-lg shadow-deep-blue/30">
 <span class="material-symbols-outlined text-4xl">directions_car</span>
 </div>
 <div class="text-center">
-<h3 class="text-xl font-bold text-deep-blue dark:text-white">Ofrecer un Viaje</h3>
-<p class="text-sm text-slate-500 dark:text-cerulean/80">Comparte tu ruta y ahorra</p>
+<h3 class="text-xl font-bold text-deep-blue dark:text-white" data-i18n="offer-ride">Ofrecer un Viaje</h3>
+<p class="text-sm text-slate-500 dark:text-cerulean/80" data-i18n="offer-desc">Comparte tu ruta y ahorra</p>
 </div>
 </button>
 </div>
 <!-- Featured Trip/Map Placeholder -->
 <section class="mb-12">
 <div class="flex items-center justify-between mb-4">
-<h2 class="text-xl font-bold text-space-blue dark:text-white">Viajes Cercanos</h2>
-<a class="text-primary font-semibold text-sm" href="#">Ver todos</a>
+<h2 class="text-xl font-bold text-space-blue dark:text-white" data-i18n="nearby-title">Viajes Cercanos</h2>
+<a class="text-primary font-semibold text-sm" href="#" data-i18n="see-all">Ver todos</a>
 </div>
 <div class="neumorph-card rounded-3xl overflow-hidden p-2">
 <div class="relative h-48 rounded-2xl bg-slate-200 overflow-hidden mb-4">
 <div class="absolute inset-0 bg-cover bg-center" data-alt="A stylized map showing driving routes in Caracas" data-location="Caracas, Venezuela" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0oObpbXrbZBCBfoD2BEpvCN1wwNo7iavEcWpX-dgXqb5oMcwhbGpU1k9qhcm0jNtb1qmININGXQMaJV_ezpEyD7eJ82oMuwQreeXeOyEegpCSaSOiVkn_v5d92_ZCk6luIrCJt0Z_Oelj6YvzeRxk0iO3qgC_COqWD-y2MlfPE6_kMUGUo1b9vmCJ7rDQWoCmfJf6Ijzx994FCDG8Ei3lTKtFRLcUo7QJRU2Fgy0yc2ivJnIIuCsgakW3K_Wtu8BoIvRmLzf_zwQ')"></div>
 <div class="absolute top-4 right-4 glass-panel px-3 py-1 rounded-full flex items-center gap-1">
 <span class="material-symbols-outlined text-primary text-sm">security</span>
-<span class="text-xs font-bold text-white uppercase tracking-wider">Verificado</span>
+<span class="text-xs font-bold text-white uppercase tracking-wider" data-i18n="verified">Verificado</span>
 </div>
 </div>
 <div class="px-4 pb-4">
 <div class="flex justify-between items-start mb-2">
 <div>
-<p class="text-xs font-bold text-primary uppercase tracking-widest">Disponible Ahora</p>
+<p class="text-xs font-bold text-primary uppercase tracking-widest" data-i18n="available-now">Disponible Ahora</p>
 <h4 class="text-lg font-bold dark:text-white">Altamira a Las Mercedes</h4>
 </div>
 <div class="text-right">
@@ -136,7 +136,7 @@
 </div>
 <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
 <span class="material-symbols-outlined text-sm">schedule</span>
-<span class="text-sm">Sale en 15 min</span>
+<span class="text-sm" data-i18n="departure">Sale en 15 min</span>
 </div>
 </div>
 </div>
@@ -147,19 +147,19 @@
 <div class="size-12 rounded-full neumorph-card flex items-center justify-center text-primary">
 <span class="material-symbols-outlined">verified_user</span>
 </div>
-<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Usuarios Verificados</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70" data-i18n="badge-verified">Usuarios Verificados</span>
 </div>
 <div class="flex flex-col items-center text-center gap-2">
 <div class="size-12 rounded-full neumorph-card flex items-center justify-center text-cerulean">
 <span class="material-symbols-outlined">encrypted</span>
 </div>
-<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Pago Seguro</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70" data-i18n="badge-payment">Pago Seguro</span>
 </div>
 <div class="flex flex-col items-center text-center gap-2">
 <div class="size-12 rounded-full neumorph-card flex items-center justify-center text-deep-blue dark:text-white">
 <span class="material-symbols-outlined">eco</span>
 </div>
-<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Bajo Carbono</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70" data-i18n="badge-eco">Bajo Carbono</span>
 </div>
 </section>
 </main>
@@ -167,23 +167,117 @@
 <nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-deep-blue border-t border-slate-200 dark:border-slate-800 px-6 pb-6 pt-3 flex justify-between items-center z-50">
 <a class="flex flex-col items-center gap-1 text-primary" href="#">
 <span class="material-symbols-outlined fill-1">home</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Inicio</span>
+<span class="text-[10px] font-bold uppercase tracking-widest" data-i18n="nav-home">Inicio</span>
 </a>
 <a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
 <span class="material-symbols-outlined">search</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Buscar</span>
+<span class="text-[10px] font-bold uppercase tracking-widest" data-i18n="nav-search">Buscar</span>
 </a>
 <a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
 <span class="material-symbols-outlined">directions_car</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Viajes</span>
+<span class="text-[10px] font-bold uppercase tracking-widest" data-i18n="nav-rides">Viajes</span>
 </a>
 <a class="flex flex-col items-center gap-1 text-slate-400 dark:text-cerulean/50" href="#">
 <span class="material-symbols-outlined">person</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Perfil</span>
+<span class="text-[10px] font-bold uppercase tracking-widest" data-i18n="nav-profile">Perfil</span>
 </a>
 </nav>
 <!-- Space for fixed nav -->
 <div class="h-24"></div>
+<script>
+// RBAC: Hide "Ofrecer un Viaje" if role is Pasajero
+(function() {
+  const role = localStorage.getItem('vamos_role') || 'pasajero';
+  const offerBtn = document.getElementById('offer-ride-btn');
+  if (role === 'pasajero' && offerBtn) {
+    offerBtn.style.display = 'none';
+  }
+})();
+
+// i18n logic
+const PAGE_TRANSLATIONS = {
+  es: {
+    "hero-title": 'Tu Viaje <span class="text-primary">Premium</span> en Vzla',
+    "hero-subtitle": "La mejor forma de moverte con comodidad y estilo.",
+    "search-ride": "Buscar un Viaje",
+    "search-desc": "Rutas premium disponibles",
+    "offer-ride": "Ofrecer un Viaje",
+    "offer-desc": "Comparte tu ruta y ahorra",
+    "nearby-title": "Viajes Cercanos",
+    "see-all": "Ver todos",
+    "verified": "Verificado",
+    "available-now": "Disponible Ahora",
+    "departure": "Sale en 15 min",
+    "badge-verified": "Usuarios Verificados",
+    "badge-payment": "Pago Seguro",
+    "badge-eco": "Bajo Carbono",
+    "nav-home": "Inicio",
+    "nav-search": "Buscar",
+    "nav-rides": "Viajes",
+    "nav-profile": "Perfil"
+  },
+  en: {
+    "hero-title": 'Your <span class="text-primary">Premium</span> Ride in Vzla',
+    "hero-subtitle": "The best way to travel with comfort and style.",
+    "search-ride": "Search for a Ride",
+    "search-desc": "Premium routes available",
+    "offer-ride": "Offer a Ride",
+    "offer-desc": "Share your route and save",
+    "nearby-title": "Nearby Trips",
+    "see-all": "See all",
+    "verified": "Verified",
+    "available-now": "Available Now",
+    "departure": "Departure in 15 min",
+    "badge-verified": "Verified Users",
+    "badge-payment": "Secure Payment",
+    "badge-eco": "Low Carbon",
+    "nav-home": "Home",
+    "nav-search": "Search",
+    "nav-rides": "Rides",
+    "nav-profile": "Profile"
+  }
+};
+
+function updateLanguage(lang) {
+  const t = PAGE_TRANSLATIONS[lang] || PAGE_TRANSLATIONS['es'];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) {
+      el.innerHTML = t[key];
+    }
+  });
+  
+  // Update lang toggle visuals
+  document.querySelectorAll('button').forEach(b => {
+    if (b.textContent.includes('|')) {
+      b.innerHTML = lang === 'es' 
+        ? '<span class="text-primary">ES</span><span class="opacity-30">|</span><span class="opacity-50">EN</span>'
+        : '<span class="opacity-50">ES</span><span class="opacity-30">|</span><span class="text-primary">EN</span>';
+    }
+  });
+}
+
+// Initial language
+updateLanguage(localStorage.getItem('vamos_lang') || 'es');
+
+// Listen for messages from parent
+window.addEventListener('message', e => {
+  if (e.data?.type === 'LANGUAGE_CHANGE') {
+    updateLanguage(e.data.lang);
+  }
+});
+
+// Trigger language toggle in parent
+document.querySelectorAll('button').forEach(b => {
+  if (b.textContent.includes('|')) {
+    b.onclick = function(e) {
+      e.stopPropagation();
+      window.parent.postMessage({ toggleLang: true }, '*');
+    };
+  }
+});
+</script>
+
 <!-- VAMOS-V2 -->
 <script id="vamos-nav-v2">
 (function(){
@@ -345,15 +439,16 @@
     });
 
     // ─── 8. Language toggle: ES|EN button ─────────────────────
-    document.querySelectorAll('button').forEach(function(b){
-      var t = (b.textContent||'').trim();
-      if(t==='ES | EN' || (t.indexOf('ES')>-1 && t.indexOf('EN')>-1)){
-        b.onclick=function(e){
-          e.stopPropagation();
-          alert('Opciones de idioma: actualmente Español');
-        };
-      }
-    });
+    // This is now handled by the new i18n script block
+    // document.querySelectorAll('button').forEach(function(b){
+    //   var t = (b.textContent||'').trim();
+    //   if(t==='ES | EN' || (t.indexOf('ES')>-1 && t.indexOf('EN')>-1)){
+    //     b.onclick=function(e){
+    //       e.stopPropagation();
+    //       alert('Opciones de idioma: actualmente Español');
+    //     };
+    //   }
+    // });
 
     // ─── 9. "Viajes Cercanos" card → dashboard ──────────────────
     document.querySelectorAll('[class*="neumorph-card"], [class*="neu-flat"]').forEach(function(card){

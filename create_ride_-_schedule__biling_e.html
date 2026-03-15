@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en"><head>
+<html lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -73,28 +73,28 @@
 <div class="bg-background-dark rounded-2xl p-4 neu-flat">
 <div class="flex items-center justify-between mb-4">
 <button class="material-symbols-outlined text-primary">chevron_left</button>
-<span class="font-bold">Octubre 2023</span>
+<span class="font-bold">Marzo 2026</span>
 <button class="material-symbols-outlined text-primary">chevron_right</button>
 </div>
 <div class="grid grid-cols-7 text-center text-xs font-bold text-slate-400 mb-2">
 <div>D</div><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div>
 </div>
-<div class="grid grid-cols-7 gap-1">
+<div class="grid grid-cols-7 gap-1" id="calendar-grid">
 <!-- Placeholder days -->
+<div class="h-10 flex items-center justify-center text-slate-700">26</div>
+<div class="h-10 flex items-center justify-center text-slate-700">27</div>
 <div class="h-10 flex items-center justify-center text-slate-700">28</div>
-<div class="h-10 flex items-center justify-center text-slate-700">29</div>
-<div class="h-10 flex items-center justify-center text-slate-700">30</div>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">1</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">2</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">3</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">4</button>
-<button class="h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold shadow-lg shadow-primary/20">5</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">6</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">7</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">8</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">9</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors">10</button>
-<button class="h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors text-primary font-bold">11</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">1</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">2</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">3</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">4</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold shadow-lg shadow-primary/20" onclick="selectDate(this)">15</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">16</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">17</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">18</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">19</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors" onclick="selectDate(this)">20</button>
+<button class="date-tile h-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors text-primary font-bold" onclick="selectDate(this)">21</button>
 </div>
 </div>
 </section>
@@ -113,11 +113,41 @@
                     30
                 </div>
 <div class="flex flex-col gap-2 ml-2">
-<button class="px-4 py-2 rounded-lg neu-flat bg-primary text-white text-xs font-bold uppercase tracking-wider">AM</button>
-<button class="px-4 py-2 rounded-lg neu-flat bg-background-dark text-slate-400 text-xs font-bold uppercase tracking-wider">PM</button>
+<button id="ampm-am" onclick="toggleAMPM('AM')" class="ampm-btn px-4 py-2 rounded-lg neu-flat bg-primary text-white text-xs font-bold uppercase tracking-wider">AM</button>
+<button id="ampm-pm" onclick="toggleAMPM('PM')" class="ampm-btn px-4 py-2 rounded-lg neu-flat bg-background-dark text-slate-400 text-xs font-bold uppercase tracking-wider">PM</button>
 </div>
 </div>
 </section>
+
+<!-- ... rest of the file ... -->
+
+<script>
+function selectDate(btn) {
+  document.querySelectorAll('.date-tile').forEach(b => {
+    b.classList.remove('bg-primary', 'text-white', 'font-bold', 'shadow-lg', 'shadow-primary/20');
+    b.classList.add('hover:bg-slate-800');
+  });
+  btn.classList.add('bg-primary', 'text-white', 'font-bold', 'shadow-lg', 'shadow-primary/20');
+  btn.classList.remove('hover:bg-slate-800');
+}
+
+function toggleAMPM(type) {
+  const am = document.getElementById('ampm-am');
+  const pm = document.getElementById('ampm-pm');
+  if (type === 'AM') {
+    am.classList.add('bg-primary', 'text-white');
+    am.classList.remove('bg-background-dark', 'text-slate-400');
+    pm.classList.add('bg-background-dark', 'text-slate-400');
+    pm.classList.remove('bg-primary', 'text-white');
+  } else {
+    pm.classList.add('bg-primary', 'text-white');
+    pm.classList.remove('bg-background-dark', 'text-slate-400');
+    am.classList.add('bg-background-dark', 'text-slate-400');
+    am.classList.remove('bg-primary', 'text-white');
+  }
+}
+</script>
+
 <!-- Vehicle Selector Section -->
 <section class="space-y-4">
 <div class="flex items-center gap-2">
@@ -154,6 +184,53 @@
 </button>
 </footer>
 </div>
+<!-- Schedule Form Interactivity -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  let selectedDate = new Date();
+  const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+  
+  function renderCalendar() {
+    const today = new Date();
+    const monthDisplay = document.querySelector('.font-bold');
+    if(monthDisplay && monthDisplay.textContent.includes('20')) {
+      monthDisplay.textContent = monthNames[today.getMonth()] + ' ' + today.getFullYear();
+    }
+    
+    document.querySelectorAll('.grid.grid-cols-7 button').forEach(function(btn) {
+      const day = btn.textContent.trim();
+      if(day && !isNaN(day) && parseInt(day) >= 1 && parseInt(day) <= 31) {
+        btn.style.cursor = 'pointer';
+        btn.onclick = function() {
+          document.querySelectorAll('.grid.grid-cols-7 button').forEach(function(b) {
+            b.classList.remove('bg-primary', 'text-white', 'shadow-lg');
+          });
+          btn.classList.add('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/20');
+          selectedDate.setDate(parseInt(day));
+          localStorage.setItem('vamos_ride_date', selectedDate.toISOString());
+        };
+      }
+    });
+  }
+  
+  let isPM = false;
+  document.querySelectorAll('.flex.flex-col.gap-2 button').forEach(function(btn) {
+    btn.style.cursor = 'pointer';
+    btn.onclick = function() {
+      isPM = !isPM;
+      document.querySelectorAll('.flex.flex-col.gap-2 button').forEach(function(b) {
+        b.classList.remove('bg-primary', 'text-white');
+        b.classList.add('bg-background-dark', 'text-slate-400');
+      });
+      btn.classList.remove('bg-background-dark', 'text-slate-400');
+      btn.classList.add('bg-primary', 'text-white');
+      localStorage.setItem('vamos_ride_time', isPM ? 'PM' : 'AM');
+    };
+  });
+  
+  renderCalendar();
+});
+</script>
 <!-- VAMOS-V2 -->
 <script id="vamos-nav-v2">
 (function(){
