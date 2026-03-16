@@ -12,13 +12,21 @@ interface PagoMovilParams {
   referencia: string;
 }
 
+interface PagoMovilResponse {
+  success: boolean;
+  transactionId?: string;
+  message: string;
+  detail?: string;
+  error?: string;
+}
+
 class PagoMovilService {
   private static projectId = process.env.NEXT_PUBLIC_VAMOS_PAYMENT_PROJECT_ID;
 
   /**
    * Procesa un pago móvil validando primero las credenciales del proyecto.
    */
-  static async procesarPago(params: PagoMovilParams) {
+  static async procesarPago(params: PagoMovilParams): Promise<PagoMovilResponse> {
     console.log("[PagoMovilService] Iniciando validación...");
 
     // Validación de seguridad crítica
@@ -31,8 +39,6 @@ class PagoMovilService {
     try {
       console.log(`[PagoMovilService] Procesando pago para Proyecto ID: ${this.projectId}`);
       
-      // Simulación de llamada al agregador (ej. Ekiipago)
-      // En una implementación real, aquí se usaría fetch() con el ID en los headers
       const response = await this.mockApiCall(params);
 
       return {
@@ -42,12 +48,13 @@ class PagoMovilService {
         detail: response.detail
       };
 
-    } catch (error: any) {
-      console.error("[PagoMovilService] Error en la transacción:", error.message);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Error desconocido";
+      console.error("[PagoMovilService] Error en la transacción:", message);
       return {
         success: false,
         message: "Lo sentimos, no pudimos procesar tu pago móvil en este momento.",
-        error: error.message
+        error: message
       };
     }
   }
@@ -56,7 +63,7 @@ class PagoMovilService {
    * Simulación de respuesta de API externa
    */
   private static async mockApiCall(params: PagoMovilParams) {
-    return new Promise<{ id: string, detail: string }>((resolve, reject) => {
+    return new Promise<{ id: string, detail: string }>((resolve) => {
       setTimeout(() => {
         // Simulación de éxito
         resolve({

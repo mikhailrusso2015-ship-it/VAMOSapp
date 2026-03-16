@@ -4,14 +4,16 @@
  * Librerías activas: places, directions, geocoding
  */
 
+import { Libraries } from "@react-google-maps/api";
+
 export const GOOGLE_MAPS_CONFIG = {
   apiKey: "AIzaSyBXjq_GPzOx2OdIjA1k7haQ-4XieYf78qc",
-  libraries: ["places", "geometry", "drawing"] as any[],
+  libraries: ["places", "geometry", "drawing"] as Libraries,
   region: "VE", // Restricción a Venezuela
   language: "es",
 };
 
-export const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry" | "drawing" | "visualization")[] = ["places", "geometry"];
+export const GOOGLE_MAPS_LIBRARIES: Libraries = ["places", "geometry"];
 
 // Script URL centralizado para carga nativa
 export const getGoogleMapsScriptUrl = () => {

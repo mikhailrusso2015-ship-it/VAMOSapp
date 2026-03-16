@@ -4,19 +4,19 @@ import React, { useCallback, useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAPS_CONFIG } from "@/lib/google-maps";
 
-const containerStyle = {
+export const containerStyle = {
   width: "100%",
   height: "100%",
   borderRadius: "24px",
 };
 
-const center = {
+export const center = {
   lat: 10.2469, // Guacara, Venezuela
   lng: -67.8831,
 };
 
 // Estilo Dark Premium para el Mapa
-const darkMapStyle = [
+export const darkMapStyle = [
   { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
   { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
   { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
@@ -98,17 +98,13 @@ const darkMapStyle = [
 ];
 
 interface Props {
+  isLoaded: boolean;
+  loadError: any;
   onLoad?: (map: google.maps.Map) => void;
   onUnmount?: (map: google.maps.Map) => void;
 }
 
-const GoogleMapComponent: React.FC<Props> = ({ onLoad, onUnmount }) => {
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: GOOGLE_MAPS_CONFIG.apiKey,
-    libraries: GOOGLE_MAPS_CONFIG.libraries,
-  });
-
+const GoogleMapComponent: React.FC<Props> = ({ isLoaded, loadError, onLoad, onUnmount }) => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
   const handleOnLoad = useCallback((map: google.maps.Map) => {
@@ -145,7 +141,6 @@ const GoogleMapComponent: React.FC<Props> = ({ onLoad, onUnmount }) => {
         zoomControl: false,
       }}
     >
-      {/* Child components, such as markers, info windows, etc. */}
       <></>
     </GoogleMap>
   ) : (
