@@ -1,5 +1,7 @@
 {
-  "projects": {},
+  "projects": {
+    "default": "vamosapp-cc81a"
+  },
   "targets": {},
   "etags": {}
 }

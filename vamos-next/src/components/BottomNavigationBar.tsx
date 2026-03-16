@@ -9,7 +9,7 @@ const BottomNavigationBar = () => {
   const pathname = usePathname();
 
   const navItems = [
-    { label: "Buscar", icon: Search, href: "/" },
+    { label: "Buscar", icon: Search, href: "/search" },
     { label: "Publicar", icon: Plus, href: "/publish", isSpecial: true },
     { label: "Mis Viajes", icon: Car, href: "/trips" },
     { label: "Mensajes", icon: MessageSquare, href: "/messages" },

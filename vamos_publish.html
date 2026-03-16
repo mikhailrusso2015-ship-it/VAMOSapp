@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VAMOS - Publicar Viaje</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -32,33 +36,40 @@
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
         }
+
         .neu-flat {
             background: #081D56;
             box-shadow: 6px 6px 12px #020211, -6px -6px 12px #0e3391;
         }
+
         .neu-pressed {
             background: #081D56;
             box-shadow: inset 4px 4px 8px #020211, inset -4px -4px 8px #0e3391;
         }
+
         .neu-card {
             background: #081D56;
             box-shadow: 8px 8px 16px #020211, -8px -8px 16px #0e3391;
         }
+
         .bottom-nav-blur {
             backdrop-filter: blur(10px);
             background: rgba(8, 29, 86, 0.85);
         }
+
         .badge-pill.selected {
             background: #F59A2F;
             color: white;
             box-shadow: 0 0 15px rgba(245, 154, 47, 0.4);
             border-color: #F59A2F;
         }
+
         .badge-pill {
             background: #081D56;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -66,12 +77,14 @@
         }
     </style>
 </head>
+
 <body class="flex justify-center min-h-screen">
     <div class="w-full max-w-[400px] bg-vamos-dark pb-32 relative min-h-screen flex flex-col">
-        
+
         <!-- Header -->
         <header class="flex items-center px-6 pt-12 pb-6">
-            <button class="w-10 h-10 neu-flat rounded-full flex items-center justify-center active:scale-95 transition-all">
+            <button
+                class="w-10 h-10 neu-flat rounded-full flex items-center justify-center active:scale-95 transition-all">
                 <span class="material-symbols-outlined text-white/70">arrow_back</span>
             </button>
             <h1 class="flex-1 text-center text-lg font-bold text-white pr-10">Fija el aporte por plaza</h1>
@@ -79,21 +92,23 @@
 
         <!-- Main Wizard Content -->
         <main class="flex-1 px-6 flex flex-col justify-center items-center py-8">
-            
+
             <!-- Price Control (BlaBlaCar Style) -->
             <div class="flex items-center gap-8 mb-4">
-                <button class="w-16 h-16 rounded-full neu-flat flex items-center justify-center active:scale-90 transition-all font-bold text-2xl text-vamos-cerulean group">
+                <button
+                    class="w-16 h-16 rounded-full neu-flat flex items-center justify-center active:scale-90 transition-all font-bold text-2xl text-vamos-cerulean group">
                     <span class="material-symbols-outlined group-active:scale-90 transition-transform">remove</span>
                 </button>
                 <div class="flex items-end gap-1">
                     <span class="text-6xl font-extrabold text-white">15</span>
                     <span class="text-3xl font-bold text-vamos-cerulean mb-2">$</span>
                 </div>
-                <button class="w-16 h-16 rounded-full neu-flat flex items-center justify-center active:scale-90 transition-all font-bold text-2xl text-vamos-cerulean group">
+                <button
+                    class="w-16 h-16 rounded-full neu-flat flex items-center justify-center active:scale-90 transition-all font-bold text-2xl text-vamos-cerulean group">
                     <span class="material-symbols-outlined group-active:scale-90 transition-transform">add</span>
                 </button>
             </div>
-            
+
             <div class="neu-pressed px-6 py-2 rounded-full mb-12">
                 <p class="text-xs text-white/50 font-medium">Recomendado: <span class="text-white">12$ - 18$</span></p>
             </div>
@@ -104,42 +119,49 @@
                     <span class="material-symbols-outlined text-vamos-orange text-lg">account_balance_wallet</span>
                     Métodos de cobro aceptados
                 </h3>
-                
+
                 <div class="flex flex-wrap gap-3">
                     <!-- Badge 1 -->
-                    <button class="badge-pill selected px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2">
+                    <button
+                        class="badge-pill selected px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
                         Pago Móvil Bs
                     </button>
                     <!-- Badge 2 -->
-                    <button class="badge-pill px-4 py-2.5 rounded-full text-xs font-bold text-white/60 flex items-center gap-2">
+                    <button
+                        class="badge-pill px-4 py-2.5 rounded-full text-xs font-bold text-white/60 flex items-center gap-2">
                         Zelle
                     </button>
                     <!-- Badge 3 -->
-                    <button class="badge-pill px-4 py-2.5 rounded-full text-xs font-bold text-white/60 flex items-center gap-2">
+                    <button
+                        class="badge-pill px-4 py-2.5 rounded-full text-xs font-bold text-white/60 flex items-center gap-2">
                         Efectivo Exacto
                     </button>
                     <!-- Badge 4 -->
-                    <button class="badge-pill px-4 py-2.5 rounded-full text-xs font-bold text-white/60 flex items-center gap-2">
+                    <button
+                        class="badge-pill px-4 py-2.5 rounded-full text-xs font-bold text-white/60 flex items-center gap-2">
                         Binance Pay USDT
                     </button>
                 </div>
-                
+
                 <p class="text-[10px] text-white/40 mt-6 leading-relaxed">
-                    * Estos métodos serán visibles únicamente para pasajeros confirmados para garantizar tu seguridad financiera.
+                    * Estos métodos serán visibles únicamente para pasajeros confirmados para garantizar tu seguridad
+                    financiera.
                 </p>
             </div>
         </main>
 
         <!-- CTA Bottom Sticky -->
         <div class="px-6 pb-28">
-            <button class="w-full bg-vamos-orange text-white py-5 rounded-3xl font-extrabold text-lg shadow-[0_10px_30px_rgba(245,154,47,0.3)] hover:brightness-110 active:scale-[0.98] transition-all">
+            <button
+                class="w-full bg-vamos-orange text-white py-5 rounded-3xl font-extrabold text-lg shadow-[0_10px_30px_rgba(245,154,47,0.3)] hover:brightness-110 active:scale-[0.98] transition-all">
                 Publicar Viaje
             </button>
         </div>
 
         <!-- Global Bottom Navigation Bar -->
-        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[360px] h-20 bottom-nav-blur rounded-[32px] border border-white/10 flex items-center justify-around px-4 shadow-2xl z-50">
+        <div
+            class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[360px] h-20 bottom-nav-blur rounded-[32px] border border-white/10 flex items-center justify-around px-4 shadow-2xl z-50">
             <!-- Buscar -->
             <button class="flex flex-col items-center gap-1 group opacity-60 hover:opacity-100 transition-opacity">
                 <div class="text-white transition-colors">
@@ -147,10 +169,11 @@
                 </div>
                 <span class="text-[10px] font-bold text-white/70">Buscar</span>
             </button>
-            
+
             <!-- Publicar - Active -->
             <button class="flex flex-col items-center gap-1 group">
-                <div class="w-12 h-12 rounded-full bg-vamos-orange flex items-center justify-center shadow-[0_0_20px_rgba(245,154,47,0.4)] -mt-14 border-4 border-vamos-dark">
+                <div
+                    class="w-12 h-12 rounded-full bg-vamos-orange flex items-center justify-center shadow-[0_0_20px_rgba(245,154,47,0.4)] -mt-14 border-4 border-vamos-dark">
                     <span class="material-symbols-outlined !text-[32px] text-white">add</span>
                 </div>
                 <span class="text-[10px] font-bold text-vamos-orange mt-1">Publicar</span>
@@ -183,4 +206,5 @@
 
     </div>
 </body>
+
 </html>

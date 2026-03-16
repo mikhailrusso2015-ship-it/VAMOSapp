@@ -1,0 +1,96 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { getAuth, signInAnonymously } from "firebase/auth";
+import axios from "axios";
+import * as dotenv from "dotenv";
+
+dotenv.config({ path: ".env.local" });
+
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+async function auditLayer1() {
+  console.log("--- Capa 1: Infraestructura ---");
+  const mapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  try {
+    const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=Caracas&key=${mapsApiKey}`);
+    if (res.status === 200 && res.data.status === "OK") {
+      console.log("Status Google Maps API: OK (Geocoding)");
+    } else {
+      console.log(`Status Google Maps API: FALLO (${res.data.status})`);
+    }
+  } catch (err: any) {
+    console.log("Status Google Maps API: FALLO (Error de red/llave)");
+  }
+}
+
+async function auditLayer2() {
+  console.log("--- Capa 2: Flujo Transaccional ---");
+  try {
+    // Autenticación necesaria para las reglas request.auth != null
+    console.log("Intentando autenticación anónima para el test...");
+    const cred = await signInAnonymously(auth);
+    const testId = cred.user.uid;
+    console.log(`Autenticado como: ${testId}`);
+
+    // 1. Test Identidad
+    await setDoc(doc(db, "users", testId), {
+      uid: testId,
+      email: "test_audit@vamos.app",
+      role: "driver",
+      isTest: true,
+      updatedAt: new Date().toISOString()
+    });
+    console.log("Test de Identidad (Escritura Firestore): OK");
+
+    // 2. Test de Negocio (El Match)
+    const tripData = {
+      driverId: testId,
+      origin: "Valencia_Audit",
+      destination: "Caracas_Audit",
+      price: 99,
+      createdAt: new Date().toISOString(),
+      isTest: true
+    };
+    const tripRef = await addDoc(collection(db, "trips"), tripData);
+    console.log("Publicación de Viaje: OK");
+
+    const q = query(collection(db, "trips"), where("origin", "==", "Valencia_Audit"));
+    const querySnapshot = await getDocs(q);
+    let found = false;
+    querySnapshot.forEach((document) => {
+      if (document.id === tripRef.id) found = true;
+    });
+
+    if (found) {
+      console.log("Búsqueda/Match de Viaje: OK");
+    } else {
+      console.log("Búsqueda/Match de Viaje: FALLO (No encontrado)");
+    }
+
+    // Cleanup
+    await deleteDoc(doc(db, "users", testId));
+    await deleteDoc(tripRef);
+    console.log("Limpieza de datos de prueba: OK");
+  } catch (err: any) {
+    console.log("Status Base de Datos: FALLO (" + (err.message || 'Error desconocido') + ")");
+  }
+}
+
+async function runAudit() {
+  await auditLayer1();
+  await auditLayer2();
+  process.exit(0);
+}
+
+runAudit();
