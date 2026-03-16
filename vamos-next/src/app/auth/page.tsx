@@ -6,12 +6,11 @@ import {
   signInWithPopup, 
   GoogleAuthProvider, 
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   updateProfile
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
-import { Mail, ArrowLeft, Mail as MailIcon, Lock, User, Calendar, Loader2 } from "lucide-react";
+import { Loader2, ArrowLeft, Mail as MailIcon, Lock, User, Calendar } from "lucide-react";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -40,34 +39,44 @@ export default function AuthPage() {
     setError("");
     try {
       const provider = new GoogleAuthProvider();
-      // Asegurar que forzamos la selección de cuenta si es necesario
       provider.setCustomParameters({ prompt: "select_account" });
       
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       
-      // Guardar en Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        role: role,
-        updatedAt: new Date().toISOString(),
-      }, { merge: true });
+      // Operación Atómica: Verificar/Crear Perfil antes de Redirigir
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
 
-      redirectBasedOnRole();
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          role: role,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+      } else {
+        // Si ya existe, solo actualizamos el último login
+        await setDoc(userRef, {
+          updatedAt: new Date().toISOString(),
+        }, { merge: true });
+      }
+
+      // REDIRECCIÓN ESTRICTA: Solo después del éxito en Firestore
+      const finalRole = userSnap.exists() ? (userSnap.data()?.role || role) : role;
+      router.push(finalRole === "driver" ? "/publish" : "/search");
+
     } catch (err: any) {
       console.error("Auth Error:", err);
-      setError(err.message || "Error al iniciar sesión con Google");
+      setError("Error crítico de autenticación. Intenta de nuevo.");
+      // Limpiar sesión si falló Firestore para evitar inconsistentemente logueados
+      await auth.signOut();
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleEmailNext = () => {
-    if (step < 4) setStep(step + 1);
-    else finishRegistration();
   };
 
   const finishRegistration = async () => {
@@ -81,6 +90,7 @@ export default function AuthPage() {
         displayName: `${formData.firstName} ${formData.lastName}`,
       });
 
+      // Registro Atómico en Firestore
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: formData.email,
@@ -88,24 +98,23 @@ export default function AuthPage() {
         birthDate: formData.birthDate,
         role: role,
         createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       });
 
-      redirectBasedOnRole();
+      // Redirección Segura
+      router.push(role === "driver" ? "/publish" : "/search");
+
     } catch (err: any) {
-      setError(err.message);
+      console.error("Registration Error:", err);
+      setError(err.message || "Error al crear la cuenta.");
+      await auth.signOut();
     } finally {
       setLoading(false);
     }
   };
 
-  const redirectBasedOnRole = () => {
-    const target = role === "driver" ? "/publish" : "/search";
-    router.push(target);
-  };
-
   return (
     <div className="flex flex-col min-h-screen bg-[#040521] px-6 py-12">
-      {/* Back Button */}
       <button 
         onClick={() => view === "options" ? router.push("/") : setView("options")}
         className="size-10 neu-card rounded-xl flex items-center justify-center text-[#62AAE5] mb-8 active:scale-95"
@@ -154,7 +163,6 @@ export default function AuthPage() {
               <span className="text-white font-bold">Continuar con Email</span>
             </button>
           </div>
-          
           {error && <p className="text-red-400 text-[10px] text-center font-bold uppercase">{error}</p>}
         </div>
       )}
@@ -162,7 +170,6 @@ export default function AuthPage() {
       {view === "register" && (
         <div className="flex flex-col gap-6 animate-in slide-in-from-right-4 duration-300">
           <h2 className="text-2xl font-black text-white tracking-tight px-1">Crear Cuenta</h2>
-          
           <div className="neu-card rounded-[32px] p-6 space-y-8 border border-white/5">
             {step === 1 && (
               <div className="space-y-6">
@@ -173,7 +180,7 @@ export default function AuthPage() {
                     <input 
                       type="email" 
                       placeholder="ejemplo@gmail.com" 
-                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold"
+                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold outline-none"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
                     />
@@ -184,7 +191,6 @@ export default function AuthPage() {
                 </button>
               </div>
             )}
-
             {step === 2 && (
               <div className="space-y-6">
                 <div className="space-y-4">
@@ -194,7 +200,7 @@ export default function AuthPage() {
                     <input 
                       type="text" 
                       placeholder="Nombre" 
-                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold"
+                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold outline-none"
                       value={formData.firstName}
                       onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                     />
@@ -204,7 +210,7 @@ export default function AuthPage() {
                     <input 
                       type="text" 
                       placeholder="Apellido" 
-                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold"
+                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold outline-none"
                       value={formData.lastName}
                       onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                     />
@@ -215,7 +221,6 @@ export default function AuthPage() {
                 </button>
               </div>
             )}
-
             {step === 3 && (
               <div className="space-y-6">
                 <div className="space-y-2">
@@ -224,7 +229,7 @@ export default function AuthPage() {
                     <Calendar size={20} className="text-white/20 mr-3" />
                     <input 
                       type="date" 
-                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold [color-scheme:dark]"
+                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold [color-scheme:dark] outline-none"
                       value={formData.birthDate}
                       onChange={(e) => setFormData({...formData, birthDate: e.target.value})}
                     />
@@ -235,7 +240,6 @@ export default function AuthPage() {
                 </button>
               </div>
             )}
-
             {step === 4 && (
               <div className="space-y-6">
                 <div className="space-y-2">
@@ -245,7 +249,7 @@ export default function AuthPage() {
                     <input 
                       type="password" 
                       placeholder="Mínimo 6 caracteres" 
-                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold"
+                      className="bg-transparent border-none focus:ring-0 w-full text-white font-bold outline-none"
                       value={formData.password}
                       onChange={(e) => setFormData({...formData, password: e.target.value})}
                     />
@@ -261,7 +265,6 @@ export default function AuthPage() {
               </div>
             )}
           </div>
-          
           {error && <p className="text-red-400 text-[10px] text-center font-bold uppercase">{error}</p>}
         </div>
       )}

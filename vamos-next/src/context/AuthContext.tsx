@@ -25,8 +25,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    // Escuchar cambios en el estado de autenticación (Firebase nativo)
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
       setLoading(false);
     });
 
@@ -35,18 +36,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signOut = async () => {
     try {
+      setLoading(true);
       await firebaseSignOut(auth);
-      // Limpiar datos locales como solicitó el usuario
+      
+      // Limpieza atómica de persistencia local
       localStorage.clear();
-      window.location.href = "/"; // Redirigir al Gateway
+      sessionStorage.clear();
+      
+      // Forzar redirección al gateway principal para evitar estados residuales
+      window.location.replace("/");
     } catch (error) {
-      console.error("Error signing out:", error);
+      console.error("Critical Auth Error during SignOut:", error);
+    } finally {
+      // No seteamos loading false aquí porque location.replace recargará la app
     }
   };
 
   return (
     <AuthContext.Provider value={{ user, loading, signOut }}>
-      {children}
+      {!loading ? children : (
+        <div className="fixed inset-0 bg-[#040521] flex items-center justify-center z-[9999]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-12 h-12 border-4 border-[#62AAE5] border-t-transparent rounded-full animate-spin" />
+            <p className="text-[#62AAE5] text-[10px] font-black uppercase tracking-[0.2em] animate-pulse">
+              Sincronizando Perfil...
+            </p>
+          </div>
+        </div>
+      )}
     </AuthContext.Provider>
   );
 };

@@ -3,33 +3,26 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Función auxiliar para verificar autenticación
     function isAuthenticated() {
       return request.auth != null;
     }
 
-    // Reglas para la colección USERS
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
     match /users/{userId} {
-      // Cualquier usuario autenticado puede leer perfiles básicos (para búsquedas)
       allow read: if isAuthenticated();
-      
-      // Solo el dueño puede crear o actualizar su propio perfil
       allow create, update: if isAuthenticated() && request.auth.uid == userId;
-      
-      // Borrado prohibido por ahora por seguridad
       allow delete: if false;
     }
 
-    // Reglas para la colección TRIPS
     match /trips/{tripId} {
-      // Lectura pública para búsquedas
       allow read: if true;
       
-      // Solo usuarios autenticados pueden publicar viajes
-      // Idealmente validaríamos que el usuario tenga rol de 'driver'
-      allow create: if isAuthenticated();
+      // SLA v2.0 Rule: Solo choferes verificados pueden publicar
+      allow create: if isAuthenticated() && getUserData().role == 'driver';
       
-      // Solo el creador del viaje (driver) puede editarlo o cancelarlo
       allow update, delete: if isAuthenticated() && (
         resource.data.driverId == request.auth.uid || 
         resource.data.userId == request.auth.uid

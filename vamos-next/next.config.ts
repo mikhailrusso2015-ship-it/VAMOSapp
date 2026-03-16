@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    // Forzamos la desactivación de turbopack en build si es que está activo por defecto
+  }
 };
 
 export default nextConfig;

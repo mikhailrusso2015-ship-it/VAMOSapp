@@ -1,15 +1,14 @@
 /**
  * CONFIGURACIÓN GOOGLE MAPS - INTEGRACIÓN NATIVA
- * API Key proporcionada para VAMOSapp: AIzaSyBXjq_GPzOx2OdIjA1k7haQ-4XieYf78qc
- * Librerías activas: places, directions, geocoding
+ * API Key autorizada para VAMOSapp (vamosapp-cc81a)
  */
 
 import { Libraries } from "@react-google-maps/api";
 
 export const GOOGLE_MAPS_CONFIG = {
-  apiKey: "AIzaSyBXjq_GPzOx2OdIjA1k7haQ-4XieYf78qc",
+  apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyDbGpOieVWF6JC7y1cecIjhH94zoxiiiHU",
   libraries: ["places", "geometry", "drawing"] as Libraries,
-  region: "VE", // Restricción a Venezuela
+  region: "VE",
   language: "es",
 };
 

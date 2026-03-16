@@ -15,15 +15,12 @@ import {
   Clock
 } from "lucide-react";
 import GoogleMapComponent from "@/components/GoogleMapComponent";
-import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { Autocomplete } from "@react-google-maps/api";
+import { useGoogleMapsLoader } from "@/hooks/useGoogleMapsLoader";
 import { GOOGLE_MAPS_CONFIG } from "@/lib/google-maps";
 
 export default function PublishPageContent() {
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: GOOGLE_MAPS_CONFIG.apiKey,
-    libraries: GOOGLE_MAPS_CONFIG.libraries as any,
-  });
+  const { isLoaded, loadError } = useGoogleMapsLoader();
 
   const [step, setStep] = useState(1);
   const [price, setPrice] = useState(15);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useState } from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap } from "@react-google-maps/api";
 import { GOOGLE_MAPS_CONFIG } from "@/lib/google-maps";
 
 export const containerStyle = {

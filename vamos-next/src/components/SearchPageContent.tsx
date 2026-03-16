@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import { MapPin, Calendar, Users, Star, Clock, ChevronRight, Navigation } from "lucide-react";
-import { Autocomplete, useJsApiLoader, Libraries } from "@react-google-maps/api";
+import { Autocomplete } from "@react-google-maps/api";
 import GoogleMapComponent from "@/components/GoogleMapComponent";
+import { useGoogleMapsLoader } from "@/hooks/useGoogleMapsLoader";
 import { collection, query, getDocs, orderBy, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { GOOGLE_MAPS_CONFIG } from "@/lib/google-maps";
@@ -28,11 +29,7 @@ export default function SearchPageContent() {
   const [loading, setLoading] = useState(false);
   const [searchInitiated, setSearchInitiated] = useState(false);
 
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: GOOGLE_MAPS_CONFIG.apiKey,
-    libraries: GOOGLE_MAPS_CONFIG.libraries as Libraries,
-  });
+  const { isLoaded, loadError } = useGoogleMapsLoader();
 
   const fetchRides = async () => {
     setLoading(true);
