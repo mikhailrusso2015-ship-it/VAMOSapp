@@ -15,7 +15,10 @@ export default function MessagesPage() {
           Aquí aparecerán tus chats con conductores y pasajeros. ¡No te quedes con la duda y pregunta!
         </p>
       </div>
-      <button className="flex items-center gap-2 bg-[#62AAE5] text-white px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg active:scale-95 transition-all">
+      <button 
+        onClick={() => window.location.href = "/trips"}
+        className="flex items-center gap-2 bg-[#62AAE5] text-white px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg active:scale-95 transition-all"
+      >
         <Send size={18} />
         <span>Iniciar un chat</span>
       </button>

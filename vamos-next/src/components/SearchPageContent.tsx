@@ -5,7 +5,7 @@ import { MapPin, Calendar, Users, Star, Clock, ChevronRight, Navigation } from "
 import { Autocomplete } from "@react-google-maps/api";
 import GoogleMapComponent from "@/components/GoogleMapComponent";
 import { useGoogleMapsLoader } from "@/hooks/useGoogleMapsLoader";
-import { collection, query, getDocs, orderBy, limit } from "firebase/firestore";
+import { collection, query, onSnapshot, orderBy, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { GOOGLE_MAPS_CONFIG } from "@/lib/google-maps";
 
@@ -31,12 +31,14 @@ export default function SearchPageContent() {
 
   const { isLoaded, loadError } = useGoogleMapsLoader();
 
-  const fetchRides = async () => {
+  const fetchRides = () => {
     setLoading(true);
     setSearchInitiated(true);
-    try {
-      const q = query(collection(db, "trips"), orderBy("createdAt", "desc"), limit(10));
-      const querySnapshot = await getDocs(q);
+    
+    const q = query(collection(db, "trips"), orderBy("createdAt", "desc"), limit(20));
+    
+    // SLA v2.1: Sincronización en tiempo real y recuperación automática ante caídas de señal
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const fetchedRides = querySnapshot.docs.map(document => {
         const data = document.data() as any;
         return {
@@ -51,11 +53,13 @@ export default function SearchPageContent() {
         } as Ride;
       });
       setRides(fetchedRides);
-    } catch (error) {
-      console.error("Error fetching rides:", error);
-    } finally {
       setLoading(false);
-    }
+    }, (error) => {
+      console.error("Real-time sync error:", error);
+      setLoading(false);
+    });
+
+    return unsubscribe;
   };
 
   // Mock initial rides

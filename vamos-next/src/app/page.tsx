@@ -7,6 +7,18 @@ import { Car, Users, ArrowRight } from "lucide-react";
 export default function GatewayPage() {
   const router = useRouter();
 
+  // SLA v2.2: Protocolo de Continuidad - No pedir rol si ya existe sesión
+  useEffect(() => {
+    const savedRole = localStorage.getItem("userRole");
+    const checkSession = async () => {
+      if (savedRole) {
+        // Si hay un rol guardado, asumimos que el usuario ya pasó por aquí
+        router.push(savedRole === "driver" ? "/publish" : "/search");
+      }
+    };
+    checkSession();
+  }, [router]);
+
   const handleSelection = (role: "passenger" | "driver") => {
     localStorage.setItem("userRole", role);
     router.push("/auth");

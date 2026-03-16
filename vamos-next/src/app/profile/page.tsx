@@ -23,6 +23,7 @@ import { doc, updateDoc, onSnapshot } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from "@/lib/firebase";
 import { updateProfile } from "firebase/auth";
+import { useUserData } from "@/hooks/useUserData";
 
 export default function ProfilePage() {
   const { user, signOut } = useAuth();
@@ -38,24 +39,20 @@ export default function ProfilePage() {
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Cargar datos desde Firestore en tiempo real o al montar
+  const { userData, loading: dataLoading } = useUserData(user?.uid);
+
+  // Sincronizar estado local con datos del hook
   useEffect(() => {
-    if (user) {
-      const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
-        if (doc.exists()) {
-          const data = doc.data();
-          const nameParts = (data.displayName || "").split(" ");
-          setProfileData({
-            firstName: nameParts[0] || "",
-            lastName: nameParts.slice(1).join(" ") || "",
-            phone: data.phone || "",
-            role: data.role || "passenger",
-          });
-        }
+    if (userData) {
+      const nameParts = (userData.displayName || "").split(" ");
+      setProfileData({
+        firstName: nameParts[0] || "",
+        lastName: nameParts.slice(1).join(" ") || "",
+        phone: userData.phone || "",
+        role: userData.role || "passenger",
       });
-      return () => unsub();
     }
-  }, [user]);
+  }, [userData]);
 
   const handleImageClick = () => {
     fileInputRef.current?.click();

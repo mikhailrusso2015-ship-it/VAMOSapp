@@ -31,7 +31,7 @@ export default function PublishPageContent() {
     stops: [] as string[],
   });
 
-  const methods = ["Pago Móvil Bs", "Zelle", "Efectivo Exacto", "Binance Pay"];
+  const methods = ["Pago Móvil Bs", "Efectivo"];
   const originAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const destAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 

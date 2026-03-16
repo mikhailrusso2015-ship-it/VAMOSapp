@@ -23,4 +23,17 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+// Habilitar persistencia offline para el contexto de Venezuela (LTE/4G inestable)
+if (typeof window !== "undefined") {
+  import("firebase/firestore").then(({ enableIndexedDbPersistence }) => {
+    enableIndexedDbPersistence(db).catch((err) => {
+      if (err.code === "failed-precondition") {
+        console.warn("La persistencia falló: Múltiples pestañas abiertas.");
+      } else if (err.code === "unimplemented") {
+        console.warn("La persistencia no es compatible con este navegador.");
+      }
+    });
+  });
+}
+
 export { app, auth, db, storage };

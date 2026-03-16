@@ -3,10 +3,12 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { 
   onAuthStateChanged, 
+  getRedirectResult,
   User, 
   signOut as firebaseSignOut 
 } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 interface AuthContextType {
   user: User | null;
@@ -25,9 +27,45 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Escuchar cambios en el estado de autenticación (Firebase nativo)
+    // 1. Manejar resultado de redirección (Mobile friendly)
+    const handleRedirect = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result?.user) {
+          const user = result.user;
+          const pendingRole = localStorage.getItem("pendingRole") || "passenger";
+          
+          const userRef = doc(db, "users", user.uid);
+          const userSnap = await getDoc(userRef);
+
+          if (!userSnap.exists()) {
+            await setDoc(userRef, {
+              uid: user.uid,
+              email: user.email,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+              role: pendingRole,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            });
+          }
+          localStorage.removeItem("pendingRole");
+        }
+      } catch (error) {
+        console.error("Error processing redirect result:", error);
+      }
+    };
+
+    handleRedirect();
+
+    // 2. Escuchar cambios en el estado de autenticación (Firebase nativo)
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
+      if (!firebaseUser) {
+        // RESET TOTAL: Si no hay usuario, limpiar estado inmediatamente
+        setUser(null);
+      } else {
+        setUser(firebaseUser);
+      }
       setLoading(false);
     });
 
@@ -40,15 +78,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await firebaseSignOut(auth);
       
       // Limpieza atómica de persistencia local
-      localStorage.clear();
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("pendingRole");
       sessionStorage.clear();
       
+      // RESET LOCAL STATE
+      setUser(null);
+
       // Forzar redirección al gateway principal para evitar estados residuales
       window.location.replace("/");
     } catch (error) {
       console.error("Critical Auth Error during SignOut:", error);
     } finally {
-      // No seteamos loading false aquí porque location.replace recargará la app
+      setLoading(false);
     }
   };
 

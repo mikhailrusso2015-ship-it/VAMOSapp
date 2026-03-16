@@ -6,25 +6,48 @@ import { ShieldAlert, X, MapPin, Send, PhoneCall } from "lucide-react";
 
 const FloatingSOSButton = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const constraintsRef = useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Cargar posición guardada
+  useEffect(() => {
+    const savedPos = localStorage.getItem("sos_button_position");
+    if (savedPos) {
+      try {
+        setPosition(JSON.parse(savedPos));
+      } catch (e) {
+        console.warn("Error loading SOS position", e);
+      }
+    }
+    setIsMounted(true);
+  }, []);
 
   const toggleModal = () => setIsOpen(!isOpen);
 
+  const handleDragEnd = (_: any, info: { offset: { x: number; y: number } }) => {
+    const newPos = { 
+      x: position.x + info.offset.x, 
+      y: position.y + info.offset.y 
+    };
+    setPosition(newPos);
+    localStorage.setItem("sos_button_position", JSON.stringify(newPos));
+  };
+
+  if (!isMounted) return null;
+
   return (
     <>
-      <div
-        ref={constraintsRef}
-        className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden"
-      >
+      <div className="fixed inset-0 pointer-events-none z-[9999]">
         <motion.button
           drag
-          dragConstraints={constraintsRef}
-          dragElastic={0.1}
           dragMomentum={false}
+          onDragEnd={handleDragEnd}
+          initial={false}
+          animate={{ x: position.x, y: position.y }}
+          style={{ x: position.x, y: position.y }}
           whileDrag={{ scale: 1.1, cursor: "grabbing" }}
           whileTap={{ scale: 0.9 }}
-          initial={{ x: "calc(100vw - 80px)", y: "calc(100vh - 160px)" }}
-          className="pointer-events-auto absolute w-16 h-16 bg-[#F59A2F] rounded-full shadow-[0_0_25px_rgba(245,154,47,0.6)] border-4 border-[#040521] flex items-center justify-center text-white font-bold cursor-grab transition-all"
+          className="pointer-events-auto absolute bottom-24 right-6 w-16 h-16 bg-[#F59A2F] rounded-full shadow-[0_0_25px_rgba(245,154,47,0.6)] border-4 border-[#040521] flex items-center justify-center text-white font-bold cursor-grab transition-shadow"
           onClick={toggleModal}
         >
           <div className="flex flex-col items-center justify-center leading-none">

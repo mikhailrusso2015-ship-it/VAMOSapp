@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { 
-  signInWithPopup, 
+  signInWithRedirect, 
+  getRedirectResult,
   GoogleAuthProvider, 
   createUserWithEmailAndPassword,
   updateProfile
@@ -41,40 +42,14 @@ export default function AuthPage() {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account" });
       
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+      // Guardar el rol en localStorage antes de la redirección para recuperarlo después
+      localStorage.setItem("pendingRole", role);
       
-      // Operación Atómica: Verificar/Crear Perfil antes de Redirigir
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-
-      if (!userSnap.exists()) {
-        await setDoc(userRef, {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          role: role,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-      } else {
-        // Si ya existe, solo actualizamos el último login
-        await setDoc(userRef, {
-          updatedAt: new Date().toISOString(),
-        }, { merge: true });
-      }
-
-      // REDIRECCIÓN ESTRICTA: Solo después del éxito en Firestore
-      const finalRole = userSnap.exists() ? (userSnap.data()?.role || role) : role;
-      router.push(finalRole === "driver" ? "/publish" : "/search");
-
+      await signInWithRedirect(auth, provider);
+      // La ejecución se detiene aquí y redirige a Google
     } catch (err: any) {
-      console.error("Auth Error:", err);
-      setError("Error crítico de autenticación. Intenta de nuevo.");
-      // Limpiar sesión si falló Firestore para evitar inconsistentemente logueados
-      await auth.signOut();
-    } finally {
+      console.error("Auth Redirection Error:", err);
+      setError("Error al iniciar redirección de Google.");
       setLoading(false);
     }
   };
